@@ -1,0 +1,217 @@
+{% extends 'base.html' %} {% block title %} Custom Pc {% endblock %} {% block content %}
+<style>
+  div {
+    border: 1px solid #000;
+  }
+</style>
+<div class="left_section">
+  <!-- 폼출력 버튼 -->
+  <div class="left_section_button">
+    <ul>
+      <li id="cpu">CPU</li>
+      <li id="board">Board</li>
+      <li id="ram">RAM</li>
+      <li id="vga">VGA</li>
+      <li id="power">Power</li>
+      <li id="hdd">HDD</li>
+      <li id="ssd">SSD</li>
+      <li id="odd">ODD</li>
+    </ul>
+  </div>
+  
+  <!-- 폼 -->
+  <div class="select_form">
+    <form action="" method="post">{% csrf_token %}
+      <p id="select_cpu">
+        <label for="id_cpu">Cpu:</label>
+        <select name="cpu" id="id_cpu" size="5">
+          <option value="" selected>---------</option>
+          {% for hard in hards %} {% if hard.hardware_kind == 'CPU' %}
+          <option value="{{ hard.id }}">{{ hard.name }}</option>
+          {% endif %} {% endfor %}
+        </select>
+      </p>
+      <p id="select_board">
+        <label for="id_board">Board:</label>
+        <select name="board" id="id_board" size="5">
+          <option value="" selected>---------</option>
+          {% for hard in hards %} {% if hard.hardware_kind == 'BRD' %}
+          <option value="{{ hard.id }}">{{ hard.name }}</option>
+          {% endif %} {% endfor %}
+        </select>
+      </p>
+      <p id="select_ram">
+        <label for="id_ram">Ram:</label>
+        <select name="ram" id="id_ram" size="5">
+          <option value="" selected>---------</option>
+          {% for hard in hards %} {% if hard.hardware_kind == 'RAM' %}
+          <option value="{{ hard.id }}">{{ hard.name }}</option>
+          {% endif %} {% endfor %}
+        </select>
+      </p>
+      <p id="select_vga">
+        <label for="id_vga">Vga:</label>
+        <select name="vga" id="id_vga" size="5">
+          <option value="" selected>---------</option>
+          {% for hard in hards %} {% if hard.hardware_kind == 'VGA' %}
+          <option value="{{ hard.id }}">{{ hard.name }}</option>
+          {% endif %} {% endfor %}
+        </select>
+      </p>
+      <p id="select_power">
+        <label for="id_power">Power:</label>
+        <select name="power" id="id_power" size="5">
+          <option value="" selected>---------</option>
+          {% for hard in hards %} {% if hard.hardware_kind == 'POW' %}
+          <option value="{{ hard.id }}">{{ hard.name }}</option>
+          {% endif %} {% endfor %}
+        </select>
+      </p>
+      <p id="select_hdd">
+        <label for="id_hdd">Hdd:</label>
+        <select name="hdd" id="id_hdd" size="5">
+          <option value="" selected>---------</option>
+          {% for hard in hards %} {% if hard.hardware_kind == 'HDD' %}
+          <option value="{{ hard.id }}">{{ hard.name }}</option>
+          {% endif %} {% endfor %}
+        </select>
+      </p>
+      <p id="select_ssd">
+        <label for="id_ssd">Ssd:</label>
+        <select name="ssd" id="id_ssd" size="5">
+          <option value="" selected>---------</option>
+          {% for hard in hards %} {% if hard.hardware_kind == 'SSD' %}
+          <option value="{{ hard.id }}">{{ hard.name }}</option>
+          {% endif %} {% endfor %}
+        </select>
+      </p>
+      <p id="select_odd">
+        <label for="id_odd">Odd:</label>
+        <select name="odd" id="id_odd" size="5">
+          <option value="" selected>---------</option>
+          {% for hard in hards %} {% if hard.hardware_kind == 'ODD' %}
+          <option value="{{ hard.id }}">{{ hard.name }}</option>
+          {% endif %} {% endfor %}
+        </select>
+      </p>
+      <button type="submit" id="save_set">저장</button>
+    </form>
+  </div>
+</div>
+
+<div>
+  <ul>
+    <li>CPU : <span id="up_cpu"></span></li>
+    <li>Board : <span id="up_board"></span></li>
+    <li>RAM : <span id="up_ram"></span></li>
+    <li>VGA : <span id="up_vga"></span></li>
+    <li>Power : <span id="up_power"></span></li>
+    <li>HDD : <span id="up_hdd"></span></li>
+    <li>SSD : <span id="up_ssd"></span></li>
+    <li>ODD : <span id="up_odd"></span></li>
+  </ul>
+</div>
+
+<div>
+  <div>
+    <h2>클릭했을때 타입에 의한설명</h2>
+    <p id="guide"></p>
+  </div>
+  <div>
+    <h2>클릭했을때 부품의 사양표시</h2>
+    <p id="spec"></p>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function () {
+    $('p').hide();
+  })
+  //cpu
+  $('li#cpu').click(function () {
+    $('p').hide();
+    $('p#select_cpu').show();
+  })
+  $('select#id_cpu').click(function() {
+    var cpu = $('select#id_cpu option:selected').text()
+    $('span#up_cpu').text(cpu)
+    $('p#spec').text(
+      {% for hard in hards %}
+        {% if hard == cpu %}
+          '{{ hard.option }}'
+        {% endif %}
+      {% endfor %}
+    )
+  })
+
+  //board
+  $('li#board').click(function () {
+    $('p').hide();
+    $('p#select_board').show();
+  })
+  $('select#id_board').click(function() {
+    var board = $('select#id_board option:selected').text()
+    $('span#up_board').text(board)
+  })
+
+  //ram
+  $('li#ram').click(function () {
+    $('p').hide();
+    $('p#select_ram').show();
+  })
+  $('select#id_ram').click(function() {
+    var ram = $('select#id_ram option:selected').text()
+    $('span#up_ram').text(ram)
+  })
+
+  //vga
+  $('li#vga').click(function () {
+    $('p').hide();
+    $('p#select_vga').show();
+  })
+  $('select#id_vga').click(function() {
+    var vga = $('select#id_vga option:selected').text()
+    $('span#up_vga').text(vga)
+  })
+
+  //power
+  $('li#power').click(function () {
+    $('p').hide();
+    $('p#select_power').show();
+  })
+  $('select#id_power').click(function() {
+    var power = $('select#id_power option:selected').text()
+    $('span#up_power').text(power)
+  })
+
+  //hdd
+  $('li#hdd').click(function () {
+    $('p').hide();
+    $('p#select_hdd').show();
+  })
+  $('select#id_hdd').click(function() {
+    var hdd = $('select#id_hdd option:selected').text()
+    $('span#up_vga').text(hdd)
+  })
+
+  //ssd
+  $('li#ssd').click(function () {
+    $('p').hide();
+    $('p#select_ssd').show();
+  })
+  $('select#id_ssd').click(function() {
+    var ssd = $('select#id_ssd option:selected').text()
+    $('span#up_ssd').text(ssd)
+  })
+
+  //odd
+  $('li#odd').click(function () {
+    $('p').hide();
+    $('p#select_odd').show();
+  })
+  $('select#id_odd').click(function() {
+    var odd = $('select#id_odd option:selected').text()
+    $('span#up_odd').text(odd)
+  })
+</script> {% endblock %}
