@@ -1,16 +1,20 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Custom Pc</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>
-            {% block title %}
-            {% endblock %}
-        </h1>
+        <nav>
+            <p><a href="/">Home</a> <a href="{% url 'custom:customlist' %}">list</a> 상단메뉴바</p>
+        </nav>
+        <div>
+            <h1>{% block title %}{% endblock %}</h1>
+        </div>
     </header>
     <div>
         {% block content %}

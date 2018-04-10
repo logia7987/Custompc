@@ -30,7 +30,9 @@ class Compa(models.Model):
         return self.comp_mode
 
 class Custom(models.Model):
+    title = models.CharField(max_length=50)
     user = models.ForeignKey('auth.User')
+    create_date = models.DateTimeField(auto_now_add=True)
     cpu = models.ForeignKey(Hardware,null=True,blank=True,related_name='cpu')
     board = models.ForeignKey(Hardware, null=True, blank=True,related_name='board')
     ram = models.ForeignKey(Hardware, null=True, blank=True,related_name='ram')
@@ -39,7 +41,7 @@ class Custom(models.Model):
     hdd = models.ForeignKey(Hardware, null=True, blank=True,related_name='hdd')
     ssd = models.ForeignKey(Hardware, null=True, blank=True,related_name='ssd')
     odd = models.ForeignKey(Hardware, null=True, blank=True, related_name='odd')
-    create_date = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(blank=True,null=True)
 
     def __str__(self):
-        return self.user.username
+        return self.title

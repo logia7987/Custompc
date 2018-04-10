@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.user }}{% endblock %}
+
+{% block content %}
+
+<section>
+    <h1>{{ object }}</h1>
+    <p>작성일 : {{ object.create_date }} <span>작성자 : {{ object.user }}</span></p>
+    <ul>
+        <li>CPU : {{ object.cpu }}</li>
+        <li>Board : {{ object.board }}</li>
+        <li>RAM : {{ object.ram }}</li>
+        <li>VGA : {{ object.vga }}</li>
+        <li>Power : {{ object.power }}</li>
+        <li>HDD : {{ object.hdd }}</li>
+        <li>SSD : {{ object.ssd }}</li>
+        <li>ODD : {{ object.odd }}</li>
+    </ul>
+    <p>{{ object.text }}</p>
+    <a href="{% url 'custom:customlist' %}">목록보기</a>
+</section>
+
+{% endblock %}
