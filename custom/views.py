@@ -7,7 +7,14 @@ from .forms import *
 # Create your views here.
 # 함수형 view
 def custom_new(request):
-    hardware = Hardware.objects.all()
+    cpu = Hardware.objects.filter(hardware_kind="CPU")[:10]
+    board = Hardware.objects.filter(hardware_kind="BRD")[:10]
+    ram = Hardware.objects.filter(hardware_kind="RAM")[:10]
+    vga = Hardware.objects.filter(hardware_kind="VGA")[:10]
+    power = Hardware.objects.filter(hardware_kind="POW")[:10]
+    hdd = Hardware.objects.filter(hardware_kind="HDD")[:10]
+    ssd = Hardware.objects.filter(hardware_kind="SSD")[:10]
+    odd = Hardware.objects.filter(hardware_kind="ODD")[:10]
     compa = Compa.objects.all()
     if request.method == 'POST':
         form = CustomForm(request.POST)
@@ -15,18 +22,26 @@ def custom_new(request):
             hard = form.save(commit=False)
             hard.user = request.user
             hard.save()
-            return redirect('custom:customdetail', pk=hard.pk)
+            return redirect('custom:custom_detail', pk=hard.pk)
     else:
         form = CustomForm()
 
-    return render(request, 'custom/custom_edit.html',{'form':form,'hards':hardware,'compa':compa})
+    return render(request, 'custom/custom_edit.html',{'form':form,'compa':compa,'cpu':cpu,'board':board,'ram':ram,'vga':vga,'power':power,'hdd':hdd,'ssd':ssd,'odd':odd})
 
 def custom_edit(request, pk):
     hard = get_object_or_404(Custom, pk)
     if request.method == 'POST':
         form = CustomForm(request.POST, instance=hard)
         if form.is_valid():
-            hard = form.save(commit=False)
+            if form.is_valid():
+                hard = form.save(commit=False)
+                hard.user = request.user
+                hard.save()
+                return redirect('custom:custom_detail', pk=hard.pk)
+        else:
+            form = CustomForm(instance=hard)
+
+        return render(request, 'custom/custom_edit.html', {'form': form, 'hard': hard})
 
 
 

@@ -45,3 +45,6 @@ class Custom(models.Model):
 
     def __str__(self):
         return self.title
+
+    def short_text(self):
+        return self.text[:50]
