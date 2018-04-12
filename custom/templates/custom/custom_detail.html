@@ -20,5 +20,10 @@
     <p>{{ object.text }}</p>
     <a href="{% url 'custom:custom_list' %}">목록보기</a>
 </section>
-
+<span>
+	<script type="text/javascript" src="http://share.naver.net/js/naver_sharebutton.js"></script>
+	<script type="text/javascript">
+	new ShareNaver.makeButton({"type": "e" , "title":""});
+	</script>
+</span>
 {% endblock %}
