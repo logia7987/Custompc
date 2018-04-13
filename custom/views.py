@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic import DeleteView
 from .models import *
 from .forms import *
-
-# Create your views here.
 # 함수형 view
 def custom_new(request):
     cpu = Hardware.objects.filter(hardware_kind="CPU")[:10]
@@ -33,15 +33,14 @@ def custom_edit(request, pk):
     if request.method == 'POST':
         form = CustomForm(request.POST, instance=hard)
         if form.is_valid():
-            if form.is_valid():
-                hard = form.save(commit=False)
-                hard.user = request.user
-                hard.save()
-                return redirect('custom:custom_detail', pk=hard.pk)
-        else:
-            form = CustomForm(instance=hard)
+            hard = form.save(commit=False)
+            hard.user = request.user
+            hard.save()
+            return redirect('custom:custom_detail', pk=hard.pk)
+    else:
+        form = CustomForm(instance=hard)
 
-        return render(request, 'custom/custom_edit.html', {'form': form, 'hard': hard})
+    return render(request, 'custom/custom_edit.html', {'form': form, 'hard': hard})
 
 
 
@@ -53,6 +52,11 @@ class CustomListView(ListView):
 class CustomDetailView(DetailView):
     model = Custom
     template_name = 'custom/custom_detail.html'
+
+class CustomDeleteView(DeleteView):
+    model = Custom
+    template_name = 'custom/custom_delete.html'
+    success_url = reverse_lazy('custom:custom_list')
 
 
 

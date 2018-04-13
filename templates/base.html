@@ -9,14 +9,31 @@
 </head>
 <body>
     <header>
-        <nav>
-            <p><a href="/">Home</a> <a href="{% url 'custom:custom_list' %}">list</a> 상단메뉴바</p>
+        <nav class="clearfix">
+            <div class="headnav_left">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="{% url 'custom:custom_list' %}">list</a></li>
+                </ul>
+            </div>
+            <div class="headnav_right">
+                <ul>
+                    {% if user.is_authenticated %}
+                    <li><a href="#">로그아웃</a></li>
+                    {% else %}
+                    <li><a href="#">회원가입</a></li>
+                    <li><a href="#">로그인</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </nav>
-        <div>
-            <h1>{% block title %}{% endblock %}</h1>
-        </div>
     </header>
-    <div>
+    <div class="base_logo_area">
+        <section>
+            <h1>{% block title %}{% endblock %}</h1>
+        </section>
+    </div>
+    <div class="content_area">
         {% block content %}
         {% endblock %}
     </div>

@@ -43,4 +43,10 @@ class Custom(models.Model):
     text = models.TextField(blank=True,null=True)
 
     def __str__(self):
+        return self.user.username
+
+    def short_text(self):
         return self.text[:30]
+
+    class Meta:
+        ordering = ['-create_date']

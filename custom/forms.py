@@ -5,4 +5,4 @@ class CustomForm(forms.ModelForm):
 
     class Meta:
         model = Custom
-        fields = ('cpu','board','ram','vga','power','hdd','ssd','odd',)
+        fields = ('cpu','board','ram','vga','power','hdd','ssd','odd','text',)
