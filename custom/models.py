@@ -30,7 +30,6 @@ class Compa(models.Model):
         return self.comp_mode
 
 class Custom(models.Model):
-    title = models.CharField(max_length=50)
     user = models.ForeignKey('auth.User')
     create_date = models.DateTimeField(auto_now_add=True)
     cpu = models.ForeignKey(Hardware,null=True,blank=True,related_name='cpu')
@@ -44,7 +43,4 @@ class Custom(models.Model):
     text = models.TextField(blank=True,null=True)
 
     def __str__(self):
-        return self.title
-
-    def short_text(self):
-        return self.text[:50]
+        return self.text[:30]

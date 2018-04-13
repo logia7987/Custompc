@@ -3,10 +3,9 @@
 {% block title %}견적리스트{% endblock %}
 
 {% block content %}
-
 <ul>
 {% for obj in object_list %}
-    <li><a href="{% url 'custom:custom_detail' pk=obj.pk %}">{{ obj.id }}  {{obj}}</a></li>
+    <li><a href="{% url 'custom:custom_detail' pk=obj.pk %}">{{ obj.id }} || {{ obj.user }} || {{ obj.create_date }}</a></li>
 {% endfor %}
 </ul>
 {% endblock %}
