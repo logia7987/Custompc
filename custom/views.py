@@ -6,6 +6,7 @@ from django.views.generic import DeleteView
 from .models import *
 from .forms import *
 # 함수형 view
+
 def custom_new(request):
     cpu = Hardware.objects.filter(hardware_kind="CPU")[:10]
     board = Hardware.objects.filter(hardware_kind="BRD")[:10]
@@ -15,7 +16,6 @@ def custom_new(request):
     hdd = Hardware.objects.filter(hardware_kind="HDD")[:10]
     ssd = Hardware.objects.filter(hardware_kind="SSD")[:10]
     odd = Hardware.objects.filter(hardware_kind="ODD")[:10]
-    compa = Compa.objects.all()
     if request.method == 'POST':
         form = CustomForm(request.POST)
         if form.is_valid():
@@ -26,7 +26,7 @@ def custom_new(request):
     else:
         form = CustomForm()
 
-    return render(request, 'custom/custom_edit.html',{'form':form,'compa':compa,'cpu':cpu,'board':board,'ram':ram,'vga':vga,'power':power,'hdd':hdd,'ssd':ssd,'odd':odd})
+    return render(request, 'custom/custom_edit.html',{'form':form,'cpu':cpu,'board':board,'ram':ram,'vga':vga,'power':power,'hdd':hdd,'ssd':ssd,'odd':odd})
 
 def custom_edit(request, pk):
     hard = get_object_or_404(Custom, pk)

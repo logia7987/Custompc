@@ -24,7 +24,7 @@
           <select name="cpu" id="id_cpu" size="5">
             <option value="" selected>---------</option>
             {% for hard in cpu %}
-            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')">{{ hard.name }}</option>
+            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')">{{ hard.name }}:{{hard.cpu.all.count}}|{{hard.hit}}</option>
             {% endfor %}
           </select>
         </p>
@@ -33,7 +33,7 @@
           <select name="board" id="id_board" size="5">
             <option value="" selected>---------</option>
             {% for hard in board %}
-            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')">{{ hard.name }}</option>
+            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')">{{ hard.name }}:{{hard.board.all.count}}</option>
             {% endfor %}
           </select>
         </p>
@@ -42,7 +42,7 @@
           <select name="ram" id="id_ram" size="5">
             <option value="" selected>---------</option>
             {% for hard in ram %}
-            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')">{{ hard.name }}</option>
+            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')">{{ hard.name }}:{{hard.ram.all.count}}</option>
             {% endfor %}
           </select>
         </p>
@@ -51,7 +51,7 @@
           <select name="vga" id="id_vga" size="5">
             <option value="" selected>---------</option>
             {% for hard in vga %}
-            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')">{{ hard.name }}</option>
+            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')">{{ hard.name }}:{{hard.vga.all.count}}</option>
             {% endfor %}
           </select>
         </p>
@@ -60,7 +60,7 @@
           <select name="power" id="id_power" size="5">
             <option value="" selected>---------</option>
             {% for hard in power %}
-            <option value="{{ hard.id }}">{{ hard.name }}</option>
+            <option value="{{ hard.id }}">{{ hard.name }}:{{hard.power.all.count}}</option>
             {% endfor %}
           </select>
         </p>
@@ -69,7 +69,7 @@
           <select name="hdd" id="id_hdd" size="5">
             <option value="" selected>---------</option>
             {% for hard in hdd %}
-            <option value="{{ hard.id }}">{{ hard.name }}</option>
+            <option value="{{ hard.id }}">{{ hard.name }}:{{hard.hdd.all.count}}</option>
             {% endfor %}
           </select>
         </p>
@@ -78,7 +78,7 @@
           <select name="ssd" id="id_ssd" size="5">
             <option value="" selected>---------</option>
             {% for hard in ssd %}
-            <option value="{{ hard.id }}">{{ hard.name }}</option>
+            <option value="{{ hard.id }}">{{ hard.name }}:{{hard.ssd.all.count}}</option>
             {% endfor %}
           </select>
         </p>
@@ -87,7 +87,7 @@
           <select name="odd" id="id_odd" size="5">
             <option value="" selected>---------</option>
             {% for hard in odd %}
-            <option value="{{ hard.id }}">{{ hard.name }}</option>
+            <option value="{{ hard.id }}">{{ hard.name }}:{{hard.odd.all.count}}</option>
             {% endfor %}
           </select>
         </p>
@@ -137,6 +137,7 @@
     <div>
       <h2>좌즉의 카테고리를 클릭하여 선택하십시오.</h2>
       <p id="guide"></p>
+      <!-- 하드웨어를 견적에 등록한 횟수 -->
     </div>
     <div>
       <h2>부품 사양</h2>
@@ -272,7 +273,7 @@
     var que = confirm('이 견적에 추가설명을 쓰시겠습니까?')
     if (que == true) {
       var text = prompt('설명을 입력해주세요.')
-      $('textarea#id_text').val(text)  
+      $('textarea#id_text').val(text)
     } 
     $('button#save_set').trigger("click")
   })
@@ -304,7 +305,6 @@
         var obj = JSON.parse(this.responseText);
         obj_hard = JSON.parse(obj.hard)
         obj_compa = JSON.parse(obj.compa)
-        // console.log(obj_compa)
         if (obj_hard[0]['fields']['hardware_kind'] === "BRD" ||
           obj_hard[0]['fields']['hardware_kind'] === "CPU" ||
           obj_hard[0]['fields']['hardware_kind'] === "VGA" ||

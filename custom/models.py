@@ -22,6 +22,21 @@ class Hardware(models.Model):
     def __str__(self):
         return self.name
 
+    def hit(self):
+        hard_count = 0;
+        req = Custom.objects.filter(cpu=self).count();
+        cpu = Hardware.objects.filter(hardware_kind="CPU")
+        for i in cpu:
+            hard_count = hard_count + Custom.objects.filter(cpu=i.id).count();
+        regular = len(cpu)/hard_count
+        top = regular * 5 / 100
+        if req/100 > top:
+            return 'HIT'
+        else:
+            return ''
+
+
+
 class Compa(models.Model):
     comp_mode = models.CharField(max_length=100)
     hardware = models.ManyToManyField(Hardware)
