@@ -24,13 +24,42 @@ class Hardware(models.Model):
 
     def hit(self):
         hard_count = 0;
-        req = Custom.objects.filter(cpu=self).count();
-        cpu = Hardware.objects.filter(hardware_kind="CPU")
-        for i in cpu:
-            hard_count = hard_count + Custom.objects.filter(cpu=i.id).count();
-        regular = len(cpu)/hard_count
-        top = regular * 5 / 100
-        if req/100 > top:
+        if self.hardware_kind == "CPU":
+            req = Custom.objects.filter(cpu=self).count();
+        elif self.hardware_kind == "BRD":
+            req = Custom.objects.filter(board=self).count();
+        elif self.hardware_kind == "RAM":
+            req = Custom.objects.filter(ram=self).count();
+        elif self.hardware_kind == "VGA":
+            req = Custom.objects.filter(vga=self).count();
+        elif self.hardware_kind == "POW":
+            req = Custom.objects.filter(power=self).count();
+        elif self.hardware_kind == "HDD":
+            req = Custom.objects.filter(hdd=self).count();
+        elif self.hardware_kind == "SSD":
+            req = Custom.objects.filter(ssd=self).count();
+        elif self.hardware_kind == "ODD":
+            req = Custom.objects.filter(odd=self).count();
+        some_hard = Hardware.objects.filter(hardware_kind=self.hardware_kind)
+        for i in some_hard:
+            if self.hardware_kind == "CPU":
+                hard_count = hard_count + Custom.objects.filter(cpu=i.id).count();
+            elif self.hardware_kind == "BRD":
+                hard_count = hard_count + Custom.objects.filter(board=i.id).count();
+            elif self.hardware_kind == "RAM":
+                hard_count = hard_count + Custom.objects.filter(ram=i.id).count();
+            elif self.hardware_kind == "VGA":
+                hard_count = hard_count + Custom.objects.filter(vga=i.id).count();
+            elif self.hardware_kind == "POW":
+                hard_count = hard_count + Custom.objects.filter(power=i.id).count();
+            elif self.hardware_kind == "HDD":
+                hard_count = hard_count + Custom.objects.filter(hdd=i.id).count();
+            elif self.hardware_kind == "SSD":
+                hard_count = hard_count + Custom.objects.filter(ssd=i.id).count();
+            elif self.hardware_kind == "ODD":
+                hard_count = hard_count + Custom.objects.filter(odd=i.id).count();
+        top = hard_count/100*85
+        if req >= top:
             return 'HIT'
         else:
             return ''
@@ -58,10 +87,19 @@ class Custom(models.Model):
     text = models.TextField(blank=True,null=True)
 
     def __str__(self):
-        return self.user.username
-
-    def short_text(self):
-        return self.text[:30]
+        if self.text:
+            return self.text[:10]
+        else:
+            return self.user.username
 
     class Meta:
         ordering = ['-create_date']
+
+class Comment(models.Model):
+    custom = models.ForeignKey('custom.Custom', related_name='comments')
+    author = models.CharField(max_length=25)
+    text = models.TextField()
+    create_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text

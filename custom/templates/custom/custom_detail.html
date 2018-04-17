@@ -27,7 +27,12 @@
         <li>ODD : {{ object.odd }}</li>
     </ul>
     <p>{{ object.text }}</p>
-    <p><a href="{% url 'custom:custom_list' %}">[목록보기]</a><a href="{% url 'custom:custom_delete' pk=object.pk %}">[삭제]</a></p>
+    <p>
+        <a href="{% url 'custom:custom_list' %}">[목록보기]</a>
+        {% if user == object.user %}
+        <a href="{% url 'custom:custom_delete' pk=object.pk %}">[삭제]</a>
+        {% endif %}
+    </p>
 </section>
 <!-- SNS 공유 -->
 <div class="detail_share">
@@ -39,4 +44,28 @@
     </span>
     <div class="fb-share-button" data-href="http://logia7.pythonanywhere.com/custom/{{ object.id }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flogia7.pythonanywhere.com%2Fcustom%2F{{object.id}}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">공유하기</a></div>
 </div>
+<div>
+    <h3>댓글<a href="{% url 'custom:add_comment' pk=object.pk%}"> [댓글달기]</a></h3>
+    {% for comment in object.comments.all %}
+    <hr>
+        <div>
+            <p>{{comment.author}} | {{comment.create_date|date:'Y년 m월 d일 h:i'}} {% if user == object.user or user == comment.author %}<a href="#" class="ment_re" id="{{ comment.id }}">[댓글삭제]</a>{% endif %}</p>
+            <p>{{comment.text}}</p>
+        </div>
+    <hr>
+    {% empty %}
+        <li>empty</li>
+    {% endfor %}
+</div>
+<script>
+    $('a.ment_re').click(function() {
+        ment = confirm('정말 삭제하시겠습니까?')
+        pk = $('a.ment_re').attr('id')
+        if (ment === true) {
+            location.href="/custom/"+pk+"/comment/remove"
+        } else {
+            alert('취소되었습니다.')
+        }
+    })
+</script>
 {% endblock %}

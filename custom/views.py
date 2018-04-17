@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
@@ -42,12 +43,31 @@ def custom_edit(request, pk):
 
     return render(request, 'custom/custom_edit.html', {'form': form, 'hard': hard})
 
+def add_comment(request, pk):
+    set = get_object_or_404(Custom, pk=pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.custom = set
+            comment.save()
+            return redirect('custom:custom_detail', pk=set.pk)
+    else:
+        form = CommentForm()
+
+    return render(request, 'custom/add_comment.html',{'form':form})
+
+def comment_remove(request,pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    return redirect('custom:custom_detail', pk=comment.custom.pk)
 
 
 # 클래스형 view
 class CustomListView(ListView):
     model = Custom
     template_name = 'custom/custom_list.html'
+    paginate_by = 5
 
 class CustomDetailView(DetailView):
     model = Custom

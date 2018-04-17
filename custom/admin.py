@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(Hardware)
 admin.site.register(Compa)
 admin.site.register(Custom)
+admin.site.register(Comment)
