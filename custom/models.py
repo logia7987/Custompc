@@ -1,4 +1,6 @@
 from django.db import models
+from imagekit.models import ProcessedImageField
+from imagekit.processors import Thumbnail
 
 # Create your models here.
 class Hardware(models.Model):
@@ -18,6 +20,13 @@ class Hardware(models.Model):
     )
     name = models.CharField(max_length=100)
     option = models.TextField()
+    hard_thumbnail = ProcessedImageField(
+        upload_to='hardware',
+        processors=[Thumbnail(55,55)],
+        format='JPEG',
+        options={'quality':60},
+        null=True
+    )
 
     def __str__(self):
         return self.name

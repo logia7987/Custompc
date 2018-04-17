@@ -17,7 +17,12 @@
     <h1>작성자 : {{ object.user }}</h1>
     <p>작성일 : {{ object.create_date|date:"Y년 m월 d일 h:i" }} </p>
     <ul>
-        <li>CPU : {{ object.cpu }}</li>
+        <li>
+            {% if object.cpu.hard_thumbnail %}
+            <img src="{{ object.cpu.hard_thumbnail.url }}" alt="{{ object.cpu }}">
+            {% endif %}
+            CPU : {{ object.cpu }}
+        </li>
         <li>Board : {{ object.board }}</li>
         <li>RAM : {{ object.ram }}</li>
         <li>VGA : {{ object.vga }}</li>

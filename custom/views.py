@@ -67,7 +67,7 @@ def comment_remove(request,pk):
 class CustomListView(ListView):
     model = Custom
     template_name = 'custom/custom_list.html'
-    paginate_by = 5
+    paginate_by = 15
 
 class CustomDetailView(DetailView):
     model = Custom
