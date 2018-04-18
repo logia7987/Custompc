@@ -1,8 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from imagekit.models import ProcessedImageField
 from imagekit.processors import Thumbnail
 
-# Create your models here.
+class User(AbstractUser):
+    is_manager = models.BooleanField(default=False)
+    is_member = models.BooleanField(default=False)
+
 class Hardware(models.Model):
     HARDWARE_KIND_CHOICE =(
         ('CPU','CPU'),
@@ -25,7 +29,8 @@ class Hardware(models.Model):
         processors=[Thumbnail(55,55)],
         format='JPEG',
         options={'quality':60},
-        null=True
+        null=True,
+        blank=True
     )
 
     def __str__(self):
@@ -73,8 +78,6 @@ class Hardware(models.Model):
         else:
             return ''
 
-
-
 class Compa(models.Model):
     comp_mode = models.CharField(max_length=100)
     hardware = models.ManyToManyField(Hardware)
@@ -82,8 +85,12 @@ class Compa(models.Model):
     def __str__(self):
         return self.comp_mode
 
+    def cleaner(self):
+        if self.hardware == None:
+            self.delete()
+
 class Custom(models.Model):
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey(User)
     create_date = models.DateTimeField(auto_now_add=True)
     cpu = models.ForeignKey(Hardware,null=True,blank=True,related_name='cpu')
     board = models.ForeignKey(Hardware, null=True, blank=True,related_name='board')
@@ -106,9 +113,10 @@ class Custom(models.Model):
 
 class Comment(models.Model):
     custom = models.ForeignKey('custom.Custom', related_name='comments')
-    author = models.CharField(max_length=25)
+    author = models.ForeignKey(User)
     text = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.text
+        return self.text[:10]
+

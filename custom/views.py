@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
@@ -50,6 +49,7 @@ def add_comment(request, pk):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.custom = set
+            comment.author = request.user
             comment.save()
             return redirect('custom:custom_detail', pk=set.pk)
     else:
@@ -77,6 +77,3 @@ class CustomDeleteView(DeleteView):
     model = Custom
     template_name = 'custom/custom_delete.html'
     success_url = reverse_lazy('custom:custom_list')
-
-
-

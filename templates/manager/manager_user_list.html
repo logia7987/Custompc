@@ -1,0 +1,26 @@
+{% extends 'manager/manager_home.html' %}
+
+{% block manager %}
+<!--todo 디테일한 기능 추가예정-->
+<table>
+    <tr>
+        <th>번호</th>
+        <th>ID</th>
+        <th>권한</th>
+        <th>가입일</th>
+        <th>작성견적</th>
+        <th>작성댓글</th>
+    </tr>
+    {% for user in object_list %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.is_superuser}}</td>
+        <td>{{user.date_joined|date:'Y년 m월 d일 h:i'}}</td>
+        <td>{{user.custom_set.all.count}}</td>
+        <td>{{user.comment_set.all.count}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

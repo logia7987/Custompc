@@ -151,159 +151,159 @@
   $('li#cpu').click(function () {
     $('p.hw_select').hide();
     $('p#select_cpu').show();
-    $('p#guide').siblings('h2').text('CPU란?')
-    $('p#guide').text('CPU는 컴퓨터의 연산장치로 컴퓨터의 뇌같은 하드웨어 입니다. 필수로 있어야만 컴퓨터를 조립할 수 있습니다.')
+    $('p#guide').siblings('h2').text('CPU란?');
+    $('p#guide').text('CPU는 컴퓨터의 연산장치로 컴퓨터의 뇌같은 하드웨어 입니다. 필수로 있어야만 컴퓨터를 조립할 수 있습니다.');
   })
   $('select#id_cpu').click(function () {
-    var cpu = $('select#id_cpu option:selected').text()
-    var cpu_id = $('select#id_cpu option:selected').attr('id')
-    var checkcpu = [{% for hard in cpu %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}]
-    $('span#up_cpu').text(cpu)
-    addSpec(cpu_id,checkcpu)
+    var cpu = $('select#id_cpu option:selected').text();
+    var cpu_id = $('select#id_cpu option:selected').attr('id');
+    var checkcpu = [{% for hard in cpu %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
+    $('span#up_cpu').text(cpu);
+    addSpec(cpu_id,checkcpu);
   })
 
   //board
   $('li#board').click(function () {
     $('p.hw_select').hide();
     $('p#select_board').show();
-    $('p#guide').siblings('h2').text('Board란?')
-    $('p#guide').text('Board는 마더보드라고도 합니다. 보드가 있어야만 다른 하드웨어들을 장착할 수 있기때문에 필수입니다.')
+    $('p#guide').siblings('h2').text('Board란?');
+    $('p#guide').text('Board는 마더보드라고도 합니다. 보드가 있어야만 다른 하드웨어들을 장착할 수 있기때문에 필수입니다.');
   })
   $('select#id_board').click(function () {
-    var board = $('select#id_board option:selected').text()
-    var board_id = $('select#id_board option:selected').attr('id')
-    var checkboard = [{% for hard in board %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}]
-    $('span#up_board').text(board)
-    addSpec(board_id,checkboard)
+    var board = $('select#id_board option:selected').text();
+    var board_id = $('select#id_board option:selected').attr('id');
+    var checkboard = [{% for hard in board %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
+    $('span#up_board').text(board);
+    addSpec(board_id,checkboard);
   })
 
   //ram
   $('li#ram').click(function () {
     $('p.hw_select').hide();
     $('p#select_ram').show();
-    $('p#guide').siblings('h2').text('RAM란?')
-    $('p#guide').text('RAM은 기억된 정보를 읽어내기도 하고 다른 정보를 기억시킬 수도 있는 메모리로서, 컴퓨터의 주기억장치, 응용 프로그램의 일시적 로딩과 데이터의 일시적 저장 등에 사용된다. 컴퓨터 작동을 위해서는 필수요소입니다.')
+    $('p#guide').siblings('h2').text('RAM란?');
+    $('p#guide').text('RAM은 기억된 정보를 읽어내기도 하고 다른 정보를 기억시킬 수도 있는 메모리로서, 컴퓨터의 주기억장치, 응용 프로그램의 일시적 로딩과 데이터의 일시적 저장 등에 사용된다. 컴퓨터 작동을 위해서는 필수요소입니다.');
   })
   $('select#id_ram').click(function () {
-    var ram = $('select#id_ram option:selected').text()
-    var ram_id = $('select#id_ram option:selected').attr('id')
-    var checkram = [{% for hard in ram %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}]
-    $('span#up_ram').text(ram)
-    addSpec(ram_id,checkram)
+    var ram = $('select#id_ram option:selected').text();
+    var ram_id = $('select#id_ram option:selected').attr('id');
+    var checkram = [{% for hard in ram %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
+    $('span#up_ram').text(ram);
+    addSpec(ram_id,checkram);
   })
 
   //vga
   $('li#vga').click(function () {
     $('p.hw_select').hide();
     $('p#select_vga').show();
-    $('p#guide').siblings('h2').text('VGA란?')
-    $('p#guide').text('VGA는 그래픽카드입니다. 그래픽카드는 고사양을 필요로하는 게임과, 디자이너들이 사용합니다. 그래서 서핑과 컴퓨터에 적게 투자하여 이용하시고 싶으신 분들에게는 권장하지 않습니다.')
+    $('p#guide').siblings('h2').text('VGA란?');
+    $('p#guide').text('VGA는 그래픽카드입니다. 그래픽카드는 고사양을 필요로하는 게임과, 디자이너들이 사용합니다. 그래서 서핑과 컴퓨터에 적게 투자하여 이용하시고 싶으신 분들에게는 권장하지 않습니다.');
   })
   $('select#id_vga').click(function () {
-    var vga = $('select#id_vga option:selected').text()
-    var vga_id = $('select#id_vga option:selected').attr('id')
-    var checkvga = [{% for hard in vga %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}]
-    $('span#up_vga').text(vga)
-    addSpec(vga_id,checkvga)
+    var vga = $('select#id_vga option:selected').text();
+    var vga_id = $('select#id_vga option:selected').attr('id');
+    var checkvga = [{% for hard in vga %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
+    $('span#up_vga').text(vga);
+    addSpec(vga_id,checkvga);
   })
 
   //power
   $('li#power').click(function () {
     $('p.hw_select').hide();
     $('p#select_power').show();
-    $('p#guide').siblings('h2').text('Power란?')
-    $('p#guide').text('Power는 컴퓨터의 전력을 공급하는 역할을 합니다. 필수로 있어야만 하는 하드웨어입니다. ex) 그래픽카드를 구매하시는 분들은 그래픽카드의 권장 정격과 파워의 정격을 확인하고 구매하시기 바랍니다.')
+    $('p#guide').siblings('h2').text('Power란?');
+    $('p#guide').text('Power는 컴퓨터의 전력을 공급하는 역할을 합니다. 필수로 있어야만 하는 하드웨어입니다. ex) 그래픽카드를 구매하시는 분들은 그래픽카드의 권장 정격과 파워의 정격을 확인하고 구매하시기 바랍니다.');
   })
   $('select#id_power').click(function () {
-    var power = $('select#id_power option:selected').text()
-    var power_id = $('select#id_power option:selected').attr('id')
-    var checkpower = [{% for hard in power %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}]
-    $('span#up_power').text(power)
-    addSpec(power_id,checkpower)
+    var power = $('select#id_power option:selected').text();
+    var power_id = $('select#id_power option:selected').attr('id');
+    var checkpower = [{% for hard in power %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
+    $('span#up_power').text(power);
+    addSpec(power_id,checkpower);
   })
 
   //hdd
   $('li#hdd').click(function () {
     $('p.hw_select').hide();
     $('p#select_hdd').show();
-    $('p#guide').siblings('h2').text('HDD란?')
-    $('p#guide').text('HDD는 기억해야할 데이터를 기억해주는 역할을 합니다. 필수요소 입니다.')
+    $('p#guide').siblings('h2').text('HDD란?');
+    $('p#guide').text('HDD는 기억해야할 데이터를 기억해주는 역할을 합니다. 필수요소 입니다.');
   })
   $('select#id_hdd').click(function () {
-    var hdd = $('select#id_hdd option:selected').text()
-    var hdd_id = $('select#id_hdd option:selected').attr('id')
-    var checkhdd = [{% for hard in hdd %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}]
-    $('span#up_hdd').text(hdd)
-    addSpec(hdd_id,checkhdd)
+    var hdd = $('select#id_hdd option:selected').text();
+    var hdd_id = $('select#id_hdd option:selected').attr('id');
+    var checkhdd = [{% for hard in hdd %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
+    $('span#up_hdd').text(hdd);
+    addSpec(hdd_id,checkhdd);
   })
 
   //ssd
   $('li#ssd').click(function () {
     $('p.hw_select').hide();
     $('p#select_ssd').show();
-    $('p#guide').siblings('h2').text('SSD란?')
-    $('p#guide').text('SSD는 HDD보다 빠른속도를 가지고 있습니다. 그래서 HDD보다 더 많이 사용되고 있습니다.')
+    $('p#guide').siblings('h2').text('SSD란?');
+    $('p#guide').text('SSD는 HDD보다 빠른속도를 가지고 있습니다. 그래서 HDD보다 더 많이 사용되고 있습니다.');
   })
   $('select#id_ssd').click(function () {
-    var ssd = $('select#id_ssd option:selected').text()
-    var ssd_id = $('select#id_ssd option:selected').attr('id')
-    var checkssd = [{% for hard in ssd %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}]
-    $('span#up_ssd').text(ssd)
-    addSpec(ssd_id,checkssd)
+    var ssd = $('select#id_ssd option:selected').text();
+    var ssd_id = $('select#id_ssd option:selected').attr('id');
+    var checkssd = [{% for hard in ssd %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
+    $('span#up_ssd').text(ssd);
+    addSpec(ssd_id,checkssd);
   })
 
   //odd
   $('li#odd').click(function () {
     $('p.hw_select').hide();
     $('p#select_odd').show();
-    $('p#guide').siblings('h2').text('ODD란?')
-    $('p#guide').text('ODD는 CD를 읽는 하드웨어입니다. 운영체재나 소프트웨어를 설치할때 사용합니다.')
+    $('p#guide').siblings('h2').text('ODD란?');
+    $('p#guide').text('ODD는 CD를 읽는 하드웨어입니다. 운영체재나 소프트웨어를 설치할때 사용합니다.');
   })
   $('select#id_odd').click(function () {
-    var odd = $('select#id_odd option:selected').text()
-    var odd_id = $('select#id_odd option:selected').attr('id')
-    var checkodd = [{% for hard in odd %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}]
-    $('span#up_odd').text(odd)
-    addSpec(odd_id,checkodd)
+    var odd = $('select#id_odd option:selected').text();
+    var odd_id = $('select#id_odd option:selected').attr('id');
+    var checkodd = [{% for hard in odd %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
+    $('span#up_odd').text(odd);
+    addSpec(odd_id,checkodd);
   })
 
   // 하드웨어를 구분하고 옵션을 화면에
   var addSpec = function(id,check){
     for (var i = 0; i < check.length; i++) {
       if ( id === check[i]['id']) {
-        var option = check[i]['option']
-        return $('p#spec').text(option)
+        var option = check[i]['option'];
+        return $('p#spec').text(option);
       }
     }
   }
 
   $('button#fake_set').click(function () {
-    var que = confirm('이 견적에 추가설명을 쓰시겠습니까?')
+    var que = confirm('이 견적에 추가설명을 쓰시겠습니까?');
     if (que == true) {
-      var text = prompt('설명을 입력해주세요.')
-      $('textarea#id_text').val(text)
+      var text = prompt('설명을 입력해주세요.');
+      $('textarea#id_text').val(text);
     }
-    $('button#save_set').trigger("click")
+    $('button#save_set').trigger("click");
   })
   var myPc = {};
   var yourPc ='';
   var checkmypc = function () {
     if ($.inArray(myPc["CPU"][0], myPc["BRD"]) != -1) {
-      yourPc += 'CPU: 적합\n'
+      yourPc += 'CPU: 적합\n';
     } else {
-      yourPc += 'CPU: ' + '부적합 #Board가 ' + myPc["CPU"][0] + '를 호환하지 않습니다.\n'
+      yourPc += 'CPU: ' + '부적합 #Board가 ' + myPc["CPU"][0] + '를 호환하지 않습니다.\n';
     }
     if ($.inArray(myPc["VGA"][0], myPc["BRD"]) != -1) {
-      yourPc += 'RAM: 적합\n'
+      yourPc += 'RAM: 적합\n';
     } else {
-      yourPc += 'RAM: ' + '부적합 #Board 가' + myPc["RAM"][0] + '를 호환하지 않습니다.\n'
+      yourPc += 'RAM: ' + '부적합 #Board 가' + myPc["RAM"][0] + '를 호환하지 않습니다.\n';
     }
     if ($.inArray(myPc["RAM"][0], myPc["BRD"]) != -1) {
-      yourPc += 'VGA: 적합\n'
+      yourPc += 'VGA: 적합\n';
     } else {
-      yourPc += 'VGA: ' + '부적합 #Board 가' + myPc["VGA"][0] + '를 호환하지 않습니다.\n'
+      yourPc += 'VGA: ' + '부적합 #Board 가' + myPc["VGA"][0] + '를 호환하지 않습니다.\n';
     }
-    alert(yourPc)
+    alert(yourPc);
     yourPc = '';
   }
   var checkit = function (hwid, hwtype) {
@@ -311,19 +311,19 @@
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         var obj = JSON.parse(this.responseText);
-        obj_hard = JSON.parse(obj.hard)
-        obj_compa = JSON.parse(obj.compa)
+        obj_hard = JSON.parse(obj.hard);
+        obj_compa = JSON.parse(obj.compa);
         if (obj_hard[0]['fields']['hardware_kind'] === "BRD" ||
           obj_hard[0]['fields']['hardware_kind'] === "CPU" ||
           obj_hard[0]['fields']['hardware_kind'] === "VGA" ||
           obj_hard[0]['fields']['hardware_kind'] === "RAM") {
-          var objVal = [], objName
+          var objVal = [], objName;
           for (var i = 0; i < obj_compa.length; i++) {
             objVal.push(obj_compa[i]["fields"]["comp_mode"])
           }
-          objName = obj_hard[0]['fields']['hardware_kind']
+          objName = obj_hard[0]['fields']['hardware_kind'];
           var keyname = objName;
-          myPc[keyname] = objVal
+          myPc[keyname] = objVal;
         }
       }
     }

@@ -18,6 +18,10 @@
             </div>
             <div class="headnav_right">
                 <ul>
+                    <!--todo 권한추가시 조건변경-->
+                    {% if request.user.is_superuser %}
+                    <li><a href="{% url 'manager_page' %}">메니저페이지</a></li>
+                    {% endif %}
                     {% if user.is_authenticated %}
                     <li><a href="#">로그아웃</a></li>
                     {% else %}

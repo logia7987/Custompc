@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}<a href="{% url 'manager_page' %}">Manager</a>{% endblock %}
+
+{% block content %}
+
+<div>
+    <nav>
+        <ul>
+            <li><a href="{% url 'manager_hardware_list' %}">제품목록</a></li>
+            <li><a href="{% url 'manager_compa_list' %}">호환성 필터 관리</a></li>
+            <li><a href="{% url 'manager_user_list' %}">유저목록</a></li>
+            <li><a href="{% url 'manager_stat' %}">통계</a></li>
+        </ul>
+    </nav>
+</div>
+<div>
+    {% block manager %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>견적</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+        {% for set in sets %}
+        <tr>
+            <td>{{set.id}}</td>
+            <td>{{set}}</td>
+            <td>{{set.user}}</td>
+            <td>{{set.create_date|date:'Y년 m월 d일 h:i'}}</td>
+        {% empty %}
+            <td>없음</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <!--todo 필요없는 hr태그-->
+    <hr>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>내용</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+        {% for ment in ments %}
+        <tr>
+            <td>{{ ment.id }}</td>
+            <td>{{ ment }}...</td>
+            <td>{{ ment.author }}</td>
+            <td>{{ ment.create_date|date:'Y년 m월 d일 h:i' }}</td>
+        {% empty %}
+            <td>없음</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endblock %}
+</div>
+{% endblock %}
