@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}수정{% endblock %}
+{% block title %}회원가입{% endblock %}
 
 {% block content %}
-
 <form action=""method="post">{% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">저장</button>
+    <button type="submit">회원가입</button>
 </form>
-
 {% endblock %}

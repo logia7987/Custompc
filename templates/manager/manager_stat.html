@@ -1,7 +1,37 @@
 {% extends 'manager/manager_home.html' %}
 
 {% block manager %}
+<h1>통계</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>품명</th>
+        <th>견적등록횟수</th>
+    </tr>
+    {% for hard in hards %}
+    <tr>
+        <td>{{ hard.id }}</td>
+        <td>{{ hard.name }}</td>
+        {% if hard.hardware_kind == "CPU" %}
+        <td>{{ hard.cpu.all.count }}</td>
+        {% elif hard.hardware_kind == "BRD" %}
+        <td>{{ hard.board.all.count }}</td>
+        {% elif hard.hardware_kind == "RAM" %}
+        <td>{{ hard.ram.all.count }}</td>
+        {% elif hard.hardware_kind == "VGA" %}
+        <td>{{ hard.vga.all.count }}</td>
+        {% elif hard.hardware_kind == "POW" %}
+        <td>{{ hard.power.all.count }}</td>
+        {% elif hard.hardware_kind == "HDD" %}
+        <td>{{ hard.hdd.all.count }}</td>
+        {% elif hard.hardware_kind == "SSD" %}
+        <td>{{ hard.ssd.all.count }}</td>
+        {% elif hard.hardware_kind == "ODD" %}
+        <td>{{ hard.odd.all.count }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
 
-통계자료
 
 {% endblock %}

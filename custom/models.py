@@ -5,7 +5,7 @@ from imagekit.processors import Thumbnail
 
 class User(AbstractUser):
     is_manager = models.BooleanField(default=False)
-    is_member = models.BooleanField(default=False)
+    is_member = models.BooleanField(default=True)
 
 class Hardware(models.Model):
     HARDWARE_KIND_CHOICE =(

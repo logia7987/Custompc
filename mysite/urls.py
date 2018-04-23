@@ -21,7 +21,9 @@ urlpatterns = [
     url(r'^manager/stat$', ManagerStat.as_view(),name='manager_stat'),
     url(r'^getcompa', get_compa, name='get_compa'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
-    # url(r'^accounts/register/$', RegisterView.as_view(), name='register'),
-    # url(r'^accounts/register/done$', RegisterDoneView.as_view(), name='register_done'),
+    url(r'^accounts/register/$', RegisterView.as_view(), name='register'),
+    url(r'^accounts/register/done$', RegisterDoneView.as_view(), name='register_done'),
+    #user mypage
+    url(r'^member/', MemberHome.as_view(), name='member_home'),
     url(r'^admin/', admin.site.urls),
 ]

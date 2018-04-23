@@ -15,12 +15,18 @@
     <tr>
         <td>{{ user.id }}</td>
         <td>{{user.username}}</td>
-        <td>{{user.is_superuser}}</td>
+        {% if user.is_superuser %}
+        <td>A</td>
+        {% elif user.is_manager %}
+        <td>M</td>
+        {% else %}
+        <td>U</td>
+        {% endif %}
         <td>{{user.date_joined|date:'Y년 m월 d일 h:i'}}</td>
         <td>{{user.custom_set.all.count}}</td>
         <td>{{user.comment_set.all.count}}</td>
     </tr>
     {% endfor %}
 </table>
-
+<p>*A = 슈퍼유저, M = 매니저, U = 유저 입니다.</p>
 {% endblock %}

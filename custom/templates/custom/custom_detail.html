@@ -14,28 +14,29 @@
 }(document, 'script', 'facebook-jssdk'));
 </script>
 <section>
-    <h1>작성자 : {{ object.user }}</h1>
-    <p>작성일 : {{ object.create_date|date:"Y년 m월 d일 h:i" }} </p>
+    <h1>작성자 : {{ set.user }}</h1>
+    <p>작성일 : {{ set.create_date|date:"Y년 m월 d일 h:i" }} </p>
     <ul>
         <li>
-            {% if object.cpu.hard_thumbnail %}
-            <img src="{{ object.cpu.hard_thumbnail.url }}" alt="{{ object.cpu }}">
+            {% if set.cpu.hard_thumbnail %}
+            <img src="{{ set.cpu.hard_thumbnail.url }}" alt="{{ set.cpu }}">
             {% endif %}
-            CPU : {{ object.cpu }}
+            CPU : {{ set.cpu }}
         </li>
-        <li>Board : {{ object.board }}</li>
-        <li>RAM : {{ object.ram }}</li>
-        <li>VGA : {{ object.vga }}</li>
-        <li>Power : {{ object.power }}</li>
-        <li>HDD : {{ object.hdd }}</li>
-        <li>SSD : {{ object.ssd }}</li>
-        <li>ODD : {{ object.odd }}</li>
+        <li>Board : {{ set.board }}</li>
+        <li>RAM : {{ set.ram }}</li>
+        <li>VGA : {{ set.vga }}</li>
+        <li>Power : {{ set.power }}</li>
+        <li>HDD : {{ set.hdd }}</li>
+        <li>SSD : {{ set.ssd }}</li>
+        <li>ODD : {{ set.odd }}</li>
     </ul>
-    <p>{{ object.text }}</p>
+    <p>{{ set.text }}</p>
     <p>
         <a href="{% url 'custom:custom_list' %}">[목록보기]</a>
-        {% if user == object.user %}
-        <a href="{% url 'custom:custom_delete' pk=object.pk %}">[삭제]</a>
+        {% if user == set.user %}
+        <a href="{% url 'custom:custom_edit' pk=set.pk %}">[수정]</a>
+        <a href="{% url 'custom:custom_delete' pk=set.pk %}">[삭제]</a>
         {% endif %}
     </p>
 </section>
@@ -51,12 +52,13 @@
 </div>
 <div>
     {% if user.is_authenticated %}
-    <h3>댓글<a href="{% url 'custom:add_comment' pk=object.pk%}"> [댓글달기]</a></h3>
+    <h3>댓글</h3>
+    <p>{% include "custom/add_comment.html" %}</p>
     {% endif %}
-    {% for comment in object.comments.all %}
+    {% for comment in set.comments.all %}
     <hr>
         <div>
-            <p>{{comment.author}} | {{comment.create_date|date:'Y년 m월 d일 h:i'}} {% if user == object.user or user == comment.author %}<a href="#" class="ment_re" id="{{ comment.id }}">[댓글삭제]</a>{% endif %}</p>
+            <p>{{comment.author}} | {{comment.create_date|date:'Y년 m월 d일 h:i'}} {% if user == set.user or user == comment.author or user.is_superuser %}<a href="#" class="ment_re" id="{{ comment.id }}">[댓글삭제]</a>{% endif %}</p>
             <p>{{comment.text}}</p>
         </div>
     <hr>
