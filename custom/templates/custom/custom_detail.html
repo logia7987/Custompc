@@ -23,13 +23,13 @@
             {% endif %}
             CPU : {{ set.cpu }}
         </li>
-        <li>Board : {{ set.board }}</li>
-        <li>RAM : {{ set.ram }}</li>
-        <li>VGA : {{ set.vga }}</li>
-        <li>Power : {{ set.power }}</li>
-        <li>HDD : {{ set.hdd }}</li>
-        <li>SSD : {{ set.ssd }}</li>
-        <li>ODD : {{ set.odd }}</li>
+        <li>{% if set.board.hard_thumbnail %}<img src="{{ set.board.hard_thumbnail.url }}" alt="{{ set.cpu }}">{% endif %}Board : {{ set.board }}</li>
+        <li>{% if set.ram.hard_thumbnail %}<img src="{{ set.ram.hard_thumbnail.url }}" alt="{{ set.ram }}">{% endif %}RAM : {{ set.ram }}</li>
+        <li>{% if set.vga.hard_thumbnail %}<img src="{{ set.vga.hard_thumbnail.url }}" alt="{{ set.vga }}">{% endif %}VGA : {{ set.vga }}</li>
+        <li>{% if set.power.hard_thumbnail %}<img src="{{ set.power.hard_thumbnail.url }}" alt="{{ set.power }}">{% endif %}Power : {{ set.power }}</li>
+        <li>{% if set.hdd.hard_thumbnail %}<img src="{{ set.hdd.hard_thumbnail.url }}" alt="{{ set.hdd }}">{% endif %}HDD : {{ set.hdd }}</li>
+        <li>{% if set.ssd.hard_thumbnail %}<img src="{{ set.ssd.hard_thumbnail.url }}" alt="{{ set.ssd }}">{% endif %}SSD : {{ set.ssd }}</li>
+        <li>{% if set.odd.hard_thumbnail %}<img src="{{ set.odd.hard_thumbnail.url }}" alt="{{ set.odd }}">{% endif %}ODD : {{ set.odd }}</li>
     </ul>
     <p>{{ set.text }}</p>
     <p>

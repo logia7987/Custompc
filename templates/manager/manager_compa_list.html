@@ -1,26 +1,46 @@
 {% extends 'manager/manager_home.html' %}
 
 {% block manager %}
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <h1>호환성 필터 관리</h1>
 <a href="{% url 'manager_compa_new' %}">필터추가</a>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>제품이름</th>
-        <th>필터</th>
-        <th>삭제</th>
-    </tr>
-    {% for com in object_list %}
-    <tr>
-        <td>{{ com.id }}</td>
-        <td><a href="{% url 'manager_compa_edit' pk=com.pk %}">{{ com }}</a></td>
-        <td><a href="{% url 'manager_compa_edit' pk=com.pk %}">{{ com.hardware.get }}</a></td>
-        <td><a href="{% url 'manager_compa_remove' pk=com.pk %}"><button id="{{ com.id }}" class="com_re">삭제</button></a></td>
-        {% empty %}
-        <td>비어있습니다. 제품을 등록해 주십시오.</td>
-    </tr>
-    {% endfor %}
-</table>
+{% verbatim %}
+<div ng-app="comApp" ng-controller="compCtrl">
+    <p><input type="text" ng-model="compsearch"></p>
+    <table>
+        <tr>
+            <th ng-click="orderByMe('pk')">ID</th>
+            <th ng-click="orderByMe('fields.comp_mode')">필터</th>
+            <th ng-click="orderByMe('fields.hardware')">제품이름</th>
+            <th>삭제</th>
+        </tr>
+        <tr ng-repeat="x in comp|orderBy:myOrderBy|filter:compsearch">
+            <td>{{x.pk}}</td>
+            <td><a href="/manager/compatible/{{x.pk}}/edit">{{x.fields.comp_mode}}</a></td>
+            <td><a href="/manager/compatible/{{x.pk}}/edit">{{x.fields.hardware}}</a></td>
+            <td><a href="/manager/compatible/{{x.pk}}/remove"><button>삭제</button></a></td>
+        </tr>
+    </table>
+</div>
+{% endverbatim %}
 <p>*제품이름이나 필터를 클릭하면 수정할 수 있습니다.</p>
+<script>
+    var app = angular.module('comApp', []);
+    app.controller('compCtrl', function($scope, $http) {
+        $http.get('{% url "get_data" %}').then(function (response){
+            $scope.comp = JSON.parse(response.data.comp);
+            $scope.hw = JSON.parse(response.data.hardware);
+            for (var i=0;i<$scope.comp.length;i++){
+                $scope.comp[i]['fields']['hardware'][0]
+                for (var k=0;k<$scope.hw.length;k++){
+                    if ($scope.comp[i]['fields']['hardware'][0] == $scope.hw[k]['pk']) {
+                        $scope.comp[i]['fields']['hardware'] = $scope.hw[k]['fields']['name']
+                    }
+                }
+            }
+            $scope.orderByMe = function(x) {
+                $scope.myOrderBy = x;
+            };
+        });
+    });
+</script>
 {% endblock %}

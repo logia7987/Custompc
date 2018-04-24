@@ -62,7 +62,7 @@ header nav div.headnav_right li {
 }
 div.left_section {
   float: left;
-  width: 40%;
+  width: 33%;
 }
 div.left_section_button,
 div.select_form {
@@ -70,9 +70,9 @@ div.select_form {
 }
 div.center_section {
   float: left;
-  width: 30%;
+  width: 33%;
 }
 div.right_section {
   float: left;
-  width: 30%;
+  width: 33%;
 }

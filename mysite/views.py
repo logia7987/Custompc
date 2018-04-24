@@ -117,3 +117,12 @@ def get_compa(request):
         'compa':compa
     }
     return JsonResponse(data)
+#매니저 페이지를 위한 정보 수집
+def get_data(request):
+    hardware = serializers.serialize('json',list(Hardware.objects.all()))
+    comp = serializers.serialize('json',list(Compa.objects.all()))
+    date = {
+        'hardware':hardware,
+        'comp':comp
+    }
+    return JsonResponse(date)

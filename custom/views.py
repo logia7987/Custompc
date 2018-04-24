@@ -73,25 +73,11 @@ def custom_detail(request, pk):
             comment.custom = set
             comment.author = request.user
             comment.save()
-    else:
-        form = CommentForm()
-
-    return render(request, 'custom/custom_detail.html',{'set':set,'form':form})
-
-def add_comment(request, pk):
-    set = get_object_or_404(Custom, pk=pk)
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.custom = set
-            comment.author = request.user
-            comment.save()
             return redirect('custom:custom_detail', pk=set.pk)
     else:
         form = CommentForm()
 
-    return render(request, 'custom/add_comment.html',{'form':form})
+    return render(request, 'custom/custom_detail.html',{'set':set,'form':form})
 
 def comment_remove(request,pk):
     comment = get_object_or_404(Comment, pk=pk)

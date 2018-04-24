@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^custom/(?P<pk>\d+)/$', custom_detail, name='custom_detail'),
     url(r'^custom/(?P<pk>\d+)/edit/$', custom_edit, name='custom_edit'),
     url(r'^custom/(?P<pk>\d+)/remove/$', CustomDeleteView.as_view(), name='custom_delete'),
-    url(r'^custom/(?P<pk>\d+)/comment/$', add_comment, name='add_comment'),
+    # url(r'^custom/(?P<pk>\d+)/comment/$', add_comment, name='add_comment'),
     url(r'^custom/(?P<pk>\d+)/comment/remove/$', comment_remove, name='comment_remove')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -48,7 +48,7 @@
         {% for ment in ments %}
         <tr>
             <td>{{ ment.id }}</td>
-            <td><a href="{% url 'custom:custom_detail' pk=ment.pk%}">{{ ment }}...</a></td>
+            <td><a href="{% url 'custom:custom_detail' pk=ment.custom.pk%}">{{ ment }}...</a></td>
             <td>{{ ment.author }}</td>
             <td>{{ ment.create_date|date:'Y년 m월 d일 h:i' }}</td>
         {% empty %}

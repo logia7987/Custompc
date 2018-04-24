@@ -25,16 +25,16 @@
         <p id="select_cpu" class="hw_select" style="display:none">
           <label for="id_cpu_new">Cpu:</label>
           <select name="cpu" id="id_cpu_new" size="5">
-            <option value="" selected>---------</option>
+            <option value="" selected>         </option>
             {% for hard in cpu %}
-            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}: {{hard.cpu.all.count}} {{hard.hit}}</span></option>
+            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}: {{hard.cpu.all.count}} {{hard.hit}}</option>
             {% endfor %}
           </select>
         </p>
         <p id="select_board" class="hw_select" style="display:none">
           <label for="id_board_new">Board:</label>
           <select name="board" id="id_board_new" size="5">
-            <option value="" selected>---------</option>
+            <option value="" selected>         </option>
             {% for hard in board %}
             <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}:{{hard.board.all.count}} {{hard.hit}}</option>
             {% endfor %}
@@ -43,7 +43,7 @@
         <p id="select_ram" class="hw_select" style="display:none">
           <label for="id_ram_new">Ram:</label>
           <select name="ram" id="id_ram_new" size="5">
-            <option value="" selected>---------</option>
+            <option value="" selected>         </option>
             {% for hard in ram %}
             <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}:{{hard.ram.all.count}} {{hard.hit}}</option>
             {% endfor %}
@@ -52,7 +52,7 @@
         <p id="select_vga" class="hw_select" style="display:none">
           <label for="id_vga_new">Vga:</label>
           <select name="vga" id="id_vga_new" size="5">
-            <option value="" selected>---------</option>
+            <option value="" selected>         </option>
             {% for hard in vga %}
             <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}:{{hard.vga.all.count}} {{hard.hit}}</option>
             {% endfor %}
@@ -61,7 +61,7 @@
         <p id="select_power" class="hw_select" style="display:none">
           <label for="id_power_new">Power:</label>
           <select name="power" id="id_power_new" size="5">
-            <option value="" selected>---------</option>
+            <option value="" selected>         </option>
             {% for hard in power %}
             <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.power.all.count}} {{hard.hit}}</option>
             {% endfor %}
@@ -70,7 +70,7 @@
         <p id="select_hdd" class="hw_select" style="display:none">
           <label for="id_hdd_new">Hdd:</label>
           <select name="hdd" id="id_hdd_new" size="5">
-            <option value="" selected>---------</option>
+            <option value="" selected>         </option>
             {% for hard in hdd %}
             <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.hdd.all.count}} {{hard.hit}}</option>
             {% endfor %}
@@ -79,16 +79,16 @@
         <p id="select_ssd" class="hw_select" style="display:none">
           <label for="id_ssd_new">Ssd:</label>
           <select name="ssd" id="id_ssd_new" size="5">
-            <option value="" selected>---------</option>
+            <option value="" selected>         </option>
             {% for hard in ssd %}
-            <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.ssd.all.count}} <span>{{hard.hit}}</span></option>
+            <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.ssd.all.count}} {{hard.hit}}</option>
             {% endfor %}
           </select>
         </p>
         <p id="select_odd" class="hw_select" style="display:none">
           <label for="id_odd_new">Odd:</label>
           <select name="odd" id="id_odd_new" size="5">
-            <option value="" selected>---------</option>
+            <option value="" selected>         </option>
             {% for hard in odd %}
             <option value="{{ hard.id }}">{{ hard.name }}:{{hard.odd.all.count}} {{hard.hit}}</option>
             {% endfor %}
@@ -106,27 +106,35 @@
   <div class="center_section">
     <ul>
       <li>CPU :
+        <img src="" alt="CPU" id="cpu_th">
         <span id="up_cpu"></span>
       </li>
       <li>Board :
+        <img src="" alt="board" id="board_th">
         <span id="up_board"></span>
       </li>
       <li>RAM :
+        <img src="" alt="RAM" id="ram_th">
         <span id="up_ram"></span>
       </li>
       <li>VGA :
+        <img src="" alt="VGA" id="vga_th">
         <span id="up_vga"></span>
       </li>
       <li>Power :
+        <img src="" alt="power" id="power_th">
         <span id="up_power"></span>
       </li>
       <li>HDD :
+        <img src="" alt="HDD" id="hdd_th">
         <span id="up_hdd"></span>
       </li>
       <li>SSD :
+        <img src="" alt="SSD" id="ssd_th">
         <span id="up_ssd"></span>
       </li>
       <li>ODD :
+        <img src="" alt="ODD" id="odd_th">
         <span id="up_odd"></span>
       </li>
     </ul>
@@ -149,7 +157,9 @@
   </div>
 </div>
 <script>
+  $(document).ready(setEdit());
   function setEdit() {
+    $('div.center_section li img').hide()
     cpu = $('input#id_cpu').val();
     $('select#id_cpu_new').val(cpu).prop("selected", true);
     $('span#up_cpu').text($('select#id_cpu_new option:selected').text())
@@ -183,10 +193,18 @@
     $('p#guide').text('CPU는 컴퓨터의 연산장치로 컴퓨터의 뇌같은 하드웨어 입니다. 필수로 있어야만 컴퓨터를 조립할 수 있습니다.');
   })
   $('select#id_cpu_new').click(function () {
-    var cpu = $('select#id_cpu_new option:selected').text();
     var cpu_id = $('select#id_cpu_new option:selected').attr('id');
-    var checkcpu = [{% for hard in cpu %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
-    $('span#up_cpu').text(cpu);
+    var checkcpu = [{% for hard in cpu %}{ 'id': '{{ hard.id }}', 'name':'{{ hard }}','option': '{{ hard.option}}','src':'{{ hard.hard_thumbnail }}' }, {% endfor %}];
+    var cpu = $('select#id_cpu_new option:selected').attr('value')
+    for (var i=0; i<checkcpu.length; i++) {
+      if (checkcpu[i]['id'] == cpu) {
+        cpu = checkcpu[i]['name']
+        cpu_src = checkcpu[i]['src']
+        $('span#up_cpu').text(cpu);
+        $('img#cpu_th').show()
+        $('img#cpu_th').attr('src','/media/'+cpu_src)
+      }
+    }
     addSpec(cpu_id,checkcpu);
   })
 
@@ -198,10 +216,18 @@
     $('p#guide').text('Board는 마더보드라고도 합니다. 보드가 있어야만 다른 하드웨어들을 장착할 수 있기때문에 필수입니다.');
   })
   $('select#id_board_new').click(function () {
-    var board = $('select#id_board_new option:selected').text();
     var board_id = $('select#id_board_new option:selected').attr('id');
-    var checkboard = [{% for hard in board %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
-    $('span#up_board').text(board);
+    var checkboard = [{% for hard in board %}{ 'id': '{{ hard.id }}','name':'{{hard}}', 'option': '{{ hard.option}}','src':'{{ hard.hard_thumbnail }}' }, {% endfor %}];
+    var board = $('select#id_board_new option:selected').attr('value');
+    for (var i=0; i<checkboard.length; i++) {
+      if (checkboard[i]['id'] == board) {
+        board = checkboard[i]['name']
+        board_src = checkboard[i]['src']
+        $('span#up_board').text(board);
+        $('img#board_th').show()
+        $('img#board_th').attr('src','/media/'+board_src)
+      }
+    }
     addSpec(board_id,checkboard);
   })
 
@@ -213,10 +239,18 @@
     $('p#guide').text('RAM은 기억된 정보를 읽어내기도 하고 다른 정보를 기억시킬 수도 있는 메모리로서, 컴퓨터의 주기억장치, 응용 프로그램의 일시적 로딩과 데이터의 일시적 저장 등에 사용된다. 컴퓨터 작동을 위해서는 필수요소입니다.');
   })
   $('select#id_ram_new').click(function () {
-    var ram = $('select#id_ram_new option:selected').text();
     var ram_id = $('select#id_ram_new option:selected').attr('id');
-    var checkram = [{% for hard in ram %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
-    $('span#up_ram').text(ram);
+    var checkram = [{% for hard in ram %}{ 'id': '{{ hard.id }}','name':'{{hard}}','option': '{{ hard.option}}','src':'{{ hard.hard_thumbnail }}' }, {% endfor %}];
+    var ram = $('select#id_ram_new option:selected').attr('value')
+    for (var i=0; i<checkram.length; i++) {
+      if (checkram[i]['id'] == ram) {
+        ram = checkram[i]['name']
+        ram_src = checkram[i]['src']
+        $('span#up_ram').text(ram);
+        $('img#ram_th').show()
+        $('img#ram_th').attr('src','/media/'+ram_src)
+      }
+    }
     addSpec(ram_id,checkram);
   })
 
@@ -228,10 +262,18 @@
     $('p#guide').text('VGA는 그래픽카드입니다. 그래픽카드는 고사양을 필요로하는 게임과, 디자이너들이 사용합니다. 그래서 서핑과 컴퓨터에 적게 투자하여 이용하시고 싶으신 분들에게는 권장하지 않습니다.');
   })
   $('select#id_vga_new').click(function () {
-    var vga = $('select#id_vga_new option:selected').text();
     var vga_id = $('select#id_vga_new option:selected').attr('id');
-    var checkvga = [{% for hard in vga %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
-    $('span#up_vga').text(vga);
+    var checkvga = [{% for hard in vga %}{ 'id': '{{ hard.id }}','name':'{{hard}}','option': '{{ hard.option}}','src':'{{ hard.hard_thumbnail }}' }, {% endfor %}];
+    var vga = $('select#id_vga_new option:selected').attr('value')
+    for (var i=0; i<checkvga.length; i++) {
+      if (checkvga[i]['id'] == vga) {
+        vga = checkvga[i]['name']
+        vga_src = checkvga[i]['src']
+        $('span#up_vga').text(vga);
+        $('img#vga_th').show()
+        $('img#vga_th').attr('src','/media/'+vga_src)
+      }
+    }
     addSpec(vga_id,checkvga);
   })
 
@@ -243,10 +285,18 @@
     $('p#guide').text('Power는 컴퓨터의 전력을 공급하는 역할을 합니다. 필수로 있어야만 하는 하드웨어입니다. ex) 그래픽카드를 구매하시는 분들은 그래픽카드의 권장 정격과 파워의 정격을 확인하고 구매하시기 바랍니다.');
   })
   $('select#id_power_new').click(function () {
-    var power = $('select#id_power_new option:selected').text();
     var power_id = $('select#id_power_new option:selected').attr('id');
-    var checkpower = [{% for hard in power %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
-    $('span#up_power').text(power);
+    var checkpower = [{% for hard in power %}{ 'id': '{{ hard.id }}','name':'{{hard}}','option': '{{ hard.option}}','src':'{{ hard.hard_thumbnail }}' }, {% endfor %}];
+    var power = $('select#id_power_new option:selected').attr('value')
+    for (var i=0; i<checkpower.length; i++) {
+      if (checkpower[i]['id'] == power) {
+        power = checkpower[i]['name']
+        power_src = checkpower[i]['src']
+        $('span#up_power').text(power);
+        $('img#power_th').show()
+        $('img#power_th').attr('src','/media/'+power_src)
+      }
+    }
     addSpec(power_id,checkpower);
   })
 
@@ -258,10 +308,18 @@
     $('p#guide').text('HDD는 기억해야할 데이터를 기억해주는 역할을 합니다. 필수요소 입니다.');
   })
   $('select#id_hdd_new').click(function () {
-    var hdd = $('select#id_hdd_new option:selected').text();
     var hdd_id = $('select#id_hdd_new option:selected').attr('id');
-    var checkhdd = [{% for hard in hdd %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
-    $('span#up_hdd').text(hdd);
+    var checkhdd = [{% for hard in hdd %}{ 'id': '{{ hard.id }}','name':'{{hard}}','option': '{{ hard.option}}','src':'{{ hard.hard_thumbnail }}' }, {% endfor %}];
+    var hdd = $('select#id_hdd_new option:selected').attr('value')
+    for (var i=0; i<checkhdd.length; i++) {
+      if (checkhdd[i]['id'] == hdd) {
+        hdd = checkhdd[i]['name']
+        hdd_src = checkhdd[i]['src']
+        $('span#up_hdd').text(hdd);
+        $('img#hdd_th').show()
+        $('img#hdd_th').attr('src','/media/'+hdd_src)
+      }
+    }
     addSpec(hdd_id,checkhdd);
   })
 
@@ -273,10 +331,18 @@
     $('p#guide').text('SSD는 HDD보다 빠른속도를 가지고 있습니다. 그래서 HDD보다 더 많이 사용되고 있습니다.');
   })
   $('select#id_ssd_new').click(function () {
-    var ssd = $('select#id_ssd_new option:selected').text();
     var ssd_id = $('select#id_ssd_new option:selected').attr('id');
-    var checkssd = [{% for hard in ssd %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
-    $('span#up_ssd').text(ssd);
+    var checkssd = [{% for hard in ssd %}{ 'id': '{{ hard.id }}','name':'{{hard}}','option': '{{ hard.option}}','src':'{{ hard.hard_thumbnail }}' }, {% endfor %}];
+    var ssd = $('select#id_ssd_new option:selected').attr('value')
+    for (var i=0; i<checkssd.length; i++) {
+      if (checkssd[i]['id'] == ssd) {
+        ssd = checkssd[i]['name']
+        ssd_src = checkssd[i]['src']
+        $('span#up_ssd').text(ssd);
+        $('img#ssd_th').show()
+        $('img#ssd_th').attr('src','/media/'+ssd_src)
+      }
+    }
     addSpec(ssd_id,checkssd);
   })
 
@@ -288,10 +354,18 @@
     $('p#guide').text('ODD는 CD를 읽는 하드웨어입니다. 운영체재나 소프트웨어를 설치할때 사용합니다.');
   })
   $('select#id_odd_new').click(function () {
-    var odd = $('select#id_odd_new option:selected').text();
     var odd_id = $('select#id_odd_new option:selected').attr('id');
-    var checkodd = [{% for hard in odd %}{ 'id': '{{ hard.id }}', 'option': '{{ hard.option}}' }, {% endfor %}];
-    $('span#up_odd').text(odd);
+    var checkodd = [{% for hard in odd %}{ 'id': '{{ hard.id }}','name':'{{hard}}','option': '{{ hard.option}}','src':'{{ hard.hard_thumbnail }}' }, {% endfor %}];
+    var odd = $('select#id_odd_new option:selected').attr('value')
+    for (var i=0; i<checkodd.length; i++) {
+      if (checkodd[i]['id'] == odd) {
+        odd = checkodd[i]['name']
+        odd_src = checkodd[i]['src']
+        $('span#up_odd').text(odd);
+        $('img#odd_th').show()
+        $('img#odd_th').attr('src','/media/'+odd_src)
+      }
+    }
     addSpec(odd_id,checkodd);
   })
 
@@ -316,21 +390,33 @@
   // 호환성 검사 오류 수정하기
   var myPc = {};
   var yourPc ='';
-  var checkmypc = function () {
-    if ($.inArray(myPc["CPU"][0], myPc["BRD"]) != -1) {
-      yourPc += 'CPU: 적합\n';
-    } else {
-      yourPc += 'CPU: ' + '부적합 #Board가 ' + myPc["CPU"][0] + '를 호환하지 않습니다.\n';
+  function checkmypc() {
+    if (myPc["CPU"] == undefined) {
+      yourPc += 'CPU: 미선택\n';
+    } else if (myPc["CPU"]) {
+      if (($.inArray(myPc["CPU"][0], myPc["BRD"]) != -1)) {
+        yourPc += 'CPU: 적합\n';
+      } else {
+        yourPc += 'CPU: 부적합 #Board가 ' + myPc["CPU"][0] + '를 호환하지 않습니다.\n';
+      }
     }
-    if ($.inArray(myPc["VGA"][0], myPc["BRD"]) != -1) {
-      yourPc += 'RAM: 적합\n';
-    } else {
-      yourPc += 'RAM: ' + '부적합 #Board 가' + myPc["RAM"][0] + '를 호환하지 않습니다.\n';
+    if (myPc["RAM"] == undefined) {
+      yourPc += 'RAM: 미선택\n';
+    } else if (myPc["VGA"]) {
+      if ($.inArray(myPc["VGA"][0], myPc["BRD"]) != -1) {
+        yourPc += 'RAM: 적합\n';
+      } else {
+        yourPc += 'RAM: 부적합 #Board 가' + myPc["RAM"][0] + '를 호환하지 않습니다.\n';
+      }
     }
-    if ($.inArray(myPc["RAM"][0], myPc["BRD"]) != -1) {
-      yourPc += 'VGA: 적합\n';
-    } else {
-      yourPc += 'VGA: ' + '부적합 #Board 가' + myPc["VGA"][0] + '를 호환하지 않습니다.\n';
+    if (myPc["VGA"] == undefined) {
+      yourPc += 'VGA: 미선택\n';
+    } else if (myPc["VGA"]) {
+      if ($.inArray(myPc["RAM"][0], myPc["BRD"]) != -1) {
+        yourPc += 'VGA: 적합\n';
+      } else {
+        yourPc += 'VGA: 부적합 #Board 가' + myPc["VGA"][0] + '를 호환하지 않습니다.\n';
+      }  
     }
     alert(yourPc);
     yourPc = '';
