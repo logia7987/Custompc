@@ -146,7 +146,7 @@
   <!-- 세트의 정보 -->
   <div class="right_section">
     <div>
-      <h2>좌즉의 카테고리를 클릭하여 선택하십시오.</h2>
+      <h2>도움말</h2>
       <p id="guide"></p>
       <!-- 하드웨어를 견적에 등록한 횟수 -->
     </div>
@@ -189,8 +189,7 @@
   $('li#cpu').click(function () {
     $('p.hw_select').hide();
     $('p#select_cpu').show();
-    $('p#guide').siblings('h2').text('CPU란?');
-    $('p#guide').text('CPU는 컴퓨터의 연산장치로 컴퓨터의 뇌같은 하드웨어 입니다. 필수로 있어야만 컴퓨터를 조립할 수 있습니다.');
+    addText('CPU')
   })
   $('select#id_cpu_new').click(function () {
     var cpu_id = $('select#id_cpu_new option:selected').attr('id');
@@ -212,8 +211,7 @@
   $('li#board').click(function () {
     $('p.hw_select').hide();
     $('p#select_board').show();
-    $('p#guide').siblings('h2').text('Board란?');
-    $('p#guide').text('Board는 마더보드라고도 합니다. 보드가 있어야만 다른 하드웨어들을 장착할 수 있기때문에 필수입니다.');
+    addText('Board')
   })
   $('select#id_board_new').click(function () {
     var board_id = $('select#id_board_new option:selected').attr('id');
@@ -235,8 +233,7 @@
   $('li#ram').click(function () {
     $('p.hw_select').hide();
     $('p#select_ram').show();
-    $('p#guide').siblings('h2').text('RAM란?');
-    $('p#guide').text('RAM은 기억된 정보를 읽어내기도 하고 다른 정보를 기억시킬 수도 있는 메모리로서, 컴퓨터의 주기억장치, 응용 프로그램의 일시적 로딩과 데이터의 일시적 저장 등에 사용된다. 컴퓨터 작동을 위해서는 필수요소입니다.');
+    addText('RAM')
   })
   $('select#id_ram_new').click(function () {
     var ram_id = $('select#id_ram_new option:selected').attr('id');
@@ -258,8 +255,7 @@
   $('li#vga').click(function () {
     $('p.hw_select').hide();
     $('p#select_vga').show();
-    $('p#guide').siblings('h2').text('VGA란?');
-    $('p#guide').text('VGA는 그래픽카드입니다. 그래픽카드는 고사양을 필요로하는 게임과, 디자이너들이 사용합니다. 그래서 서핑과 컴퓨터에 적게 투자하여 이용하시고 싶으신 분들에게는 권장하지 않습니다.');
+    addText('VGA')
   })
   $('select#id_vga_new').click(function () {
     var vga_id = $('select#id_vga_new option:selected').attr('id');
@@ -281,8 +277,7 @@
   $('li#power').click(function () {
     $('p.hw_select').hide();
     $('p#select_power').show();
-    $('p#guide').siblings('h2').text('Power란?');
-    $('p#guide').text('Power는 컴퓨터의 전력을 공급하는 역할을 합니다. 필수로 있어야만 하는 하드웨어입니다. ex) 그래픽카드를 구매하시는 분들은 그래픽카드의 권장 정격과 파워의 정격을 확인하고 구매하시기 바랍니다.');
+    addText('Power')
   })
   $('select#id_power_new').click(function () {
     var power_id = $('select#id_power_new option:selected').attr('id');
@@ -304,8 +299,7 @@
   $('li#hdd').click(function () {
     $('p.hw_select').hide();
     $('p#select_hdd').show();
-    $('p#guide').siblings('h2').text('HDD란?');
-    $('p#guide').text('HDD는 기억해야할 데이터를 기억해주는 역할을 합니다. 필수요소 입니다.');
+    addText('HDD')
   })
   $('select#id_hdd_new').click(function () {
     var hdd_id = $('select#id_hdd_new option:selected').attr('id');
@@ -327,8 +321,7 @@
   $('li#ssd').click(function () {
     $('p.hw_select').hide();
     $('p#select_ssd').show();
-    $('p#guide').siblings('h2').text('SSD란?');
-    $('p#guide').text('SSD는 HDD보다 빠른속도를 가지고 있습니다. 그래서 HDD보다 더 많이 사용되고 있습니다.');
+    addText('SSD')
   })
   $('select#id_ssd_new').click(function () {
     var ssd_id = $('select#id_ssd_new option:selected').attr('id');
@@ -350,8 +343,7 @@
   $('li#odd').click(function () {
     $('p.hw_select').hide();
     $('p#select_odd').show();
-    $('p#guide').siblings('h2').text('ODD란?');
-    $('p#guide').text('ODD는 CD를 읽는 하드웨어입니다. 운영체재나 소프트웨어를 설치할때 사용합니다.');
+    addText('ODD')
   })
   $('select#id_odd_new').click(function () {
     var odd_id = $('select#id_odd_new option:selected').attr('id');
@@ -369,6 +361,19 @@
     addSpec(odd_id,checkodd);
   })
 
+  function addText(type) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status ==200) {
+        text = JSON.parse(this.responseText)
+        text = text[type]
+        $('p#guide').text(text)
+        $('p#guide').siblings('h2').text(type+'란?');
+      };
+    };
+    xhttp.open("GET","{% url 'get_text' %}",true)
+    xhttp.send()
+  };
   // 하드웨어를 구분하고 옵션을 화면에
   function addSpec(id,check){
     for (var i = 0; i < check.length; i++) {
@@ -378,7 +383,6 @@
       }
     }
   }
-
   $('button#fake_set').click(function () {
     var que = confirm('이 견적에 추가설명을 쓰시겠습니까?');
     if (que == true) {
@@ -397,7 +401,7 @@
       if (($.inArray(myPc["CPU"][0], myPc["BRD"]) != -1)) {
         yourPc += 'CPU: 적합\n';
       } else {
-        yourPc += 'CPU: 부적합 #Board가 ' + myPc["CPU"][0] + '를 호환하지 않습니다.\n';
+        yourPc += 'CPU: 부적합 Board가 ' + myPc["CPU"][0] + '를 호환하지 않습니다.\n';
       }
     }
     if (myPc["RAM"] == undefined) {
@@ -406,7 +410,7 @@
       if ($.inArray(myPc["VGA"][0], myPc["BRD"]) != -1) {
         yourPc += 'RAM: 적합\n';
       } else {
-        yourPc += 'RAM: 부적합 #Board 가' + myPc["RAM"][0] + '를 호환하지 않습니다.\n';
+        yourPc += 'RAM: 부적합 Board 가' + myPc["RAM"][0] + '를 호환하지 않습니다.\n';
       }
     }
     if (myPc["VGA"] == undefined) {
@@ -415,7 +419,7 @@
       if ($.inArray(myPc["RAM"][0], myPc["BRD"]) != -1) {
         yourPc += 'VGA: 적합\n';
       } else {
-        yourPc += 'VGA: 부적합 #Board 가' + myPc["VGA"][0] + '를 호환하지 않습니다.\n';
+        yourPc += 'VGA: 부적합 Board 가' + myPc["VGA"][0] + '를 호환하지 않습니다.\n';
       }  
     }
     alert(yourPc);

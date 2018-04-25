@@ -13,43 +13,44 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
-<section>
-    <h1>작성자 : {{ set.user }}</h1>
-    <p>작성일 : {{ set.create_date|date:"Y년 m월 d일 h:i" }} </p>
-    <ul>
-        <li>
-            {% if set.cpu.hard_thumbnail %}
-            <img src="{{ set.cpu.hard_thumbnail.url }}" alt="{{ set.cpu }}">
+<section class="clearfix">
+    <div class="set_detail_left">
+        <h1>작성자 : {{ set.user }}</h1>
+        <p>작성일 : {{ set.create_date|date:"Y년 m월 d일 h:i" }} </p>
+        <ul>
+            <li onmouseover="addText('CPU')">{% if set.cpu.hard_thumbnail %}<img src="{{ set.cpu.hard_thumbnail.url }}" alt="{{ set.cpu }}">{% endif %}CPU : {{ set.cpu }}</li>
+            <li onmouseover="addText('Board')">{% if set.board.hard_thumbnail %}<img src="{{ set.board.hard_thumbnail.url }}" alt="{{ set.board }}">{% endif %}Board : {{ set.board }}</li>
+            <li onmouseover="addText('RAM')">{% if set.ram.hard_thumbnail %}<img src="{{ set.ram.hard_thumbnail.url }}" alt="{{ set.ram }}">{% endif %}RAM : {{ set.ram }}</li>
+            <li onmouseover="addText('VGA')">{% if set.vga.hard_thumbnail %}<img src="{{ set.vga.hard_thumbnail.url }}" alt="{{ set.vga }}">{% endif %}VGA : {{ set.vga }}</li>
+            <li onmouseover="addText('Power')">{% if set.power.hard_thumbnail %}<img src="{{ set.power.hard_thumbnail.url }}" alt="{{ set.power }}">{% endif %}Power : {{ set.power }}</li>
+            <li onmouseover="addText('HDD')">{% if set.hdd.hard_thumbnail %}<img src="{{ set.hdd.hard_thumbnail.url }}" alt="{{ set.hdd }}">{% endif %}HDD : {{ set.hdd }}</li>
+            <li onmouseover="addText('SSD')">{% if set.ssd.hard_thumbnail %}<img src="{{ set.ssd.hard_thumbnail.url }}" alt="{{ set.ssd }}">{% endif %}SSD : {{ set.ssd }}</li>
+            <li onmouseover="addText('ODD')">{% if set.odd.hard_thumbnail %}<img src="{{ set.odd.hard_thumbnail.url }}" alt="{{ set.odd }}">{% endif %}ODD : {{ set.odd }}</li>
+        </ul>
+        <p>{{ set.text }}</p>
+        <p>
+            <a href="{% url 'custom:custom_list' %}">[목록보기]</a>
+            {% if user == set.user %}
+            <a href="{% url 'custom:custom_edit' pk=set.pk %}">[수정]</a>
+            <a href="{% url 'custom:custom_delete' pk=set.pk %}">[삭제]</a>
             {% endif %}
-            CPU : {{ set.cpu }}
-        </li>
-        <li>{% if set.board.hard_thumbnail %}<img src="{{ set.board.hard_thumbnail.url }}" alt="{{ set.cpu }}">{% endif %}Board : {{ set.board }}</li>
-        <li>{% if set.ram.hard_thumbnail %}<img src="{{ set.ram.hard_thumbnail.url }}" alt="{{ set.ram }}">{% endif %}RAM : {{ set.ram }}</li>
-        <li>{% if set.vga.hard_thumbnail %}<img src="{{ set.vga.hard_thumbnail.url }}" alt="{{ set.vga }}">{% endif %}VGA : {{ set.vga }}</li>
-        <li>{% if set.power.hard_thumbnail %}<img src="{{ set.power.hard_thumbnail.url }}" alt="{{ set.power }}">{% endif %}Power : {{ set.power }}</li>
-        <li>{% if set.hdd.hard_thumbnail %}<img src="{{ set.hdd.hard_thumbnail.url }}" alt="{{ set.hdd }}">{% endif %}HDD : {{ set.hdd }}</li>
-        <li>{% if set.ssd.hard_thumbnail %}<img src="{{ set.ssd.hard_thumbnail.url }}" alt="{{ set.ssd }}">{% endif %}SSD : {{ set.ssd }}</li>
-        <li>{% if set.odd.hard_thumbnail %}<img src="{{ set.odd.hard_thumbnail.url }}" alt="{{ set.odd }}">{% endif %}ODD : {{ set.odd }}</li>
-    </ul>
-    <p>{{ set.text }}</p>
-    <p>
-        <a href="{% url 'custom:custom_list' %}">[목록보기]</a>
-        {% if user == set.user %}
-        <a href="{% url 'custom:custom_edit' pk=set.pk %}">[수정]</a>
-        <a href="{% url 'custom:custom_delete' pk=set.pk %}">[삭제]</a>
-        {% endif %}
-    </p>
+        </p>
+        <!-- SNS 공유 -->
+        <div class="detail_share">
+            <span>
+                <script type="text/javascript" src="http://share.naver.net/js/naver_sharebutton.js"></script>
+                <script type="text/javascript">
+                new ShareNaver.makeButton({"type": "e" , "title":""});
+                </script>
+            </span>
+            <div class="fb-share-button" data-href="http://logia7.pythonanywhere.com/custom/{{ object.id }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flogia7.pythonanywhere.com%2Fcustom%2F{{object.id}}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">공유하기</a></div>
+        </div>
+    </div>
+    <div class="set_detail_right">
+      <h2>도움말</h2>
+      <p id="guide"></p>
+    </div>
 </section>
-<!-- SNS 공유 -->
-<div class="detail_share">
-    <span>
-        <script type="text/javascript" src="http://share.naver.net/js/naver_sharebutton.js"></script>
-        <script type="text/javascript">
-        new ShareNaver.makeButton({"type": "e" , "title":""});
-        </script>
-    </span>
-    <div class="fb-share-button" data-href="http://logia7.pythonanywhere.com/custom/{{ object.id }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flogia7.pythonanywhere.com%2Fcustom%2F{{object.id}}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">공유하기</a></div>
-</div>
 <div>
     {% if user.is_authenticated %}
     <h3>댓글</h3>
@@ -76,5 +77,18 @@
             alert('취소되었습니다.')
         }
     })
+    function addText(type) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status ==200) {
+        text = JSON.parse(this.responseText)
+        text = text[type]
+        $('p#guide').text(text)
+        $('p#guide').siblings('h2').text(type+'란?');
+      };
+    };
+    xhttp.open("GET","{% url 'get_text' %}",true)
+    xhttp.send()
+  };
 </script>
 {% endblock %}

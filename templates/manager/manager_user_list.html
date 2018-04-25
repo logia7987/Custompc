@@ -2,31 +2,37 @@
 
 {% block manager %}
 <!--todo 디테일한 기능 추가예정-->
-<table>
-    <tr>
-        <th>번호</th>
-        <th>ID</th>
-        <th>권한</th>
-        <th>가입일</th>
-        <th>작성견적</th>
-        <th>작성댓글</th>
-    </tr>
-    {% for user in object_list %}
-    <tr>
-        <td>{{ user.id }}</td>
-        <td>{{user.username}}</td>
-        {% if user.is_superuser %}
-        <td>A</td>
-        {% elif user.is_manager %}
-        <td>M</td>
-        {% else %}
-        <td>U</td>
-        {% endif %}
-        <td>{{user.date_joined|date:'Y년 m월 d일 h:i'}}</td>
-        <td>{{user.custom_set.all.count}}</td>
-        <td>{{user.comment_set.all.count}}</td>
-    </tr>
-    {% endfor %}
-</table>
-<p>*A = 슈퍼유저, M = 매니저, U = 유저 입니다.</p>
+<div ng-app="userApp" ng-controller="userCtrl">
+    <p><input type="text" ng-model="usersearch"></p>
+    <table>
+        <tr>
+            <th ng-click="orderByMe('pk')">번호</th>
+            <th ng-click="orderByMe('fields.username')">ID</th>
+            <th>권한</th>
+            <th ng-click="orderByMe('fields.last_login')">마지막 로그인</th>
+            <th ng-click="orderByMe('fields.date_joined')">가입일</th>
+        </tr>
+        <tr ng-repeat="x in users|orderBy:myOrderBy|filter:usersearch">
+            {% verbatim %}
+            <td>{{ x.pk }}</td>
+            <td>{{ x.fields.username }}</td>
+            <td>{{ x.fields.is_superuser }}|{{ x.fields.is_manager }}|{{ x.fields.is_member }}</td>
+            <td>{{ x.fields.last_login|date:'yyyy년 M월 d일 h:m' }}</td>
+            <td>{{ x.fields.date_joined|date:'yyyy년 M월 d일 h:m' }}</td>
+            {% endverbatim %}
+        </tr>
+    </table>
+</div>
+<p>*권한은 왼쪽에서 부터 슈퍼유저, 매니저, 유저 입니다.</p>
+<script>
+    var app = angular.module('userApp',[]);
+    app.controller('userCtrl', function($scope, $http){
+        $http.get('{% url "get_data" %}').then(function (response) {
+            $scope.users = JSON.parse(response.data.user);
+            $scope.orderByMe = function(x) {
+                $scope.myOrderBy = x;
+            };
+        });
+    });
+</script>
 {% endblock %}

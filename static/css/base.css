@@ -76,3 +76,11 @@ div.right_section {
   float: left;
   width: 33%;
 }
+div.set_detail_left {
+    float:left;
+    width:50%;
+}
+div.set_detail_right {
+    float:right;
+    width:50%;
+}
