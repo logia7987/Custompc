@@ -14,7 +14,7 @@
             <th ng-click="orderByMe('fields.hardware_kind')">종류</th>
             <th>삭제</th>
         </tr>
-        <tr ng-repeat="x in names|orderBy:myOrderBy|limitTo:pageSize|filter:hwsearch|startForm:currentPage*pageSize">
+        <tr ng-repeat="x in names|startFrom:currentPage*pageSize|limitTo:pageSize|filter:hwsearch|orderBy:myOrderBy">
             <td>{{ x.pk }}</td>
             <td><a href="/manager/hardware/{{ x.pk }}/edit">{{x.fields.name}}</a></td>
             <td>{{x.fields.hardware_kind}}</td>
@@ -33,9 +33,13 @@
 
     app.controller('namesCtrl', function($scope, $http) {
         $http.get('{% url "get_data" %}').then(function (response){
-            $scope.names = JSON.parse(response.data.hardware);
             $scope.currentPage = 0;
             $scope.pageSize = 10;
+            $scope.names = []
+            $scope.data = JSON.parse(response.data.hardware);
+            for (var i=0;i<$scope.data.length;i++) {
+                $scope.names.push($scope.data[i])
+            }
             $scope.numberOfPage = function() {
                 return Math.ceil($scope.names.length/$scope.pageSize);
             };
@@ -45,7 +49,7 @@
         });
     });
 
-    app.filter('startForm', function() {
+    app.filter('startFrom', function() {
         return function(input, start) {
             start = +start;
             return input.slice(start);
