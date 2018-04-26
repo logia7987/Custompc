@@ -87,10 +87,10 @@ def comment_remove(request,pk):
 
 
 # 클래스형 view
-class CustomListView(ListView):
-    model = Custom
-    template_name = 'custom/custom_list.html'
-    paginate_by = 15
+# class CustomListView(ListView):
+#     model = Custom
+#     template_name = 'custom/custom_list.html'
+#     paginate_by = 15
 
 class CustomDeleteView(DeleteView):
     model = Custom

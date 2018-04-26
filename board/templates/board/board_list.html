@@ -1,0 +1,9 @@
+{% extends 'board/board_home.html' %}
+
+{% block board %}
+<ul>
+    {% for board in boards %}
+        <li><a href="#">{{ board }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

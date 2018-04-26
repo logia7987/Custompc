@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}게시판{% endblock %}
+
+{% block content %}
+<nav>
+    <ul>
+        <li><a href="{% url 'board:board_set_list' %}">견적게시판</a></li>
+        {% for ctgr in cate %}
+            <li><a href="{% url 'board:board_list' %}?category={{ ctgr }}">{{ ctgr.name }}</a></li>
+        {% endfor %}
+    </ul>
+</nav>
+<p><a href="#">새글쓰기</a></p>
+    {% block board %}
+    {% endblock %}
+{% endblock %}

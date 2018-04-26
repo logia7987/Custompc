@@ -4,6 +4,7 @@ from .views import *
 
 urlpatterns = [
     url('^', include('custom.urls', namespace='custom')),
+    url('^board/', include('board.urls', namespace='board')),
     url(r'^manager/$', ManagerHome.as_view(), name='manager_page'),
     # object compa
     url(r'^manager/compatible/$', ManagerCompaList.as_view(), name='manager_compa_list'),

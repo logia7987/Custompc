@@ -29,7 +29,7 @@
         </ul>
         <p>{{ set.text }}</p>
         <p>
-            <a href="{% url 'custom:custom_list' %}">[목록보기]</a>
+            <a href="{% url 'board:board_set_list' %}">[목록보기]</a>
             {% if user == set.user %}
             <a href="{% url 'custom:custom_edit' pk=set.pk %}">[수정]</a>
             <a href="{% url 'custom:custom_delete' pk=set.pk %}">[삭제]</a>

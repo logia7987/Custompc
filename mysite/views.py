@@ -4,7 +4,7 @@ from django.shortcuts import redirect,get_object_or_404
 from django.core.urlresolvers import reverse_lazy
 from django.http import JsonResponse
 from django.core import serializers
-from custom.models import *
+from custom.models import Custom,Comment,Hardware,Compa, User
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required

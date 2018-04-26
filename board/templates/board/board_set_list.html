@@ -1,0 +1,9 @@
+{% extends 'board/board_home.html' %}
+
+{% block board %}
+<ul>
+    {% for set in sets %}
+        <li><a href="{% url 'custom:custom_detail' pk=set.pk %}">{{ set }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
