@@ -37,7 +37,7 @@ class ManagerHome(LoginRequiredMixin, TemplateView):
         return context
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_member or request.user.is_anonymous:
+        if request.user.is_anonymous or request.user.is_member:
             return redirect('no_authority')
         return super(ManagerHome, self).dispatch(request, *args, **kwargs)
 
@@ -47,7 +47,7 @@ class ManagerHardwareList(LoginRequiredMixin, ListView):
     template_name = 'manager/manager_hardware_list.html'
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_member or request.user.is_anonymous:
+        if request.user.is_anonymous or request.user.is_member:
             return redirect('no_authority')
         return super(ManagerHardwareList, self).dispatch(request, *args, **kwargs)
 
@@ -58,7 +58,7 @@ class ManagerHardwareNew(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('manager_hardware_list')
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_member or request.user.is_anonymous:
+        if request.user.is_anonymous or request.user.is_member:
             return redirect('no_authority')
         return super(ManagerHardwareNew, self).dispatch(request, *args, **kwargs)
 
@@ -69,7 +69,7 @@ class ManagerHardwareUpdate(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('manager_hardware_list')
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_member or request.user.is_anonymous:
+        if request.user.is_anonymous or request.user.is_member:
             return redirect('no_authority')
         return super(ManagerHardwareUpdate, self).dispatch(request, *args, **kwargs)
 
@@ -79,7 +79,7 @@ class ManagerCompaList(LoginRequiredMixin, ListView):
     model = Compa
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_member or request.user.is_anonymous:
+        if request.user.is_anonymous or request.user.is_member:
             return redirect('no_authority')
         return super(ManagerCompaList, self).dispatch(request, *args, **kwargs)
 
@@ -101,7 +101,7 @@ class ManagerCompaEdit(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('manager_compa_list')
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_member or request.user.is_anonymous:
+        if request.user.is_anonymous or request.user.is_member:
             return redirect('no_authority')
         return super(ManagerCompaEdit, self).dispatch(request, *args, **kwargs)
 
@@ -111,7 +111,7 @@ class ManagerUserList(LoginRequiredMixin, ListView):
     model = User
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_member or request.user.is_anonymous:
+        if request.user.is_anonymous or request.user.is_member:
             return redirect('no_authority')
         return super(ManagerUserList, self).dispatch(request, *args, **kwargs)
 
@@ -145,13 +145,20 @@ def no_authority(request):
 @login_required
 def manager_hardware_remove(request, pk):
     some_hard = get_object_or_404(Hardware, pk=pk)
-    some_hard.delete()
-    return redirect('manager_hardware_list')
+    if request.user.is_manager or request.user.is_superuser:
+        some_hard.delete()
+        return redirect('manager_hardware_list')
+    else:
+        return redirect('no_authority')
+
 @login_required
 def manager_compa_remove(request, pk):
     some_comp = get_object_or_404(Compa, pk=pk)
-    some_comp.delete()
-    return redirect('manager_compa_list')
+    if request.user.is_manager or request.user.is_superuser:
+        some_comp.delete()
+        return redirect('manager_compa_list')
+    else:
+        return redirect('no_authority')
 #종류별 설명
 def get_text(request):
     cpu = 'CPU는 컴퓨터의 연산장치로 컴퓨터의 뇌같은 하드웨어 입니다. 필수로 있어야만 컴퓨터를 조립할 수 있습니다.'
@@ -188,9 +195,9 @@ def get_compa(request):
     return JsonResponse(data)
 #매니저 페이지를 위한 정보 수집
 def get_data(request):
-    hardware = serializers.serialize('json',list(Hardware.objects.all()))
-    comp = serializers.serialize('json',list(Compa.objects.all()))
-    user = serializers.serialize('json',list(User.objects.all()))
+    hardware = serializers.serialize('json', Hardware.objects.all())
+    comp = serializers.serialize('json',Compa.objects.all())
+    user = serializers.serialize('json',User.objects.all())
     date = {
         'hardware':hardware,
         'comp':comp,

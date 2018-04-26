@@ -78,9 +78,9 @@ div.right_section {
 }
 div.set_detail_left {
     float:left;
-    width:50%;
+    width:60%;
 }
 div.set_detail_right {
     float:right;
-    width:50%;
+    width:40%;
 }

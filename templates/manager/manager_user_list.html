@@ -2,6 +2,7 @@
 
 {% block manager %}
 <!--todo 디테일한 기능 추가예정-->
+{% verbatim %}
 <div ng-app="userApp" ng-controller="userCtrl">
     <p><input type="text" ng-model="usersearch"></p>
     <table>
@@ -12,27 +13,46 @@
             <th ng-click="orderByMe('fields.last_login')">마지막 로그인</th>
             <th ng-click="orderByMe('fields.date_joined')">가입일</th>
         </tr>
-        <tr ng-repeat="x in users|orderBy:myOrderBy|filter:usersearch">
-            {% verbatim %}
+        <tr ng-repeat="x in users|startFrom:currentPage*pageSize|limitTo:pageSize|filter:hwsearch|orderBy:myOrderBy">
             <td>{{ x.pk }}</td>
             <td>{{ x.fields.username }}</td>
             <td>{{ x.fields.is_superuser }}|{{ x.fields.is_manager }}|{{ x.fields.is_member }}</td>
             <td>{{ x.fields.last_login|date:'yyyy년 M월 d일 h:m' }}</td>
             <td>{{ x.fields.date_joined|date:'yyyy년 M월 d일 h:m' }}</td>
-            {% endverbatim %}
         </tr>
     </table>
+    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">이전</button>
+    {{currentPage+1}}/{{numberOfPage()}}
+    <button ng-disabled="currentPage >= users.length/pageSize - 1" ng-click="currentPage=currentPage+1">다음</button>
 </div>
+{% endverbatim %}
 <p>*권한은 왼쪽에서 부터 슈퍼유저, 매니저, 유저 입니다.</p>
 <script>
     var app = angular.module('userApp',[]);
+
     app.controller('userCtrl', function($scope, $http){
-        $http.get('{% url "get_data" %}').then(function (response) {
-            $scope.users = JSON.parse(response.data.user);
-            $scope.orderByMe = function(x) {
+        $scope.currentPage = 0;
+        $scope.pageSize = 10;
+        $scope.users = []
+        $scope.numberOfPage = function() {
+            return Math.ceil($scope.users.length/$scope.pageSize);
+        };
+        $scope.orderByMe = function(x) {
                 $scope.myOrderBy = x;
             };
+        $http.get('{% url "get_data" %}').then(function (response) {
+            data = JSON.parse(response.data.user);
+            for (var i=0;i<data.length;i++){
+                $scope.users.push(data[i])
+            }
         });
+    });
+
+    app.filter('startFrom', function() {
+        return function(input, start) {
+            start = +start;
+            return input.slice(start);
+        };
     });
 </script>
 {% endblock %}

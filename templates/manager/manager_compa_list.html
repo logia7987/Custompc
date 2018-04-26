@@ -13,34 +13,52 @@
             <th ng-click="orderByMe('fields.hardware')">제품이름</th>
             <th>삭제</th>
         </tr>
-        <tr ng-repeat="x in comp|orderBy:myOrderBy|filter:compsearch">
+        <tr ng-repeat="x in comp|startFrom:currentPage*pageSize|limitTo:pageSize|filter:hwsearch|orderBy:myOrderBy">
             <td>{{x.pk}}</td>
             <td><a href="/manager/compatible/{{x.pk}}/edit">{{x.fields.comp_mode}}</a></td>
             <td><a href="/manager/compatible/{{x.pk}}/edit">{{x.fields.hardware}}</a></td>
             <td><a href="/manager/compatible/{{x.pk}}/remove"><button>삭제</button></a></td>
         </tr>
     </table>
+    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">이전</button>
+    {{currentPage+1}}/{{numberOfPage()}}
+    <button ng-disabled="currentPage >= comp.length/pageSize - 1" ng-click="currentPage=currentPage+1">다음</button>
 </div>
 {% endverbatim %}
 <p>*제품이름이나 필터를 클릭하면 수정할 수 있습니다.</p>
 <script>
     var app = angular.module('comApp', []);
+
     app.controller('compCtrl', function($scope, $http) {
-        $http.get('{% url "get_data" %}').then(function (response){
-            $scope.comp = JSON.parse(response.data.comp);
-            $scope.hw = JSON.parse(response.data.hardware);
-            for (var i=0;i<$scope.comp.length;i++){
-                $scope.comp[i]['fields']['hardware'][0]
-                for (var k=0;k<$scope.hw.length;k++){
-                    if ($scope.comp[i]['fields']['hardware'][0] == $scope.hw[k]['pk']) {
-                        $scope.comp[i]['fields']['hardware'] = $scope.hw[k]['fields']['name']
-                    }
-                }
-            }
-            $scope.orderByMe = function(x) {
+        $scope.currentPage = 0;
+        $scope.pageSize = 10;
+        $scope.comp = []
+        $scope.numberOfPage = function() {
+            return Math.ceil($scope.comp.length/$scope.pageSize);
+        };
+        $scope.orderByMe = function(x) {
                 $scope.myOrderBy = x;
+        };
+        $http.get('{% url "get_data" %}').then(function (response){
+            data = JSON.parse(response.data.comp);
+            hw = JSON.parse(response.data.hardware);
+            for (var i=0;i<data.length;i++){
+                data[i]['fields']['hardware'][0]
+                for (var k=0;k<hw.length;k++){
+                    if (data[i]['fields']['hardware'][0] == hw[k]['pk']) {
+                        data[i]['fields']['hardware'] = hw[k]['fields']['name']
+                        $scope.comp.push(data[i])
+                    };
+                };
             };
         });
+    });
+
+    app.filter('startFrom', function() {
+        return function(input, start) {
+            start = +start;
+            return input.slice(start);
+        };
     });
 </script>
 {% endblock %}
