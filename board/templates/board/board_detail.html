@@ -1,0 +1,35 @@
+{% extends 'board/board_home.html' %}
+
+{% block board %}
+    <h1>{{ board.title }}</h1>
+    <p>작성자 : {{ board.author }} | 작성일 : {{ board.created_date|date:'Y년 m월 d일 h:i' }} {% if board.modified_date %}| 수정일 : {{ board.modified_date|date:'Y년 m월 d일 h:i' }}{% endif %}</p>
+    <p>{{ board.text }}</p>
+    <p><a href="{% url 'board:board_list' %}">[목록]</a><a href="{% url 'board:board_edit' pk=board.pk %}">[수정]</a><a href="{% url 'board:board_remove' pk=board.pk %}">[삭제]</a></p>
+    <div>
+    {% if user.is_authenticated %}
+    <h3>댓글</h3>
+    <p>{% include "board/add_board_comment.html" %}</p>
+    {% endif %}
+    {% for comment in board.board_comments.all %}
+    <hr>
+        <div>
+            <p>{{comment.author}} | {{comment.create_date|date:'Y년 m월 d일 h:i'}} {% if user == set.user or user == comment.author or user.is_superuser %}<a href="{% url 'board:board_comment_remove' pk=comment.pk %}" class="ment_re" id="{{ comment.id }}">[댓글삭제]</a>{% endif %}</p>
+            <p>{{comment.text}}</p>
+        </div>
+    <hr>
+    {% empty %}
+        <li>empty</li>
+    {% endfor %}
+    </div>
+<script>
+    $('a.ment_re').click(function() {
+        ment = confirm('정말 삭제하시겠습니까?')
+        pk = $('a.ment_re').attr('id')
+        if (ment === true) {
+            location.href="/board/"+pk+"/comment/remove"
+        } else {
+            alert('취소되었습니다.')
+        }
+    })
+</script>
+{% endblock %}

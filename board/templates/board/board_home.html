@@ -1,17 +1,29 @@
 {% extends 'base.html' %}
 
-{% block title %}게시판{% endblock %}
+{% block title %}<a href="{% url 'board:board_home' %}">게시판</a>{% endblock %}
 
 {% block content %}
-<nav>
-    <ul>
-        <li><a href="{% url 'board:board_set_list' %}">견적게시판</a></li>
-        {% for ctgr in cate %}
-            <li><a href="{% url 'board:board_list' %}?category={{ ctgr }}">{{ ctgr.name }}</a></li>
-        {% endfor %}
-    </ul>
-</nav>
-<p><a href="#">새글쓰기</a></p>
+<p><a href="{% url 'board:board_new' %}">새글쓰기</a></p>
     {% block board %}
+        <div>
+            <h1><a href="{% url 'board:board_set_list' %}">견적게시판</a></h1>
+            <ul>
+                {% for set in custom %}
+                <li><a href="{% url 'custom:custom_detail' pk=set.pk %}">{{ set }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% for ctgr in cate %}
+        <div>
+            <h1><a href="{% url 'board:board_list' %}?category={{ ctgr }}">{{ ctgr }}</a></h1>
+        </div>
+        <ul>
+            {% for board in board %}
+                {% if board.category == ctgr %}
+                <li><a href="{% url 'board:board_detail' pk=board.pk %}">{{ board }}</a></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        {% endfor %}
     {% endblock %}
 {% endblock %}

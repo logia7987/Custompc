@@ -1,0 +1,10 @@
+{% extends 'board/board_home.html' %}
+
+{% block title %}새글쓰기{% endblock %}
+
+{% block board %}
+<form action=""method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">저장</button>
+</form>
+{% endblock %}

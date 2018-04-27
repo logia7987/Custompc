@@ -1,6 +1,8 @@
 {% extends 'board/board_home.html' %}
 
+
 {% block board %}
+<h1>견적게시판</h1>
 <ul>
     {% for set in sets %}
         <li><a href="{% url 'custom:custom_detail' pk=set.pk %}">{{ set }}</a></li>

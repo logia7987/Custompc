@@ -1,9 +1,10 @@
 {% extends 'board/board_home.html' %}
 
 {% block board %}
+<h1>{{ ctgr }}</h1>
 <ul>
     {% for board in boards %}
-        <li><a href="#">{{ board }}</a></li>
+        <li><a href="{% url 'board:board_detail' pk=board.pk %}">{{ board }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}
