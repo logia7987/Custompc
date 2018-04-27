@@ -88,4 +88,4 @@ def comment_remove(request,pk):
 class CustomDeleteView(DeleteView):
     model = Custom
     template_name = 'custom/custom_delete.html'
-    success_url = reverse_lazy('custom:custom_list')
+    success_url = reverse_lazy('board:board_set_list')

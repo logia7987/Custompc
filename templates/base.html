@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Custom Pc</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset='euc-kr'></script>
@@ -13,8 +14,8 @@
         <nav class="clearfix">
             <div class="headnav_left">
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="{% url 'board:board_home' %}">board</a></li>
+                    <li><a href="/">메인화면</a></li>
+                    <li><a href="{% url 'board:board_home' %}">게시판</a></li>
                 </ul>
             </div>
             <div class="headnav_right">
@@ -42,5 +43,8 @@
         {% block content %}
         {% endblock %}
     </div>
+    <footer>
+        <p>Copyright Powerd By. c22moon</p>
+    </footer>
 </body>
 </html>

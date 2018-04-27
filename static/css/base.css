@@ -1,86 +1,111 @@
- /* init */
-article,aside,details,figcaption,figure,
-footer,header,main,nav,section { 
-    display:block;
-} 
+/* init */
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+nav,
+section {
+  display: block;
+}
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 body {
-	margin: 0;
-	font-size: 1em;
+  margin: 0;
+  font-size: 1em;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 a {
-	color: #464646;
-	text-decoration: none;
+  color: #464646;
+  text-decoration: none;
 }
 nav ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-h1, h2, h3, h4, h5, h6 {
-	margin: 0;
-} 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
 img {
-	vertical-align: top; /*이미지로 인한 오류를 위한 초기화 위로 정렬*/
-	border: 0; /*IE10 이하 이미지링크의 태두리 오류때문에 사용*/
+  vertical-align: top;
+  /*이미지로 인한 오류를 위한 초기화 위로 정렬*/
+  border: 0;
+  /*IE10 이하 이미지링크의 태두리 오류때문에 사용*/
 }
 p {
   text-align: justify;
   margin: 0;
 }
 address {
-	font-style: normal;
+  font-style: normal;
 }
 .clearfix {
-	*zoom:1;
+  *zoom: 1;
 }
 .clearfix:after {
-	content: "";
-	display: block;
-	clear: both;
+  content: "";
+  display: block;
+  clear: both;
 }
-
-/* html */
-
+ul {
+  padding: 0;
+  margin: 0;
+}
+ul li {
+  list-style: none;
+}
 header {
-  background: cadetblue;
-  padding: 0 0 20px;
+  background: #c4c4c4;
+}
+header li a {
+  color: #fff;
 }
 header nav div.headnav_left {
-	float: left;
+  float: left;
 }
 header nav div.headnav_left li {
-	display: inline-block;
+  display: inline-block;
 }
 header nav div.headnav_right {
-	float: right;
+  float: right;
 }
 header nav div.headnav_right li {
-	display: inline-block;
+  display: inline-block;
 }
-div.left_section {
-  float: left;
-  width: 33%;
+div.base_logo_area {
+  background: #e4e4e4;
+  height: 5em;
+  line-height: 5em;
+  text-align: center;
 }
-div.left_section_button,
-div.select_form {
-  float: left;
+footer {
+  background: #c4c4c4;
+  height: 5em;
+  line-height: 5em;
+}
+footer p {
+  color: #fff;
+  text-align: center;
+}
+div.left_section_button {
+  background: #99c2ff;
+}
+div.left_section_button label {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
 }
 div.center_section {
-  float: left;
-  width: 33%;
-}
-div.right_section {
-  float: left;
-  width: 33%;
-}
-div.set_detail_left {
-    float:left;
-    width:60%;
-}
-div.set_detail_right {
-    float:right;
-    width:40%;
+  display: none;
 }

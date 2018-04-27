@@ -1,1 +1,103 @@
-
+ /* init */
+ @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+article,aside,details,figcaption,figure,
+footer,header,main,nav,section { 
+    display:block;
+} 
+* {
+	box-sizing: border-box;
+}
+body {
+	margin: 0;
+	font-size: 1em;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+a {
+	color: #464646;
+	text-decoration: none;
+}
+nav ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+} 
+img {
+	vertical-align: top; /*이미지로 인한 오류를 위한 초기화 위로 정렬*/
+	border: 0; /*IE10 이하 이미지링크의 태두리 오류때문에 사용*/
+}
+p {
+  text-align: justify;
+  margin: 0;
+}
+address {
+	font-style: normal;
+}
+.clearfix {
+	*zoom:1;
+}
+.clearfix:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+ul {
+	padding: 0;
+    margin: 0;
+    li {
+        list-style: none;
+    }
+}
+// html
+header {
+    background: #c4c4c4;
+    li a {
+        color: #fff;
+    }
+    nav {
+        div.headnav_left {
+            float: left;
+            li {
+                display: inline-block;
+            }
+        }
+        div.headnav_right {
+            float: right;
+            li {
+                display: inline-block;
+            }
+        }
+    }
+}
+div.base_logo_area {
+    background: #e4e4e4;
+    height: 5em;
+    line-height: 5em;
+    text-align: center;
+}
+footer {
+    background:#c4c4c4;
+    height: 5em;
+    line-height: 5em;
+    p {
+        color:#fff;
+        text-align: center;
+    }
+}
+// custom_new
+div.left_section_button {
+    background: #99c2ff;
+    li {
+        
+    }
+    label {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+}
+div.center_section {
+    display: none;
+}

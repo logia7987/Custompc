@@ -5,95 +5,92 @@
   <div class="left_section clearfix">
     <!-- 폼출력 버튼 -->
     <div class="left_section_button">
-      <ul>
-        <li id="cpu">CPU</li>
-        <li id="board">Board</li>
-        <li id="ram">RAM</li>
-        <li id="vga">VGA</li>
-        <li id="power">Power</li>
-        <li id="hdd">HDD</li>
-        <li id="ssd">SSD</li>
-        <li id="odd">ODD</li>
-      </ul>
-    </div>
-    <!-- 폼 : 장고의 필터링된 쿼리셋을 이용해서 부품타입별 필터링-->
-    <div class="select_form">
       <form action="" method="post">{% csrf_token %}
-        {% for hidden in form.hidden_fields %}
-          {{ hidden }}
-        {% endfor %}
-        <p id="select_cpu" class="hw_select" style="display:none">
-          <label for="id_cpu_new">Cpu:</label>
-          <select name="cpu" id="id_cpu_new" size="5">
-            <option value="" selected>         </option>
-            {% for hard in cpu %}
-            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}: {{hard.cpu.all.count}} {{hard.hit}}</option>
-            {% endfor %}
-          </select>
-        </p>
-        <p id="select_board" class="hw_select" style="display:none">
-          <label for="id_board_new">Board:</label>
-          <select name="board" id="id_board_new" size="5">
-            <option value="" selected>         </option>
-            {% for hard in board %}
-            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}:{{hard.board.all.count}} {{hard.hit}}</option>
-            {% endfor %}
-          </select>
-        </p>
-        <p id="select_ram" class="hw_select" style="display:none">
-          <label for="id_ram_new">Ram:</label>
-          <select name="ram" id="id_ram_new" size="5">
-            <option value="" selected>         </option>
-            {% for hard in ram %}
-            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}:{{hard.ram.all.count}} {{hard.hit}}</option>
-            {% endfor %}
-          </select>
-        </p>
-        <p id="select_vga" class="hw_select" style="display:none">
-          <label for="id_vga_new">Vga:</label>
-          <select name="vga" id="id_vga_new" size="5">
-            <option value="" selected>         </option>
-            {% for hard in vga %}
-            <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}:{{hard.vga.all.count}} {{hard.hit}}</option>
-            {% endfor %}
-          </select>
-        </p>
-        <p id="select_power" class="hw_select" style="display:none">
-          <label for="id_power_new">Power:</label>
-          <select name="power" id="id_power_new" size="5">
-            <option value="" selected>         </option>
-            {% for hard in power %}
-            <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.power.all.count}} {{hard.hit}}</option>
-            {% endfor %}
-          </select>
-        </p>
-        <p id="select_hdd" class="hw_select" style="display:none">
-          <label for="id_hdd_new">Hdd:</label>
-          <select name="hdd" id="id_hdd_new" size="5">
-            <option value="" selected>         </option>
-            {% for hard in hdd %}
-            <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.hdd.all.count}} {{hard.hit}}</option>
-            {% endfor %}
-          </select>
-        </p>
-        <p id="select_ssd" class="hw_select" style="display:none">
-          <label for="id_ssd_new">Ssd:</label>
-          <select name="ssd" id="id_ssd_new" size="5">
-            <option value="" selected>         </option>
-            {% for hard in ssd %}
-            <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.ssd.all.count}} {{hard.hit}}</option>
-            {% endfor %}
-          </select>
-        </p>
-        <p id="select_odd" class="hw_select" style="display:none">
-          <label for="id_odd_new">Odd:</label>
-          <select name="odd" id="id_odd_new" size="5">
-            <option value="" selected>         </option>
-            {% for hard in odd %}
-            <option value="{{ hard.id }}">{{ hard.name }}:{{hard.odd.all.count}} {{hard.hit}}</option>
-            {% endfor %}
-          </select>
-        </p>
+          {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+          {% endfor %}
+        <ul>
+          <li id="cpu">CPU</li>
+          <p id="select_cpu" class="hw_select" style="display:none">
+            <label for="id_cpu_new">Cpu:</label>
+            <select name="cpu" id="id_cpu_new" size="5">
+              <option value="" selected>         </option>
+              {% for hard in cpu %}
+              <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}: {{hard.cpu.all.count}} {{hard.hit}}</option>
+              {% endfor %}
+            </select>
+          </p>
+          <li id="board">Board</li>
+          <p id="select_board" class="hw_select" style="display:none">
+            <label for="id_board_new">Board:</label>
+            <select name="board" id="id_board_new" size="5">
+              <option value="" selected>         </option>
+              {% for hard in board %}
+              <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}:{{hard.board.all.count}} {{hard.hit}}</option>
+              {% endfor %}
+            </select>
+          </p>
+          <li id="ram">RAM</li>
+          <p id="select_ram" class="hw_select" style="display:none">
+            <label for="id_ram_new">Ram:</label>
+            <select name="ram" id="id_ram_new" size="5">
+              <option value="" selected>         </option>
+              {% for hard in ram %}
+              <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}:{{hard.ram.all.count}} {{hard.hit}}</option>
+              {% endfor %}
+            </select>
+          </p>
+          <li id="vga">VGA</li>
+          <p id="select_vga" class="hw_select" style="display:none">
+            <label for="id_vga_new">Vga:</label>
+            <select name="vga" id="id_vga_new" size="5">
+              <option value="" selected>         </option>
+              {% for hard in vga %}
+              <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}:{{hard.vga.all.count}} {{hard.hit}}</option>
+              {% endfor %}
+            </select>
+          </p>
+          <li id="power">Power</li>
+          <p id="select_power" class="hw_select" style="display:none">
+            <label for="id_power_new">Power:</label>
+            <select name="power" id="id_power_new" size="5">
+              <option value="" selected>         </option>
+              {% for hard in power %}
+              <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.power.all.count}} {{hard.hit}}</option>
+              {% endfor %}
+            </select>
+          </p>
+          <li id="hdd">HDD</li>
+          <p id="select_hdd" class="hw_select" style="display:none">
+            <label for="id_hdd_new">Hdd:</label>
+            <select name="hdd" id="id_hdd_new" size="5">
+              <option value="" selected>         </option>
+              {% for hard in hdd %}
+              <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.hdd.all.count}} {{hard.hit}}</option>
+              {% endfor %}
+            </select>
+          </p>
+          <li id="ssd">SSD</li>
+          <p id="select_ssd" class="hw_select" style="display:none">
+            <label for="id_ssd_new">Ssd:</label>
+            <select name="ssd" id="id_ssd_new" size="5">
+              <option value="" selected>         </option>
+              {% for hard in ssd %}
+              <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.ssd.all.count}} {{hard.hit}}</option>
+              {% endfor %}
+            </select>
+          </p>
+          <li id="odd">ODD</li>
+          <p id="select_odd" class="hw_select" style="display:none">
+            <label for="id_odd_new">Odd:</label>
+            <select name="odd" id="id_odd_new" size="5">
+              <option value="" selected>         </option>
+              {% for hard in odd %}
+              <option value="{{ hard.id }}">{{ hard.name }}:{{hard.odd.all.count}} {{hard.hit}}</option>
+              {% endfor %}
+            </select>
+          </p>
+        </ul>
         <p class="hw_select" style="display:none">
           <label for="id_text">Text:</label>
           <textarea name="text" cols="40" rows="10" id="id_text"></textarea>
@@ -101,8 +98,10 @@
         <button type="submit" id="save_set" style="display:none">저장</button>
       </form>
     </div>
+    <!-- 폼 : 장고의 필터링된 쿼리셋을 이용해서 부품타입별 필터링-->
   </div>
   <!-- 세트 출력 -->
+  <!-- todo 반응형| 기록이 left-section 에 기록되게 -->
   <div class="center_section">
     <ul>
       <li>CPU :
@@ -138,11 +137,11 @@
         <span id="up_odd"></span>
       </li>
     </ul>
-    <button type="button" id="custom_check" onclick="checkmypc()">호환성 검사</button>
-    {% if user.is_authenticated %}
-    <button type="submit" id="fake_set">저장</button>
-    {% endif %}
   </div>
+  <button type="button" id="custom_check" onclick="checkmypc()">호환성 검사</button>
+  {% if user.is_authenticated %}
+  <button type="submit" id="fake_set">저장</button>
+  {% endif %}
   <!-- 세트의 정보 -->
   <div class="right_section">
     <div>
