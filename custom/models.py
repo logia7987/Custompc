@@ -112,7 +112,8 @@ class Custom(models.Model):
         ordering = ['-create_date']
 
 class Comment(models.Model):
-    custom = models.ForeignKey('custom.Custom', related_name='comments')
+    custom = models.ForeignKey('custom.Custom', related_name='custom_comments', null=True)
+    board = models.ForeignKey('board.Board', related_name='board_comments', null=True)
     author = models.ForeignKey(User)
     text = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)

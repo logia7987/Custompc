@@ -2,21 +2,27 @@
 
 {% block title %}<a href="{% url 'manager_page' %}">Manager</a>{% endblock %}
 
-{% block content %}
+{% block bootstrap %}
+<!--bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}
 
-<div>
-    <nav>
-        <ul>
+{% block content %}
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
             <li><a href="{% url 'manager_hardware_list' %}">제품목록</a></li>
             <li><a href="{% url 'manager_compa_list' %}">호환성 필터 관리</a></li>
             <li><a href="{% url 'manager_user_list' %}">유저목록</a></li>
             <li><a href="{% url 'manager_stat' %}">통계</a></li>
         </ul>
-    </nav>
-</div>
+    </div>
+</nav>
 <div>
     {% block manager %}
-    <p>전체 견적</p>
+    <h2>전체 견적</h2>
     <table>
         <tr>
             <th>ID</th>
@@ -35,9 +41,7 @@
         </tr>
         {% endfor %}
     </table>
-    <!--todo 필요없는 hr태그-->
-    <hr>
-    <p>전체 댓글</p>
+    <h2>전체 댓글</h2>
     <table>
         <tr>
             <th>ID</th>
@@ -46,12 +50,23 @@
             <th>작성일</th>
         </tr>
         {% for ment in ments %}
+        {% if ment.custom %}
         <tr>
             <td>{{ ment.id }}</td>
             <td><a href="{% url 'custom:custom_detail' pk=ment.custom.pk%}">{{ ment }}...</a></td>
             <td>{{ ment.author }}</td>
             <td>{{ ment.create_date|date:'Y년 m월 d일 h:i' }}</td>
+        </tr>
+        {% elif ment.board %}
+        <tr>
+            <td>{{ ment.id }}</td>
+            <td><a href="{% url 'board:board_detail' pk=ment.board.pk%}">{{ ment }}...</a></td>
+            <td>{{ ment.author }}</td>
+            <td>{{ ment.create_date|date:'Y년 m월 d일 h:i' }}</td>
+        </tr>
+        {% endif %}
         {% empty %}
+        <tr>
             <td>없음</td>
         </tr>
         {% endfor %}

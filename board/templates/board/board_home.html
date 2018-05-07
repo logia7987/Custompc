@@ -1,29 +1,50 @@
 {% extends 'base.html' %}
 
-{% block title %}<a href="{% url 'board:board_home' %}">게시판</a>{% endblock %}
-
 {% block content %}
-<p><a href="{% url 'board:board_new' %}">새글쓰기</a></p>
+<div class="board_list_nav clearfix">
+    <h1><a href="{% url 'board:board_home' %}">게시판</a></h1>
+    <a href="{% url 'board:board_new' %}" class="board_new">새글쓰기</a>
+</div>
     {% block board %}
-        <div>
+    <div class="board_list clearfix">
+        <div class="board_list_ctgr d_style">
             <h1><a href="{% url 'board:board_set_list' %}">견적게시판</a></h1>
-            <ul>
+            <table>
+                <tr>
+                    <th>번호</th>
+                    <th>견적</th>
+                    <th>작성일</th>
+                </tr>
                 {% for set in custom %}
-                <li><a href="{% url 'custom:custom_detail' pk=set.pk %}">{{ set }}</a></li>
+                <tr>
+                    <td>{{ set.id }}</td>
+                    <td><a href="{% url 'custom:custom_detail' pk=set.pk %}">{{ set }}</a></td>
+                    <td>{{ set.create_date|date:'Y.m.d h:i' }}</td>
+                </tr>
                 {% endfor %}
-            </ul>
+            </table>
         </div>
         {% for ctgr in cate %}
-        <div>
-            <h1><a href="{% url 'board:board_list' %}?category={{ ctgr }}">{{ ctgr }}</a></h1>
+        <div class="board_list_ctgr d_style">
+            <h1><a href="{% url 'board:board_list' %}?category={{ ctgr.id }}">{{ ctgr }}</a></h1>
+            <table>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성일</th>
+                </tr>
+                {% for board in board %}
+                    {% if board.category == ctgr %}
+                    <tr>
+                        <td>{{ board.id }}</td>
+                        <td><a href="{% url 'board:board_detail' pk=board.pk %}">{{ board }}</a></td>
+                        <td>{{ board.created_date|date:'Y.m.d h:i' }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
         </div>
-        <ul>
-            {% for board in board %}
-                {% if board.category == ctgr %}
-                <li><a href="{% url 'board:board_detail' pk=board.pk %}">{{ board }}</a></li>
-            {% endif %}
-            {% endfor %}
-        </ul>
         {% endfor %}
+    </div>
     {% endblock %}
 {% endblock %}

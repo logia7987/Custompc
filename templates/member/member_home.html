@@ -3,29 +3,59 @@
 {% block title %}마이페이지{% endblock %}
 
 {% block content %}
-    <div>
+<div class="member_home">
+    <div class="member_sect1 d_style">
         <h2>프로필</h2>
         <p>ID : {{ user.username }}</p>
         <p><a href="{% url 'password_change' %}">비밀번호 변경</a></p>
     </div>
-    <div>
-        <h2>내 견적</h2>
-        <ul>
-            {% for set in sets %}
-            <li><a href="{% url 'custom:custom_detail' pk=set.id %}">{{ set }} | {{ set.create_date|date:'Y년 m월 d일 h:i' }}</a></li>
-            {% empty %}
-            <li>활동이 없습니다.</li>
-            {% endfor %}
-        </ul>
+    <div class="clearfix member_sect2">
+        <div class="member_info1 d_style">
+            <h2>내 견적</h2>
+            <table>
+                <tr>
+                    <th>번호</th>
+                    <th>견적</th>
+                    <th>작성일</th>
+                </tr>
+                {% for set in sets %}
+                <tr>
+                    <td>{{ set.id }}</td>
+                    <td><a href="{% url 'custom:custom_detail' pk=set.id %}">{{ set }}</a></td>
+                    <td>{{ set.create_date|date:'Y.m.d h:i' }}</td>
+                </tr>
+                {% empty %}
+                <li>활동이 없습니다.</li>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="member_info2 d_style">
+            <h2>내 댓글</h2>
+            <table>
+                <tr>
+                    <th>번호</th>
+                    <th>댓글</th>
+                    <th>작성일</th>
+                </tr>
+                {% for ment in ments %}
+                {% if ment.custom %}
+                <tr>
+                    <td>{{ ment.id }}</td>
+                    <td><a href="{% url 'custom:custom_detail' pk=ment.custom.pk %}">{{ ment }}</a></td>
+                    <td>{{ ment.create_date|date:'Y.m.d h:i' }}</td>
+                </tr>
+                {% elif ment.board %}
+                <tr>
+                    <td>{{ ment.id }}</td>
+                    <td><a href="{% url 'board:board_detail' pk=ment.board.pk %}">{{ ment }}</a></td>
+                    <td>{{ ment.create_date|date:'Y.m.d h:i' }}</td>
+                </tr>
+                {% endif %}
+                {% empty %}
+                <li>활동이 없습니다.</li>
+                {% endfor %}
+            </table>
+        </div>
     </div>
-    <div>
-        <h2>내 댓글</h2>
-        <ul>
-            {% for ment in ments %}
-            <li><a href="{% url 'custom:custom_detail' pk=ment.custom.pk %}">{{ ment }} {{ ment.custom }} {{ ment.create_date|date:'Y년 m월 d일 h:i' }}</a></li>
-            {% empty %}
-            <li>활동이 없습니다.</li>
-            {% endfor %}
-        </ul>
-    </div>
+</div>
 {% endblock %}

@@ -17,13 +17,15 @@
             <td>{{ x.pk }}</td>
             <td>{{ x.fields.username }}</td>
             <td>{{ x.fields.is_superuser }}|{{ x.fields.is_manager }}|{{ x.fields.is_member }}</td>
-            <td>{{ x.fields.last_login|date:'yyyy년 M월 d일 h:m' }}</td>
-            <td>{{ x.fields.date_joined|date:'yyyy년 M월 d일 h:m' }}</td>
+            <td>{{ x.fields.last_login|date:'yyyy.M.d h:m' }}</td>
+            <td>{{ x.fields.date_joined|date:'yyyy.M.d h:m' }}</td>
         </tr>
     </table>
-    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">이전</button>
-    {{currentPage+1}}/{{numberOfPage()}}
-    <button ng-disabled="currentPage >= users.length/pageSize - 1" ng-click="currentPage=currentPage+1">다음</button>
+    <div class="button_area">
+        <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="button_st">이전</button>
+        {{currentPage+1}}/{{numberOfPage()}}
+        <button ng-disabled="currentPage >= users.length/pageSize - 1" ng-click="currentPage=currentPage+1" class="button_st">다음</button>
+    </div>
 </div>
 {% endverbatim %}
 <p>*권한은 왼쪽에서 부터 슈퍼유저, 매니저, 유저 입니다.</p>

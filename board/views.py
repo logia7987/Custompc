@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core import serializers
+from django.http import JsonResponse
 from django.views.generic import TemplateView
-from .models import Board,Category,BoardComment
-from .forms import BoardForm,BoardCommentForm
-from custom.models import Custom
+from .models import Board,Category
+from .forms import BoardForm
+from custom.forms import CommentForm
+from custom.models import Custom, Comment
 # Create your views here.
 class BoardHome(TemplateView):
     template_name = 'board/board_home.html'
@@ -32,7 +35,7 @@ def board_detail(request, pk):
     board = get_object_or_404(Board, pk=pk)
     cate = Category.objects.all()
     if request.method == 'POST':
-        form = BoardCommentForm(request.POST)
+        form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.board = board
@@ -40,7 +43,7 @@ def board_detail(request, pk):
             comment.save()
             return redirect('board:board_detail', pk=board.pk)
     else:
-        form = BoardCommentForm()
+        form = CommentForm()
 
     return render(request, 'board/board_detail.html',{'board':board,'cate':cate,'form':form})
 
@@ -76,7 +79,11 @@ def board_remove(request, pk):
     board.delete()
     return redirect('board:board_list')
 
-def board_comment_remove(request, pk):
-    comment = get_object_or_404(BoardComment, pk=pk)
-    comment.delete()
-    return redirect('board:board_detail', pk=comment.board.pk)
+def board_list_data(request):
+    sets = serializers.serialize('json', Custom.objects.all())
+    boards = serializers.serialize('json', Board.objects.all())
+    data = {
+        'sets':sets,
+        'boards':boards
+    }
+    return JsonResponse(data)

@@ -1,7 +1,7 @@
 {% block content %}
-    <form action="" method="POST">
+    <form action="" method="POST" class="crearfix">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">저장</button>
+        {{ form }}
+        <button type="submit" class="save_button">저장</button>
     </form>
 {% endblock %}

@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Custom Pc</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!--jQuery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset='euc-kr'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    {% block bootstrap %}{% endblock %}
 </head>
 <body>
     <header>
@@ -35,8 +37,8 @@
         </nav>
     </header>
     <div class="base_logo_area">
-        <section>
-            <h1>{% block title %}{% endblock %}</h1>
+        <section class="jumbotron">
+            <h1>{% block title %}Custom Pc{% endblock %}</h1>
         </section>
     </div>
     <div class="content_area">

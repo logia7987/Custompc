@@ -17,12 +17,3 @@ class Board(models.Model):
 
     def __str__(self):
         return self.title
-
-class BoardComment(models.Model):
-    board = models.ForeignKey('board.Board', related_name='board_comments')
-    author = models.ForeignKey('custom.User')
-    text = models.TextField()
-    create_date = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.text[:10]

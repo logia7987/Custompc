@@ -1,11 +1,60 @@
 {% extends 'board/board_home.html' %}
 
-
 {% block board %}
 <h1>견적게시판</h1>
-<ul>
-    {% for set in sets %}
-        <li><a href="{% url 'custom:custom_detail' pk=set.pk %}">{{ set }}</a></li>
-    {% endfor %}
-</ul>
+<!-- todo do pagination -->
+{% verbatim %}
+<div class="board_set_list" ng-app="setApp" ng-controller="setCtrl">
+    <table>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>등록일</th>
+        </tr>
+        <tr ng-repeat="set in sets|startFrom:currentPage*pageSize|limitTo:pageSize|orderBy:myOrderBy">
+            <td>{{ set.pk }}</td>
+            <td><a href="/custom/{{ set.pk }}/">{{ set.title }}</a></td>
+            <td>{{ set.fields.use }}</td>
+            <td>{{ set.fields.create_date|date:'y.M.d h:m' }}</td>
+        </tr>
+    </table>
+    <div class="button_area">
+    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">이전</button>
+    {{currentPage+1}}/{{numberOfPage()}}
+    <button ng-disabled="currentPage >= sets.length/pageSize - 1" ng-click="currentPage=currentPage+1">다음</button>
+    </div>
+    <a href="/">견적작성하기</a>
+    <p>*견적게시판은 회원님들의 견적만 게시합니다.</p>
+</div>
+{% endverbatim %}
+<script>
+    var app = angular.module('setApp', []);
+
+    app.controller('setCtrl', function($scope, $http) {
+        $scope.currentPage = 0;
+        $scope.pageSize = 10;
+        $scope.sets = []
+        $scope.numberOfPage = function() {
+            return Math.ceil($scope.sets.length/$scope.pageSize);
+        };
+        $scope.orderByMe = function(x) {
+            $scope.myOrderBy = x;
+        };
+        $http.get('{% url "board:board_list_data" %}').then(function (response){
+            data = JSON.parse(response.data.sets);
+            for (var i=0;i<data.length;i++) {
+                $scope.sets.push(data[i])
+                $scope.sets[i]['title'] = data[i]['fields']['text'].slice(0,10)
+            }
+        });
+    });
+
+    app.filter('startFrom', function() {
+        return function(input, start) {
+            start = +start;
+            return input.slice(start);
+        };
+    });
+</script>
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} Custom Pc {% endblock %}
+
 {% block content %}
 <div class="clearfix">
   <div class="left_section clearfix">
@@ -14,7 +14,6 @@
           <p id="select_cpu" class="hw_select" style="display:none">
             <label for="id_cpu_new">Cpu:</label>
             <select name="cpu" id="id_cpu_new" size="5">
-              <option value="" selected>         </option>
               {% for hard in cpu %}
               <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}: {{hard.cpu.all.count}} {{hard.hit}}</option>
               {% endfor %}
@@ -24,7 +23,6 @@
           <p id="select_board" class="hw_select" style="display:none">
             <label for="id_board_new">Board:</label>
             <select name="board" id="id_board_new" size="5">
-              <option value="" selected>         </option>
               {% for hard in board %}
               <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}:{{hard.board.all.count}} {{hard.hit}}</option>
               {% endfor %}
@@ -34,7 +32,6 @@
           <p id="select_ram" class="hw_select" style="display:none">
             <label for="id_ram_new">Ram:</label>
             <select name="ram" id="id_ram_new" size="5">
-              <option value="" selected>         </option>
               {% for hard in ram %}
               <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}:{{hard.ram.all.count}} {{hard.hit}}</option>
               {% endfor %}
@@ -44,7 +41,6 @@
           <p id="select_vga" class="hw_select" style="display:none">
             <label for="id_vga_new">Vga:</label>
             <select name="vga" id="id_vga_new" size="5">
-              <option value="" selected>         </option>
               {% for hard in vga %}
               <option value="{{ hard.id }}" onclick="checkit({{hard.id}},'{{hard.hardware_kind}}')" id="{{ hard.id }}">{{ hard.name }}:{{hard.vga.all.count}} {{hard.hit}}</option>
               {% endfor %}
@@ -54,7 +50,6 @@
           <p id="select_power" class="hw_select" style="display:none">
             <label for="id_power_new">Power:</label>
             <select name="power" id="id_power_new" size="5">
-              <option value="" selected>         </option>
               {% for hard in power %}
               <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.power.all.count}} {{hard.hit}}</option>
               {% endfor %}
@@ -64,7 +59,6 @@
           <p id="select_hdd" class="hw_select" style="display:none">
             <label for="id_hdd_new">Hdd:</label>
             <select name="hdd" id="id_hdd_new" size="5">
-              <option value="" selected>         </option>
               {% for hard in hdd %}
               <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.hdd.all.count}} {{hard.hit}}</option>
               {% endfor %}
@@ -74,7 +68,6 @@
           <p id="select_ssd" class="hw_select" style="display:none">
             <label for="id_ssd_new">Ssd:</label>
             <select name="ssd" id="id_ssd_new" size="5">
-              <option value="" selected>         </option>
               {% for hard in ssd %}
               <option value="{{ hard.id }}" id="{{ hard.id }}">{{ hard.name }}:{{hard.ssd.all.count}} {{hard.hit}}</option>
               {% endfor %}
@@ -84,7 +77,6 @@
           <p id="select_odd" class="hw_select" style="display:none">
             <label for="id_odd_new">Odd:</label>
             <select name="odd" id="id_odd_new" size="5">
-              <option value="" selected>         </option>
               {% for hard in odd %}
               <option value="{{ hard.id }}">{{ hard.name }}:{{hard.odd.all.count}} {{hard.hit}}</option>
               {% endfor %}
@@ -383,12 +375,17 @@
     }
   }
   $('button#fake_set').click(function () {
-    var que = confirm('이 견적에 추가설명을 쓰시겠습니까?');
-    if (que == true) {
-      var text = prompt('설명을 입력해주세요.');
-      $('textarea#id_text').val(text);
+    var save = confirm('저장하시겠습니까?')
+    if (save == true) {
+        var que = confirm('이 견적에 추가설명을 쓰시겠습니까?');
+        if (que == true) {
+        var text = prompt('설명을 입력해주세요.');
+        $('textarea#id_text').val(text);
+        $('button#save_set').trigger("click");
+      }
+    } else {
+      alert('취소되었습니다.')
     }
-    $('button#save_set').trigger("click");
   })
   // 호환성 검사 오류 수정하기
   var myPc = {};
@@ -405,8 +402,8 @@
     }
     if (myPc["RAM"] == undefined) {
       yourPc += 'RAM: 미선택\n';
-    } else if (myPc["VGA"]) {
-      if ($.inArray(myPc["VGA"][0], myPc["BRD"]) != -1) {
+    } else if (myPc["RAM"]) {
+      if ($.inArray(myPc["RAM"][0], myPc["BRD"]) != -1) {
         yourPc += 'RAM: 적합\n';
       } else {
         yourPc += 'RAM: 부적합 Board 가' + myPc["RAM"][0] + '를 호환하지 않습니다.\n';

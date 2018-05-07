@@ -1,10 +1,64 @@
 {% extends 'board/board_home.html' %}
 
 {% block board %}
-<h1>{{ ctgr }}</h1>
-<ul>
-    {% for board in boards %}
-        <li><a href="{% url 'board:board_detail' pk=board.pk %}">{{ board }}</a></li>
+<h1>
+    {% for cate in cate %}
+        {% if ctgr == cate.id|stringformat:"i" %}
+            {{ cate }}
+        {% endif %}
     {% endfor %}
-</ul>
+</h1>
+{% verbatim %}
+<div class="board_list" ng-app="boardApp" ng-controller="boardCtrl">
+    <table>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>등록일</th>
+        </tr>
+        <tr ng-repeat="board in boards|startFrom:currentPage*pageSize|limitTo:pageSize|orderBy:myOrderBy">
+            <td>{{ board.pk }}</td>
+            <td><a href="{{ board.pk }}/detail">{{ board.fields.title }}</a></td>
+            <td>{{ board.fields.author }}</td>
+            <td>{{ board.fields.created_date|date:'y.M.d h:m' }}</td>
+        </tr>
+    </table>
+    <div class="button_area">
+        <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">이전</button>
+        {{currentPage+1}}/{{numberOfPage()}}
+        <button ng-disabled="currentPage >= boards.length/pageSize - 1" ng-click="currentPage=currentPage+1">다음</button>
+    </div>
+</div>
+{% endverbatim %}
+<script>
+    var app = angular.module('boardApp', []);
+
+    app.controller('boardCtrl', function($scope, $http) {
+        $scope.currentPage = 0;
+        $scope.pageSize = 10;
+        $scope.boards = []
+        $scope.numberOfPage = function() {
+            return Math.ceil($scope.boards.length/$scope.pageSize);
+        };
+        $scope.orderByMe = function(x) {
+            $scope.myOrderBy = x;
+        };
+        $http.get('{% url "board:board_list_data" %}').then(function (response){
+            data = JSON.parse(response.data.boards);
+            for (var i=0;i<data.length;i++) {
+                if (data[i]["fields"]["category"] == {{ ctgr }} ) {
+                    $scope.boards.push(data[i])
+                }
+            }
+        });
+    });
+
+    app.filter('startFrom', function() {
+        return function(input, start) {
+            start = +start;
+            return input.slice(start);
+        };
+    });
+</script>
 {% endblock %}

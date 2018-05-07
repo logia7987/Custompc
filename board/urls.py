@@ -9,5 +9,5 @@ urlpatterns = [
     url(r'(?P<pk>\d+)/detail/', views.board_detail, name='board_detail'),
     url(r'(?P<pk>\d+)/edit/', views.board_edit, name='board_edit'),
     url(r'(?P<pk>\d+)/remove/', views.board_remove, name='board_remove'),
-    url(r'(?P<pk>\d+)/comment/remove/', views.board_comment_remove, name='board_comment_remove'),
+    url(r'^getboard', views.board_list_data, name='board_list_data')
 ]

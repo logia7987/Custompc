@@ -2,7 +2,7 @@
 
 {% block manager %}
 <h1>제품목록</h1>
-<a href="{% url 'manager_hardware_new' %}">제품등록</a>
+<a href="{% url 'manager_hardware_new' %}" class="button_st">제품등록</a>
 {% verbatim %}
 <div ng-app="myApp" ng-controller="namesCtrl">
     <p><input type="text" ng-model="hwsearch"></p>
@@ -17,12 +17,14 @@
             <td>{{ x.pk }}</td>
             <td><a href="/manager/hardware/{{ x.pk }}/edit">{{x.fields.name}}</a></td>
             <td>{{x.fields.hardware_kind}}</td>
-            <td><a href="/manager/hardware/{{ x.pk }}/remove"><button>삭제</button></a></td>
+            <td><a href="/manager/hardware/{{ x.pk }}/remove"><button class="button_st">삭제</button></a></td>
         </tr>
     </table>
-    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">이전</button>
-    {{currentPage+1}}/{{numberOfPage()}}
-    <button ng-disabled="currentPage >= names.length/pageSize - 1" ng-click="currentPage=currentPage+1">다음</button>
+    <div class="button_area">
+        <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="button_st">이전</button>
+        {{currentPage+1}}/{{numberOfPage()}}
+        <button ng-disabled="currentPage >= names.length/pageSize - 1" ng-click="currentPage=currentPage+1" class="button_st">다음</button>
+    </div>
 </div>
 {% endverbatim %}
 <p>*제품이름을 클릭하면 수정할 수 있습니다.</p>
