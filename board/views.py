@@ -11,10 +11,11 @@ class BoardHome(TemplateView):
     template_name = 'board/board_home.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['cate'] = Category.objects.all()[:10]
-        context['board'] = Board.objects.all()[:10]
-        context['custom'] = Custom.objects.all()[:10]
+        context = super(BoardHome, self).get_context_data(**kwargs)
+        context['custom'] = Custom.objects.all().order_by('-create_date')[:10]
+        context['reviews'] = Board.objects.filter(category=2).order_by('-created_date')[:10]
+        context['info'] = Board.objects.filter(category=3).order_by('-created_date')[:10]
+        context['free'] = Board.objects.filter(category=4).order_by('-created_date')[:10]
         return context
 
 def board_set_list(request):
@@ -77,7 +78,7 @@ def board_edit(request, pk):
 def board_remove(request, pk):
     board = get_object_or_404(Board, pk=pk)
     board.delete()
-    return redirect('board:board_list')
+    return redirect('board:board_home')
 
 def board_list_data(request):
     sets = serializers.serialize('json', Custom.objects.all())

@@ -2,20 +2,19 @@
 
 {% block board %}
 <h1>견적게시판</h1>
-<!-- todo do pagination -->
 {% verbatim %}
 <div class="board_set_list" ng-app="setApp" ng-controller="setCtrl">
     <table>
         <tr>
             <th>번호</th>
-            <th>제목</th>
+            <th>견적</th>
             <th>글쓴이</th>
             <th>등록일</th>
         </tr>
         <tr ng-repeat="set in sets|startFrom:currentPage*pageSize|limitTo:pageSize|orderBy:myOrderBy">
             <td>{{ set.pk }}</td>
-            <td><a href="/custom/{{ set.pk }}/">{{ set.title }}</a></td>
-            <td>{{ set.fields.use }}</td>
+            <td><a href="/custom/{{ set.pk }}/">{{ set.fields.user }}</a></td>
+            <td>{{ set.fields.user }}</td>
             <td>{{ set.fields.create_date|date:'y.M.d h:m' }}</td>
         </tr>
     </table>

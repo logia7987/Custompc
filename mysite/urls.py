@@ -30,4 +30,5 @@ urlpatterns = [
     url(r'^getcompa', get_compa, name='get_compa'),
     url(r'^getdata', get_data, name='get_data'),
     url(r'^gettext',get_text, name='get_text'),
+    url(r'^getid',get_id, name='get_id'),
 ]

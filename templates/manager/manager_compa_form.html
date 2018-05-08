@@ -1,0 +1,17 @@
+{% extends 'manager/manager_home.html' %}
+
+{% block manager %}
+<!--todo 옵션 필터링 -->
+<h2>필터 등록</h2>
+<form action="" method="post" enctype="multipart/form-data" class="register">{% csrf_token %}
+    <label for="id_comp_mode">Comp mode:</label>
+    <span>필터 요소</span><input type="text" name="comp_mode" maxlength="100" required id="id_comp_mode" />
+    <label for="id_hardware">Hardware:</label>
+    <span>제품</span><select name="hardware" required id="id_hardware" multiple="multiple">
+        {% for hard in hards %}
+            <option value="{{ hard.id }}">{{ hard }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="button_st form_button">등록하기</button>
+</form>
+{% endblock %}

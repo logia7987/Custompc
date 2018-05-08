@@ -37,6 +37,9 @@ h5,
 h6 {
   margin: 0;
 }
+h1 {
+  text-align: center;
+}
 img {
   vertical-align: top;
   /*이미지로 인한 오류를 위한 초기화 위로 정렬*/
@@ -57,6 +60,10 @@ address {
   content: "";
   display: block;
   clear: both;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 0.5em;
 }
 ul {
   padding: 0;
@@ -110,6 +117,7 @@ table td {
 table th {
   border-top: 1px solid #1e1e1e;
   border-bottom: 1px solid #e4e4e4;
+  text-align: center;
 }
 table td {
   border-bottom: 1px solid #e4e4e4;
@@ -135,7 +143,6 @@ header nav div.headnav_right li {
 }
 div.base_logo_area {
   background: #e4e4e4;
-  height: 5em;
   line-height: 5em;
   text-align: center;
 }
@@ -144,7 +151,7 @@ div.content_area {
   margin: 1.5em 0 2em;
 }
 footer {
-  background: #c4c4c4;
+  background: #333;
   height: 5em;
   line-height: 5em;
 }
@@ -167,11 +174,23 @@ div.left_section_button li:hover {
   cursor: pointer;
 }
 div.left_section_button select {
-  border: none;
+  border: 1px solid #e4e4e4;
   width: 100%;
 }
 div.center_section {
   display: none;
+}
+div.center_section li {
+  padding: 0.35em;
+  margin: 0.2em;
+  background: #e4e4e4;
+}
+div.center_section span.chosen_hw {
+  color: #333;
+  padding: 0.45em;
+}
+div.right_section {
+  margin-top: 2em;
 }
 button#custom_check,
 button#fake_set {
@@ -181,22 +200,6 @@ button#fake_set {
   width: 100%;
   height: 3em;
   color: #fff;
-}
-button#custom_check {
-  background: #99ccff;
-  transition: 0.5s;
-}
-button#custom_check:hover {
-  background: #4da6ff;
-  cursor: pointer;
-}
-button#fake_set {
-  background: #99ccff;
-  transition: 0.5s;
-}
-button#fake_set:hover {
-  background: #4da6ff;
-  cursor: pointer;
 }
 div.board_list_nav {
   padding: 0.5em 0 0.5em;
@@ -215,23 +218,27 @@ div.board_list_nav a.board_new:hover {
   background: #99ccff;
   color: #fff;
 }
+h1.board_title {
+  margin-top: 1em;
+}
 div.board_list {
   margin-top: 1.5em;
 }
-div.board_list div.board_list_ctgr {
-  padding: 1.5em 1em 1.5em;
-  width: 95%;
-  margin: 0.5em;
-}
-div.board_list div.board_list_ctgr h1 {
+div.board_list h1 {
   margin-bottom: 0.5em;
   font-size: 1.7em;
 }
-div.board_list div.board_list_ctgr h1 a {
+div.board_list h1 a {
   margin-bottom: 0.2em;
 }
-div.board_list div.board_list_ctgr h1 a:hover {
+div.board_list h1 a:hover {
   border-bottom: 1px solid #464646;
+}
+div.board_list div.board_list_ctgr {
+  padding: 1.5em 1em 1.5em;
+  width: 98%;
+  margin: 0.5em;
+  margin-bottom: 2em;
 }
 div.board_list div.board_list_ctgr td {
   font-size: 0.9em;
@@ -239,7 +246,6 @@ div.board_list div.board_list_ctgr td {
 div.set_detail_left h2 {
   display: inline-block;
   border-bottom: 1px solid #888;
-  margin-bottom: 0.5em;
 }
 div.set_detail_left div.detail_share {
   float: left;
@@ -303,8 +309,15 @@ div.board_detail h2 {
   display: inline-block;
   border-bottom: 1px solid #888;
 }
-div.member_home h2 {
-  margin-bottom: 0.5em;
+div.member_home div.member_sect1 img {
+  display: block;
+  width: 50%;
+  margin: auto;
+  border-radius: 50%;
+}
+div.member_home div.member_sect1 p {
+  text-align: center;
+  margin: 1em 0 1em;
 }
 div.member_home div.member_sect2 div.member_info1 {
   margin-bottom: 1.5em;
@@ -315,4 +328,114 @@ div.member_home div.member_sect2 div.member_info2 {
 div.member_home div.member_sect2 div a,
 div.member_home div.member_sect2 div td {
   font-size: 0.9em;
+}
+form.register {
+  width: 45%;
+  margin: auto;
+}
+form.register span {
+  display: block;
+}
+form.register input {
+  width: 100%;
+  height: 2.5em;
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+form.register input#id_username {
+  width: 75%;
+}
+form.register button.id_check {
+  float: right;
+  width: 25%;
+  height: 2.5em;
+}
+form.register select {
+  width: 100%;
+}
+form.register textarea {
+  resize: none;
+  width: 100%;
+  height: 10em;
+}
+form.login input#id_username {
+  width: 100%;
+}
+button.form_button {
+  width: 100%;
+  margin-top: 1.5em;
+  display: block;
+  height: 3em;
+}
+div.done_div {
+  padding: 1.5em 0 1.5em;
+}
+div.done_div h1 {
+  font-weight: 400;
+}
+@media all and (min-width: 770px) {
+  div.left_section {
+    float: left;
+    width: 49%;
+    transition: 0.5s;
+  }
+  div.center_section {
+    float: right;
+    width: 49%;
+    display: block;
+    transition: 0.5s;
+  }
+  div.manager_left {
+    float: left;
+    width: 49%;
+  }
+  div.manager_right {
+    float: right;
+    width: 49%;
+  }
+  div.member_home div.member_sect1 {
+    width: 50%;
+    margin: 0 auto 1.5em;
+    transition: 0.5s;
+  }
+  div.member_home div.member_sect2 div.member_info1 {
+    float: left;
+    width: 49%;
+  }
+  div.member_home div.member_sect2 div.member_info2 {
+    float: right;
+    width: 49%;
+  }
+}
+@media all and (min-width: 995px) {
+  div.main {
+    position: relative;
+  }
+  div.left_section {
+    width: 33%;
+    margin-bottom: 3em;
+  }
+  div.center_section {
+    float: left;
+    width: 33%;
+  }
+  button#custom_check,
+  button#fake_set {
+    margin-bottom: 0.5em;
+    height: 5em;
+  }
+  div.right_section {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 33%;
+    margin-top: 0;
+    transition: 0.5s;
+  }
+  div.board_list_ctgr {
+    transition: 0.5s;
+    float: left;
+    width: 48.3%!important;
+    height: 450px;
+  }
 }

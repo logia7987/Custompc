@@ -52,7 +52,7 @@ class ManagerHardwareList(LoginRequiredMixin, ListView):
         return super(ManagerHardwareList, self).dispatch(request, *args, **kwargs)
 
 class ManagerHardwareNew(LoginRequiredMixin, CreateView):
-    template_name = 'manager/manager_regular_form.html'
+    template_name = 'manager/manager_hw_form.html'
     model = Hardware
     fields = ('name','hardware_kind','option','hard_thumbnail')
     success_url = reverse_lazy('manager_hardware_list')
@@ -84,10 +84,15 @@ class ManagerCompaList(LoginRequiredMixin, ListView):
         return super(ManagerCompaList, self).dispatch(request, *args, **kwargs)
 
 class ManagerCompaNew(LoginRequiredMixin, CreateView):
-    template_name = 'manager/manager_regular_form.html'
+    template_name = 'manager/manager_compa_form.html'
     model = Compa
     fields = ('comp_mode','hardware')
     success_url = reverse_lazy('manager_compa_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['hards'] = Hardware.objects.all()
+        return context
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_member or request.user.is_anonymous:
@@ -204,3 +209,14 @@ def get_data(request):
         'user':user
     }
     return JsonResponse(date)
+#아이디 중복검사
+def get_id(request):
+    users = User.objects.all()
+    id = []
+    for user in users:
+        id.append(user.username)
+    data = {
+        'id':id
+    }
+    return JsonResponse(data)
+

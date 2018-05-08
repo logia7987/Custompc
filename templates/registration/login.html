@@ -3,9 +3,13 @@
 {% block title %}로그인{% endblock %}
 
 {% block content %}
-<form action=""method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">로그인</button>
+<h2>로그인</h2>
+<form action=""method="post" class="register login">{% csrf_token %}
+    <label for="id_username">Username:</label>
+    <span>아이디</span><input type="text" name="username" autofocus maxlength="254" required id="id_username" />
+    <label for="id_password">Password:</label>
+    <span>비밀번호</span><input type="password" name="password" required id="id_password" />
+    <button type="submit" class="button_st form_button">로그인</button>
     <input type="hidden"name="next"value="{{next}}">
 </form>
 {% endblock %}

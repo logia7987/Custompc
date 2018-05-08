@@ -3,8 +3,20 @@
 {% block title %}새글쓰기{% endblock %}
 
 {% block board %}
-<form action=""method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">저장</button>
+<h2>새글쓰기</h2>
+<form action=""method="post" class="register">{% csrf_token %}
+    <label for="id_title">Title:</label>
+    <span>제목</span><input type="text" name="title" maxlength="200" required id="id_title" />
+    <label for="id_category">Category:</label>
+    <span>카테고리</span><select name="category" required id="id_category">
+      <option value="" selected>---------</option>
+      <option value="2">후기게시판</option>
+      <option value="3">H/W정보게시판</option>
+      <option value="4">자유게시판</option>
+    </select>
+    <label for="id_text">Text:</label>
+    <span>내용</span><textarea name="text" cols="40" rows="10" required id="id_text">
+    </textarea>
+    <button type="submit" class="button_st form_button">저장</button>
 </form>
 {% endblock %}

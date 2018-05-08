@@ -73,10 +73,10 @@ class Hardware(models.Model):
             elif self.hardware_kind == "ODD":
                 hard_count = hard_count + Custom.objects.filter(odd=i.id).count();
         top = hard_count/100*85
-        if req >= top:
-            return 'HIT'
-        else:
+        if req == 0:
             return ''
+        elif req >= top:
+            return 'HIT'
 
 class Compa(models.Model):
     comp_mode = models.CharField(max_length=100)

@@ -1,7 +1,6 @@
 {% extends 'manager/manager_home.html' %}
 
 {% block manager %}
-<!--todo 디테일한 기능 추가예정-->
 {% verbatim %}
 <div ng-app="userApp" ng-controller="userCtrl">
     <p><input type="text" ng-model="usersearch"></p>
@@ -16,11 +15,12 @@
         <tr ng-repeat="x in users|startFrom:currentPage*pageSize|limitTo:pageSize|filter:hwsearch|orderBy:myOrderBy">
             <td>{{ x.pk }}</td>
             <td>{{ x.fields.username }}</td>
-            <td>{{ x.fields.is_superuser }}|{{ x.fields.is_manager }}|{{ x.fields.is_member }}</td>
+            <td>{{ x.atrt }}</td>
             <td>{{ x.fields.last_login|date:'yyyy.M.d h:m' }}</td>
             <td>{{ x.fields.date_joined|date:'yyyy.M.d h:m' }}</td>
         </tr>
     </table>
+
     <div class="button_area">
         <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="button_st">이전</button>
         {{currentPage+1}}/{{numberOfPage()}}
@@ -46,6 +46,13 @@
             data = JSON.parse(response.data.user);
             for (var i=0;i<data.length;i++){
                 $scope.users.push(data[i])
+                if (data[i]['fields']['is_superuser'] === true && data[i]['fields']['is_manager'] === false && data[i]['fields']['is_member'] === false) {
+                    $scope.users[i]['atrt'] = '슈퍼유저';
+                } else if (data[i]['fields']['is_superuser'] === false && data[i]['fields']['is_manager'] === true && data[i]['fields']['is_member'] === false) {
+                    $scope.users[i]['atrt'] = '매니저';
+                } else if (data[i]['fields']['is_superuser'] === false && data[i]['fields']['is_manager'] === false && data[i]['fields']['is_member'] === true) {
+                    $scope.users[i]['atrt'] = '유저';
+                }
             }
         });
     });

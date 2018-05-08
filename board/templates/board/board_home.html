@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
 <div class="board_list_nav clearfix">
     <h1><a href="{% url 'board:board_home' %}">게시판</a></h1>
@@ -24,27 +23,57 @@
                 {% endfor %}
             </table>
         </div>
-        {% for ctgr in cate %}
         <div class="board_list_ctgr d_style">
-            <h1><a href="{% url 'board:board_list' %}?category={{ ctgr.id }}">{{ ctgr }}</a></h1>
+            <h1><a href="{% url 'board:board_list' %}?category=2">후기게시판</a></h1>
             <table>
                 <tr>
                     <th>번호</th>
                     <th>제목</th>
                     <th>작성일</th>
                 </tr>
-                {% for board in board %}
-                    {% if board.category == ctgr %}
+                {% for board in reviews %}
                     <tr>
                         <td>{{ board.id }}</td>
                         <td><a href="{% url 'board:board_detail' pk=board.pk %}">{{ board }}</a></td>
                         <td>{{ board.created_date|date:'Y.m.d h:i' }}</td>
                     </tr>
-                    {% endif %}
                 {% endfor %}
             </table>
         </div>
-        {% endfor %}
+        <div class="board_list_ctgr d_style">
+            <h1><a href="{% url 'board:board_list' %}?category=3">H/W 정보게시판</a></h1>
+            <table>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성일</th>
+                </tr>
+                {% for board in info %}
+                    <tr>
+                        <td>{{ board.id }}</td>
+                        <td><a href="{% url 'board:board_detail' pk=board.pk %}">{{ board }}</a></td>
+                        <td>{{ board.created_date|date:'Y.m.d h:i' }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="board_list_ctgr d_style">
+            <h1><a href="{% url 'board:board_list' %}?category=4">자유게시판</a></h1>
+            <table>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성일</th>
+                </tr>
+                {% for board in free %}
+                    <tr>
+                        <td>{{ board.id }}</td>
+                        <td><a href="{% url 'board:board_detail' pk=board.pk %}">{{ board }}</a></td>
+                        <td>{{ board.created_date|date:'Y.m.d h:i' }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
     {% endblock %}
 {% endblock %}

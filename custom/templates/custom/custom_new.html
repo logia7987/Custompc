@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="clearfix">
+<div class="main clearfix">
   <div class="left_section clearfix">
     <!-- 폼출력 버튼 -->
     <div class="left_section_button">
+      <h2>PC 주요부품</h2>
       <form action="" method="post">{% csrf_token %}
           {% for hidden in form.hidden_fields %}
             {{ hidden }}
@@ -93,57 +94,56 @@
     <!-- 폼 : 장고의 필터링된 쿼리셋을 이용해서 부품타입별 필터링-->
   </div>
   <!-- 세트 출력 -->
-  <!-- todo 반응형| 기록이 left-section 에 기록되게 -->
   <div class="center_section">
+    <h2>선택한 부품</h2>
     <ul>
-      <li>CPU :
+      <li><span class="chosen_hw">CPU</span>
         <img src="" alt="CPU" id="cpu_th">
         <span id="up_cpu"></span>
       </li>
-      <li>Board :
+      <li><span class="chosen_hw">Board</span>
         <img src="" alt="board" id="board_th">
         <span id="up_board"></span>
       </li>
-      <li>RAM :
+      <li><span class="chosen_hw">RAM</span>
         <img src="" alt="RAM" id="ram_th">
         <span id="up_ram"></span>
       </li>
-      <li>VGA :
+      <li><span class="chosen_hw">VGA</span>
         <img src="" alt="VGA" id="vga_th">
         <span id="up_vga"></span>
       </li>
-      <li>Power :
+      <li><span class="chosen_hw">Power</span>
         <img src="" alt="power" id="power_th">
         <span id="up_power"></span>
       </li>
-      <li>HDD :
+      <li><span class="chosen_hw">HDD</span>
         <img src="" alt="HDD" id="hdd_th">
         <span id="up_hdd"></span>
       </li>
-      <li>SSD :
+      <li><span class="chosen_hw">SSD</span>
         <img src="" alt="SSD" id="ssd_th">
         <span id="up_ssd"></span>
       </li>
-      <li>ODD :
+      <li><span class="chosen_hw">ODD</span>
         <img src="" alt="ODD" id="odd_th">
         <span id="up_odd"></span>
       </li>
     </ul>
   </div>
-  <button type="button" id="custom_check" onclick="checkmypc()">호환성 검사</button>
+  <button type="button" id="custom_check" onclick="checkmypc()" class="button_st">호환성 검사</button>
   {% if user.is_authenticated %}
-  <button type="submit" id="fake_set">저장</button>
+  <button type="submit" id="fake_set" class="button_st">저장</button>
   {% endif %}
   <!-- 세트의 정보 -->
   <div class="right_section">
     <div>
       <h2>도움말</h2>
-      <p id="guide"></p>
-      <!-- 하드웨어를 견적에 등록한 횟수 -->
+      <p id="guide" class="d_style"></p>
     </div>
     <div>
       <h2>부품 사양</h2>
-      <p id="spec"></p>
+      <p id="spec" class="d_style"></p>
     </div>
   </div>
 </div>
@@ -387,7 +387,6 @@
       alert('취소되었습니다.')
     }
   })
-  // 호환성 검사 오류 수정하기
   var myPc = {};
   var yourPc ='';
   function checkmypc() {

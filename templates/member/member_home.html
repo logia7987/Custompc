@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}마이페이지{% endblock %}
+{% block title %}My Page{% endblock %}
 
 {% block content %}
+{% load static %}
 <div class="member_home">
     <div class="member_sect1 d_style">
         <h2>프로필</h2>
-        <p>ID : {{ user.username }}</p>
-        <p><a href="{% url 'password_change' %}">비밀번호 변경</a></p>
+        <img src="{% static 'avatar/avatar-default.png' %}" alt="avatar"/>
+        <p>{{ user.username }}</p>
+        <p><a href="{% url 'password_change' %}" class="button_st">비밀번호 변경</a> <a href="#" class="button_st regist_out">회원탈퇴</a></p>
     </div>
     <div class="clearfix member_sect2">
         <div class="member_info1 d_style">
@@ -58,4 +60,6 @@
         </div>
     </div>
 </div>
+<script>
+</script>
 {% endblock %}
