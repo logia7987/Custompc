@@ -1,7 +1,6 @@
 {% extends 'board/board_home.html' %}
 
 {% block board %}
-<!--todo 게시판 미흡점 수정-->
 <h1 class="board_title">{% for cate in cate %}{% if ctgr == cate.id|stringformat:"i" %}{{ cate }}{% endif %}{% endfor %}</h1>
 {% verbatim %}
 <div class="board_cate_list" ng-app="boardApp" ng-controller="boardCtrl">
@@ -20,9 +19,9 @@
         </tr>
     </table>
     <div class="button_area">
-        <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">이전</button>
+        <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="button_st">이전</button>
         {{currentPage+1}}/{{numberOfPage()}}
-        <button ng-disabled="currentPage >= boards.length/pageSize - 1" ng-click="currentPage=currentPage+1">다음</button>
+        <button ng-disabled="currentPage >= boards.length/pageSize - 1" ng-click="currentPage=currentPage+1" class="button_st">다음</button>
     </div>
 </div>
 {% endverbatim %}

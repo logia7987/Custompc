@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from .models import Board,Category
 from .forms import BoardForm
 from custom.forms import CommentForm
-from custom.models import Custom, Comment
+from custom.models import Custom, User
 # Create your views here.
 class BoardHome(TemplateView):
     template_name = 'board/board_home.html'
@@ -83,8 +83,10 @@ def board_remove(request, pk):
 def board_list_data(request):
     sets = serializers.serialize('json', Custom.objects.all())
     boards = serializers.serialize('json', Board.objects.all())
+    id = serializers.serialize('json', User.objects.all())
     data = {
         'sets':sets,
-        'boards':boards
+        'boards':boards,
+        'id':id
     }
     return JsonResponse(data)

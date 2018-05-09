@@ -3,37 +3,76 @@
 <h2>회원가입</h2>
 <form action=""method="post" class="register">{% csrf_token %}
     <label for="id_username">Username:</label>
-    <span>아이디</span><input type="text" name="username" maxlength="150" autofocus required id="id_username" /><button class="id_check button_st" onclick="CheckId()" type="button">중복확인</button>
+    <span>아이디</span><input type="text" name="username" maxlength="150" autofocus required id="id_username" onblur="CheckId()" autocomplete="off" />
     <span id="id_result"></span>
     <label for="id_password1">Password:</label>
-    <span>비밀번호</span><input type="password" name="password1" required id="id_password1" />
+    <span>비밀번호</span><input type="password" name="password1" required id="id_password1" onblur="CheckPw()" />
+    <span id="pw1_result"></span>
     <label for="id_password2">Password confirmation:</label>
-    <span>비밀번호 확인</span><input type="password" name="password2" required id="id_password2" />
+    <span>비밀번호 확인</span><input type="password" name="password2" required id="id_password2" onblur="CheckUpw()" />
+    <span id="pw2_result"></span>
     <button type="submit" class="form_button button_st">회원가입</button>
 </form>
 <script>
-    // todo 입력오류잡기
+    function CheckUpw() {
+        var pw1 = $('input#id_password1').val()
+        var pw2 = $('input#id_password2').val()
+        var eMsg = document.getElementById('pw2_result')
+        if ( pw2 == '' ) {
+            eMsg.innerHTML = '필수 정보입니다.';
+            eMsg.style.color = '#ff3300';
+            return false
+        }
+        if (pw1 === pw2) {
+            eMsg.innerHTML = '비밀번호가 일치합니다!';
+            eMsg.style.color = '#00cc00';
+        }
+    }
+    function CheckPw() {
+        var id = $('input#id_username').val()
+        var pw = $('input#id_password1').val()
+        var eMsg = document.getElementById('pw1_result')
+        if (pw === '') {
+            eMsg.innerHTML = '필수 정보입니다.';
+            eMsg.style.color = '#ff3300';
+            return false
+        }
+        var isPW = /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{8,16}$/;
+        if (!isPW.test(pw)) {
+            eMsg.innerHTML = '8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.';
+            eMsg.style.color = '#ff3300';
+        } else {
+            eMsg.innerHTML = '사용가능한 비밀번호입니다!';
+            eMsg.style.color = '#00cc00';
+        }
+    }
     function CheckId() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
+        var id = $('input#id_username').val()
+        var eMsg = document.getElementById('id_result')
+        if (id === '') {
+            eMsg.innerHTML = '필수 정보입니다.';
+            eMsg.style.color = '#ff3300';
+            return false
+        }
+        var isID = /^[a-z0-9][a-z0-9_\-]{4,19}$/;
+        if (!isID.test(id)){
+            eMsg.innerHTML = '5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.';
+            eMsg.style.color = '#ff3300';
+            return false
+        }
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             obj = JSON.parse(this.responseText);
-            console.log()
-                for (var i=0;i<=obj['id'].length;i++) {
-                    if (obj['id'][i] === $('input#id_username').val()) {
-                        $('span#id_result').text('중독되는 아이디가 있습니다.')
-                        $('span#id_result').css('color','#ff3300')
-                        break
-                    } else if ($('input#id_username').val() === '') {
-                        $('span#id_result').text('아이디를 입력해 주세요.')
-                        $('span#id_result').css('color','#ff3300')
-                    } else if ($('input#id_username').val().length < 5 ) {
-                        $('span#id_result').text('아이디가 너무짧습니다.')
-                        $('span#id_result').css('color','#ff3300')
-                    } else {
-                        $('span#id_result').text('사용가능한 아이디입니다.')
-                        $('span#id_result').css('color','#00cc00')
-                    }
+            for (var i=0;i<=obj['id'].length;i++) {
+                if (obj['id'][i] === id) {
+                    eMsg.innerHTML = '중독되는 아이디가 있습니다.';
+                    eMsg.style.color = '#ff3300';
+                    break
+                } else {
+                    eMsg.innerHTML = '사용 가능한 아이디입니다!';
+                    eMsg.style.color = '#00cc00';
+                }
             }
         }
       };

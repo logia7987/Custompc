@@ -1,0 +1,59 @@
+{% extends 'manager/manager_home.html' %}
+
+{% block manager %}
+<!--todo comment list and pagination-->
+<h1>전체 댓글</h1>
+{% verbatim %}
+<div ng-app="commentApp" ng-controller="commentCtrl">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>내용</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+        <tr ng-repeat="x in comment">
+            <td>{{ x.pk }}</td>
+            <td><a href="#">{{ x.fields.text }}</a></td>
+            <td></td>
+            <td>{{ x.fields.create_date|date:'yyyy.M.d h:m' }}</td>
+        </tr>
+    </table>
+    <div class="button_area">
+        <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="button_st">이전</button>
+        {{currentPage+1}}/{{numberOfPage()}}
+        <button ng-disabled="currentPage >= comment.length/pageSize - 1" ng-click="currentPage=currentPage+1" class="button_st">다음</button>
+    </div>
+</div>
+{% endverbatim %}
+<script>
+    // todo fix javascript
+    var app = angular.module('commentApp', []);
+
+    app.controller('commentCtrl', function($scope, $http) {
+        $scope.currentPage = 0;
+        $scope.pageSize = 10;
+        $scope.comment = []
+        $scope.numberOfPage = function() {
+            return Math.ceil($scope.comment.length/$scope.pageSize);
+        };
+        $scope.orderByMe = function(x) {
+                $scope.myOrderBy = x;
+        };
+        $http.get('{% url "comment" %}').then(function (response){
+            ment = JSON.parse(response.data.ment);
+            for (var i=0;i<ment.length;i++) {
+                $scope.comment.push(ment[i])
+            }
+        });
+    });
+
+    app.filter('startFrom', function() {
+        return function(input, start) {
+            start = +start;
+            return input.slice(start);
+        };
+    });
+</script>
+
+{% endblock %}

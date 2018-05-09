@@ -2,25 +2,8 @@
 
 {% block manager %}
 <h2>제품등록</h2>
-<form action="" method="post" enctype="multipart/form-data" class="register">{% csrf_token %}
-    <label for="id_name">Name:</label>
-    <span>품명</span><input type="text" name="name" maxlength="100" required id="id_name" />
-    <label for="id_hardware_kind">Hardware kind:</label>
-    <span>종류</span><select name="hardware_kind" required id="id_hardware_kind">
-      <option value="" selected>---------</option>
-      <option value="CPU">CPU</option>
-      <option value="BRD">Board</option>
-      <option value="RAM">RAM</option>
-      <option value="VGA">VGA</option>
-      <option value="POW">Power</option>
-      <option value="HDD">HDD</option>
-      <option value="SSD">SSD</option>
-      <option value="ODD">ODD</option>
-    </select>
-    <label for="id_option">Option:</label>
-    <span>사양</span><textarea name="option" cols="40" rows="10" required id="id_option"></textarea>
-    <label for="id_hard_thumbnail">Hard thumbnail:</label>
-    <span>이미지</span><input type="file" name="hard_thumbnail" id="id_hard_thumbnail" />
+<form action="" method="post" enctype="multipart/form-data" class="register uselabel">{% csrf_token %}
+    {{ form.as_p }}
     <button type="submit" class="button_st form_button">등록</button>
 </form>
 {% endblock %}

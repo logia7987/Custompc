@@ -106,6 +106,9 @@ div.button_area {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
 }
+.uselabel label {
+  position: static;
+}
 table {
   border-collapse: collapse;
   width: 100%;
@@ -143,7 +146,7 @@ header nav div.headnav_right li {
 }
 div.base_logo_area {
   background: #e4e4e4;
-  line-height: 5em;
+  line-height: 6em;
   text-align: center;
 }
 div.content_area {
@@ -151,6 +154,7 @@ div.content_area {
   margin: 1.5em 0 2em;
 }
 footer {
+  margin-top: 5em;
   background: #333;
   height: 5em;
   line-height: 5em;
@@ -183,11 +187,11 @@ div.center_section {
 div.center_section li {
   padding: 0.35em;
   margin: 0.2em;
-  background: #e4e4e4;
 }
 div.center_section span.chosen_hw {
   color: #333;
-  padding: 0.45em;
+  background: #e4e4e4;
+  padding: 0 0.45em 0;
 }
 div.right_section {
   margin-top: 2em;
@@ -204,6 +208,7 @@ button#fake_set {
 div.board_list_nav {
   padding: 0.5em 0 0.5em;
   border-bottom: 1px solid #464646;
+  margin-bottom: 1.5em;
 }
 div.board_list_nav h1 {
   float: left;
@@ -255,11 +260,15 @@ div.set_detail_left div.detail_nav {
 }
 div.set_detail_left ul.d_text li {
   margin-bottom: 0.5em;
+  height: 3.5em;
+  line-height: 3.5em;
 }
 div.set_detail_left ul.d_text span {
+  display: block;
   background: #99ccff;
   color: #fff;
-  padding: 0.2em;
+  padding-left: 1em;
+  margin-bottom: 0.5em;
 }
 div.comment_area {
   margin-top: 1em;
@@ -342,9 +351,6 @@ form.register input {
   text-align: center;
   margin-bottom: 1.5em;
 }
-form.register input#id_username {
-  width: 75%;
-}
 form.register button.id_check {
   float: right;
   width: 25%;
@@ -385,6 +391,9 @@ div.done_div h1 {
     display: block;
     transition: 0.5s;
   }
+  div.center_section span.chosen_hw {
+    display: block;
+  }
   div.manager_left {
     float: left;
     width: 49%;
@@ -396,15 +405,16 @@ div.done_div h1 {
   div.member_home div.member_sect1 {
     width: 50%;
     margin: 0 auto 1.5em;
-    transition: 0.5s;
   }
   div.member_home div.member_sect2 div.member_info1 {
     float: left;
     width: 49%;
+    height: 25em;
   }
   div.member_home div.member_sect2 div.member_info2 {
     float: right;
     width: 49%;
+    height: 25em;
   }
 }
 @media all and (min-width: 995px) {
@@ -437,5 +447,28 @@ div.done_div h1 {
     float: left;
     width: 48.3%!important;
     height: 450px;
+  }
+  div.set_detail_left {
+    float: left;
+    width: 60%;
+    margin-left: 20%;
+    transition: 0.5s;
+  }
+  div.set_detail_right {
+    margin: 0 1em;
+    display: block;
+    float: right;
+    width: 16%;
+  }
+  div.board_detail {
+    width: 60%;
+    margin: auto;
+    transition: 0.5s;
+  }
+  div.comment_area,
+  div.a_comment {
+    width: 60%;
+    margin: auto;
+    margin-bottom: 1em;
   }
 }

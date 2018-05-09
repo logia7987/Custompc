@@ -13,17 +13,17 @@
         </tr>
         <tr ng-repeat="set in sets|startFrom:currentPage*pageSize|limitTo:pageSize|orderBy:myOrderBy">
             <td>{{ set.pk }}</td>
-            <td><a href="/custom/{{ set.pk }}/">{{ set.fields.user }}</a></td>
+            <td><a href="/custom/{{ set.pk }}/">{{ set.title }}</a></td>
             <td>{{ set.fields.user }}</td>
             <td>{{ set.fields.create_date|date:'y.M.d h:m' }}</td>
         </tr>
     </table>
     <div class="button_area">
-    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">이전</button>
+    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="button_st">이전</button>
     {{currentPage+1}}/{{numberOfPage()}}
-    <button ng-disabled="currentPage >= sets.length/pageSize - 1" ng-click="currentPage=currentPage+1">다음</button>
+    <button ng-disabled="currentPage >= sets.length/pageSize - 1" ng-click="currentPage=currentPage+1" class="button_st">다음</button>
     </div>
-    <a href="/">견적작성하기</a>
+    <a href="/" class="button_st">견적작성하기</a>
     <p>*견적게시판은 회원님들의 견적만 게시합니다.</p>
 </div>
 {% endverbatim %}
@@ -41,10 +41,20 @@
             $scope.myOrderBy = x;
         };
         $http.get('{% url "board:board_list_data" %}').then(function (response){
-            data = JSON.parse(response.data.sets);
-            for (var i=0;i<data.length;i++) {
-                $scope.sets.push(data[i])
-                $scope.sets[i]['title'] = data[i]['fields']['text'].slice(0,10)
+            $scope.data = JSON.parse(response.data.sets);
+            $scope.id = JSON.parse(response.data.id);
+            for (var i=0;i<$scope.data.length;i++) {
+                if ($scope.data[i]['fields']['text'] != '') {
+                    $scope.sets.push($scope.data[i])
+                    $scope.sets[i]['title'] = $scope.data[i]['fields']['text'].slice(0,10)
+                } else if ($scope.data[i]['fields']['text'] === '') {
+                    $scope.sets.push($scope.data[i])
+                    for (var k=0;k<=$scope.id.length;k++) {
+                        if ($scope.data[i]['fields']['user'] === $scope.id[k]['pk']) {
+                            return $scope.sets[i]['title'] = $scope.id[k]['fields']['username']
+                        }
+                    }
+                }
             }
         });
     });

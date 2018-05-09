@@ -6,6 +6,9 @@ urlpatterns = [
     url('^', include('custom.urls', namespace='custom')),
     url('^board/', include('board.urls', namespace='board')),
     url(r'^manager/$', ManagerHome.as_view(), name='manager_page'),
+    # set, comment
+    url(r'^manager/set/$', ManagerSetList.as_view(), name='manager_set_list'),
+    url(r'^manager/comment/$',ManagerCommentList.as_view(), name='manager_comment_list'),
     # object compa
     url(r'^manager/compatible/$', ManagerCompaList.as_view(), name='manager_compa_list'),
     url(r'^manager/compatible/new$', ManagerCompaNew.as_view(), name='manager_compa_new'),
@@ -18,6 +21,8 @@ urlpatterns = [
     url(r'^manager/hardware/(?P<pk>\d+)/remove$', manager_hardware_remove, name='manager_hardware_remove'),
     #user
     url(r'^manager/user/$', ManagerUserList.as_view(), name='manager_user_list'),
+    url(r'^manager/user/leave/$', leave, name='leave'),
+    url(r'^manager/user/leave/done/$', leave_done, name='leave_done'),
     #stat
     url(r'^manager/stat$', ManagerStat.as_view(),name='manager_stat'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
@@ -31,4 +36,6 @@ urlpatterns = [
     url(r'^getdata', get_data, name='get_data'),
     url(r'^gettext',get_text, name='get_text'),
     url(r'^getid',get_id, name='get_id'),
+    url(r'^set', set, name='set'),
+    url(r'^comment', comment, name='comment')
 ]

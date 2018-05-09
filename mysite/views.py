@@ -29,8 +29,8 @@ class ManagerHome(LoginRequiredMixin, TemplateView):
     template_name = 'manager/manager_home.html'
 
     def get_context_data(self, **kwargs):
-        set = Custom.objects.all()
-        ment = Comment.objects.all()
+        set = Custom.objects.all()[:10]
+        ment = Comment.objects.all()[:10]
         context = super().get_context_data(**kwargs)
         context['sets'] = set
         context['ments'] = ment
@@ -40,6 +40,24 @@ class ManagerHome(LoginRequiredMixin, TemplateView):
         if request.user.is_anonymous or request.user.is_member:
             return redirect('no_authority')
         return super(ManagerHome, self).dispatch(request, *args, **kwargs)
+## 글관리
+class ManagerSetList(LoginRequiredMixin, ListView):
+    model = Custom
+    template_name = 'manager/manager_set_list.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous or request.user.is_member:
+            return redirect('no_authority')
+        return super(ManagerSetList, self).dispatch(request, *args, **kwargs)
+
+class ManagerCommentList(LoginRequiredMixin, ListView):
+    model = Comment
+    template_name = 'manager/manager_comment_list.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_anonymous or request.user.is_member:
+            return redirect('no_authority')
+        return super(ManagerCommentList, self).dispatch(request, *args, **kwargs)
 
 ##제품관리
 class ManagerHardwareList(LoginRequiredMixin, ListView):
@@ -63,7 +81,7 @@ class ManagerHardwareNew(LoginRequiredMixin, CreateView):
         return super(ManagerHardwareNew, self).dispatch(request, *args, **kwargs)
 
 class ManagerHardwareUpdate(LoginRequiredMixin, UpdateView):
-    template_name = 'manager/manager_regular_form.html'
+    template_name = 'manager/manager_hw_form.html'
     model = Hardware
     fields = ['name', 'hardware_kind', 'option', 'hard_thumbnail']
     success_url = reverse_lazy('manager_hardware_list')
@@ -100,10 +118,15 @@ class ManagerCompaNew(LoginRequiredMixin, CreateView):
         return super(ManagerCompaNew, self).dispatch(request, *args, **kwargs)
 
 class ManagerCompaEdit(LoginRequiredMixin, UpdateView):
-    template_name = 'manager/manager_regular_form.html'
+    template_name = 'manager/manager_compa_form.html'
     model = Compa
     fields = ('comp_mode','hardware')
     success_url = reverse_lazy('manager_compa_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['hards'] = Hardware.objects.all()
+        return context
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_anonymous or request.user.is_member:
@@ -140,13 +163,23 @@ class MemberHome(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['sets'] = Custom.objects.filter(user=self.request.user)
-        context['ments'] = Comment.objects.filter(author=self.request.user)
+        context['sets'] = Custom.objects.filter(user=self.request.user)[:10]
+        context['ments'] = Comment.objects.filter(author=self.request.user)[:10]
         return context
 
 # 함수형
 def no_authority(request):
     return render(request, 'no_authority.html',{})
+
+@login_required
+def leave(request):
+    user = request.user
+    user.delete()
+    return redirect('leave_done')
+
+def leave_done(request):
+    return render(request, 'member/leave_done.html',{})
+
 @login_required
 def manager_hardware_remove(request, pk):
     some_hard = get_object_or_404(Hardware, pk=pk)
@@ -219,4 +252,20 @@ def get_id(request):
         'id':id
     }
     return JsonResponse(data)
-
+# 전체 세트, 전체 댓글
+def comment(request):
+    comment = serializers.serialize('json', Comment.objects.all())
+    id = serializers.serialize('json', User.objects.all())
+    data = {
+        'ment':comment,
+        'id': id
+    }
+    return JsonResponse(data)
+def set(request):
+    set = serializers.serialize('json', Custom.objects.all())
+    id = serializers.serialize('json', User.objects.all())
+    data = {
+        'set': set,
+        'id': id
+    }
+    return JsonResponse(data)

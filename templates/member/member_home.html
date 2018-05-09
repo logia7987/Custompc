@@ -27,7 +27,9 @@
                     <td>{{ set.create_date|date:'Y.m.d h:i' }}</td>
                 </tr>
                 {% empty %}
-                <li>활동이 없습니다.</li>
+                <tr>
+                    <td colspan="3">활동이 없습니다.</td>
+                </tr>
                 {% endfor %}
             </table>
         </div>
@@ -54,12 +56,22 @@
                 </tr>
                 {% endif %}
                 {% empty %}
-                <li>활동이 없습니다.</li>
+                <tr>
+                    <td colspan="3">활동이 없습니다.</td>
+                </tr>
                 {% endfor %}
             </table>
         </div>
     </div>
 </div>
 <script>
+    $('a.regist_out').click(function(){
+        ans = confirm('정말 탈퇴 하시겠습니까?')
+        if (ans === true) {
+            location.href = '/manager/user/leave/'
+        } else {
+            alert('취소되었습니다.')
+        }
+    });
 </script>
 {% endblock %}

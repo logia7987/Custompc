@@ -3,6 +3,10 @@
 {% block title %} 상세보기 {% endblock %}
 
 {% block content %}
+<div class="board_list_nav clearfix">
+    <h1><a href="{% url 'board:board_home' %}">게시판</a></h1>
+    <a href="{% url 'board:board_new' %}" class="board_new">새글쓰기</a>
+</div>
 <!--FB SDK-->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -19,14 +23,22 @@
             <h2>견적내용</h2>
             <p class="d_info">작성자: {{ set.user }} 작성일 : {{ set.create_date|date:"Y년 m월 d일 h:i" }} </p>
             <ul class="d_text">
-                <li onmouseover="addText('CPU')">{% if set.cpu.hard_thumbnail %}<img src="{{ set.cpu.hard_thumbnail.url }}" alt="{{ set.cpu }}">{% endif %}<span>CPU</span> {% if set.cpu == None %}미선택{% else %}{{ set.cpu }}{% endif %}</li>
-                <li onmouseover="addText('Board')">{% if set.board.hard_thumbnail %}<img src="{{ set.board.hard_thumbnail.url }}" alt="{{ set.board }}">{% endif %}<span>Board</span> {% if set.board == None %}미선택{% else %}{{ set.board }}{% endif %}</li>
-                <li onmouseover="addText('RAM')">{% if set.ram.hard_thumbnail %}<img src="{{ set.ram.hard_thumbnail.url }}" alt="{{ set.ram }}">{% endif %}<span>RAM</span> {% if set.ram == None %}미선택{% else %}{{ set.ram }}{% endif %}</li>
-                <li onmouseover="addText('VGA')">{% if set.vga.hard_thumbnail %}<img src="{{ set.vga.hard_thumbnail.url }}" alt="{{ set.vga }}">{% endif %}<span>VGA</span> {% if set.vga == None %}미선택{% else %}{{ set.vga }}{% endif %}</li>
-                <li onmouseover="addText('Power')">{% if set.power.hard_thumbnail %}<img src="{{ set.power.hard_thumbnail.url }}" alt="{{ set.power }}">{% endif %}<span>Power</span> {% if set.power == None %}미선택{% else %}{{ set.power }}{% endif %}</li>
-                <li onmouseover="addText('HDD')">{% if set.hdd.hard_thumbnail %}<img src="{{ set.hdd.hard_thumbnail.url }}" alt="{{ set.hdd }}">{% endif %}<span>HDD</span> {% if set.hdd == None %}미선택{% else %}{{ set.hdd }}{% endif %}</li>
-                <li onmouseover="addText('SSD')">{% if set.ssd.hard_thumbnail %}<img src="{{ set.ssd.hard_thumbnail.url }}" alt="{{ set.ssd }}">{% endif %}<span>SSD</span> {% if set.ssd == None %}미선택{% else %}{{ set.ssd }}{% endif %}</li>
-                <li onmouseover="addText('ODD')">{% if set.odd.hard_thumbnail %}<img src="{{ set.odd.hard_thumbnail.url }}" alt="{{ set.odd }}">{% endif %}<span>ODD</span> {% if set.odd == None %}미선택{% else %}{{ set.odd }}{% endif %}</li>
+                <span>CPU</span>
+                <li onmouseover="addText('CPU')">{% if set.cpu.hard_thumbnail %}<img src="{{ set.cpu.hard_thumbnail.url }}" alt="{{ set.cpu }}">{% endif %} {% if set.cpu == None %}미선택{% else %}{{ set.cpu }}{% endif %}</li>
+                <span>Board</span>
+                <li onmouseover="addText('Board')">{% if set.board.hard_thumbnail %}<img src="{{ set.board.hard_thumbnail.url }}" alt="{{ set.board }}">{% endif %} {% if set.board == None %}미선택{% else %}{{ set.board }}{% endif %}</li>
+                <span>RAM</span>
+                <li onmouseover="addText('RAM')">{% if set.ram.hard_thumbnail %}<img src="{{ set.ram.hard_thumbnail.url }}" alt="{{ set.ram }}">{% endif %} {% if set.ram == None %}미선택{% else %}{{ set.ram }}{% endif %}</li>
+                <span>VGA</span>
+                <li onmouseover="addText('VGA')">{% if set.vga.hard_thumbnail %}<img src="{{ set.vga.hard_thumbnail.url }}" alt="{{ set.vga }}">{% endif %} {% if set.vga == None %}미선택{% else %}{{ set.vga }}{% endif %}</li>
+                <span>Power</span>
+                <li onmouseover="addText('Power')">{% if set.power.hard_thumbnail %}<img src="{{ set.power.hard_thumbnail.url }}" alt="{{ set.power }}">{% endif %} {% if set.power == None %}미선택{% else %}{{ set.power }}{% endif %}</li>
+                <span>HDD</span>
+                <li onmouseover="addText('HDD')">{% if set.hdd.hard_thumbnail %}<img src="{{ set.hdd.hard_thumbnail.url }}" alt="{{ set.hdd }}">{% endif %} {% if set.hdd == None %}미선택{% else %}{{ set.hdd }}{% endif %}</li>
+                <span>SSD</span>
+                <li onmouseover="addText('SSD')">{% if set.ssd.hard_thumbnail %}<img src="{{ set.ssd.hard_thumbnail.url }}" alt="{{ set.ssd }}">{% endif %} {% if set.ssd == None %}미선택{% else %}{{ set.ssd }}{% endif %}</li>
+                <span>ODD</span>
+                <li onmouseover="addText('ODD')">{% if set.odd.hard_thumbnail %}<img src="{{ set.odd.hard_thumbnail.url }}" alt="{{ set.odd }}">{% endif %} {% if set.odd == None %}미선택{% else %}{{ set.odd }}{% endif %}</li>
             </ul>
         </div>
         <div class="detail_text d_style">

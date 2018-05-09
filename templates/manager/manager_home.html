@@ -23,7 +23,7 @@
 <div class="clearfix">
     {% block manager %}
     <div class="manager_left">
-        <h2>전체 견적</h2>
+        <h2><a href="{% url 'manager_set_list' %}">전체 견적</a></h2>
         <table>
             <tr>
                 <th>ID</th>
@@ -36,7 +36,7 @@
                 <td>{{set.id}}</td>
                 <td><a href="{% url 'custom:custom_detail' pk=set.pk%}">{{set}}</a></td>
                 <td>{{set.user}}</td>
-                <td>{{set.create_date|date:'Y년 m월 d일 h:i'}}</td>
+                <td>{{set.create_date|date:'Y.m.d h:i'}}</td>
             {% empty %}
                 <td>없음</td>
             </tr>
@@ -44,7 +44,7 @@
         </table>
     </div>
     <div class="manager_right">
-        <h2>전체 댓글</h2>
+        <h2><a href="{% url 'manager_comment_list' %}">전체 댓글</a></h2>
         <table>
             <tr>
                 <th>ID</th>
@@ -58,14 +58,14 @@
                 <td>{{ ment.id }}</td>
                 <td><a href="{% url 'custom:custom_detail' pk=ment.custom.pk%}">{{ ment }}...</a></td>
                 <td>{{ ment.author }}</td>
-                <td>{{ ment.create_date|date:'Y년 m월 d일 h:i' }}</td>
+                <td>{{ ment.create_date|date:'Y.m.d h:i' }}</td>
             </tr>
             {% elif ment.board %}
             <tr>
                 <td>{{ ment.id }}</td>
                 <td><a href="{% url 'board:board_detail' pk=ment.board.pk%}">{{ ment }}...</a></td>
                 <td>{{ ment.author }}</td>
-                <td>{{ ment.create_date|date:'Y년 m월 d일 h:i' }}</td>
+                <td>{{ ment.create_date|date:'Y.m.d. h:i' }}</td>
             </tr>
             {% endif %}
             {% empty %}
