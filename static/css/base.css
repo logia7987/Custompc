@@ -260,8 +260,9 @@ div.set_detail_left div.detail_nav {
 }
 div.set_detail_left ul.d_text li {
   margin-bottom: 0.5em;
-  height: 3.5em;
-  line-height: 3.5em;
+  height: 5em;
+  line-height: 5em;
+  font-size: 0.7em;
 }
 div.set_detail_left ul.d_text span {
   display: block;
@@ -307,7 +308,6 @@ div.a_comment p.comment_info span {
   float: right;
 }
 div.a_comment p.comment_text {
-  height: 5em;
   border: 1px solid #eee;
   margin-bottom: 1em;
 }
@@ -339,7 +339,7 @@ div.member_home div.member_sect2 div td {
   font-size: 0.9em;
 }
 form.register {
-  width: 45%;
+  width: 80%;
   margin: auto;
 }
 form.register span {
@@ -379,7 +379,10 @@ div.done_div {
 div.done_div h1 {
   font-weight: 400;
 }
-@media all and (min-width: 770px) {
+@media all and (min-width: 768px) {
+  form.register {
+    width: 50%;
+  }
   div.left_section {
     float: left;
     width: 49%;
@@ -393,6 +396,13 @@ div.done_div h1 {
   }
   div.center_section span.chosen_hw {
     display: block;
+  }
+  div.set_detail_left li {
+    transition: 0.5s;
+    margin-bottom: 1em!important;
+    height: 3.5em!important;
+    line-height: 3.5em!important;
+    font-size: 0.9em!important;
   }
   div.manager_left {
     float: left;
@@ -417,7 +427,7 @@ div.done_div h1 {
     height: 25em;
   }
 }
-@media all and (min-width: 995px) {
+@media all and (min-width: 1030px) {
   div.main {
     position: relative;
   }

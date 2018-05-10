@@ -1,7 +1,6 @@
 {% extends 'manager/manager_home.html' %}
 
 {% block manager %}
-<!--todo comment list and pagination-->
 <h1>전체 댓글</h1>
 {% verbatim %}
 <div ng-app="commentApp" ng-controller="commentCtrl">
@@ -14,8 +13,8 @@
         </tr>
         <tr ng-repeat="x in comment">
             <td>{{ x.pk }}</td>
-            <td><a href="#">{{ x.fields.text }}</a></td>
-            <td></td>
+            <td><a href="{{ x.url }}">{{ x.title }}...</a></td>
+            <td>{{ x.id }}</td>
             <td>{{ x.fields.create_date|date:'yyyy.M.d h:m' }}</td>
         </tr>
     </table>
@@ -27,7 +26,6 @@
 </div>
 {% endverbatim %}
 <script>
-    // todo fix javascript
     var app = angular.module('commentApp', []);
 
     app.controller('commentCtrl', function($scope, $http) {
@@ -41,9 +39,23 @@
                 $scope.myOrderBy = x;
         };
         $http.get('{% url "comment" %}').then(function (response){
-            ment = JSON.parse(response.data.ment);
-            for (var i=0;i<ment.length;i++) {
-                $scope.comment.push(ment[i])
+            $scope.ment = JSON.parse(response.data.ment);
+            $scope.id = JSON.parse(response.data.id);
+            $scope.comment = $scope.ment
+            for (var i=0;i<$scope.comment.length;i++) {
+                $scope.comment[i]['title'] = $scope.comment[i]['fields']['text'].slice(0,10)
+                if ($scope.comment[i]['fields']['board']) {
+                    pk = $scope.comment[i]['fields']['board']
+                    $scope.comment[i]['url'] = '/board/'+pk+'/detail/';
+                } else if ($scope.comment[i]['fields']['custom']) {
+                    pk = $scope.comment[i]['fields']['custom']
+                    $scope.comment[i]['url'] = '/custom/'+pk+'/detail/';
+                }
+                for (var k=0;k<$scope.id.length;k++) {
+                    if ($scope.comment[i]['fields']['author'] === $scope.id[k]['pk']) {
+                        $scope.comment[i]['id'] = $scope.id[k]['fields']['username']
+                    }
+                }
             }
         });
     });

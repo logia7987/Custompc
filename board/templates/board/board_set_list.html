@@ -13,7 +13,7 @@
         </tr>
         <tr ng-repeat="set in sets|startFrom:currentPage*pageSize|limitTo:pageSize|orderBy:myOrderBy">
             <td>{{ set.pk }}</td>
-            <td><a href="/custom/{{ set.pk }}/">{{ set.title }}</a></td>
+            <td><a href="/custom/{{ set.pk }}/detail">{{ set.title }}</a></td>
             <td>{{ set.fields.user }}</td>
             <td>{{ set.fields.create_date|date:'y.M.d h:m' }}</td>
         </tr>

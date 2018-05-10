@@ -26,6 +26,9 @@
         if (pw1 === pw2) {
             eMsg.innerHTML = '비밀번호가 일치합니다!';
             eMsg.style.color = '#00cc00';
+        } else {
+            eMsg.innerHTML = '입력하신 비밀번호가 일치하지 않습니다.';
+            eMsg.style.color = '#ff3300';
         }
     }
     function CheckPw() {

@@ -24,7 +24,7 @@
             <p class="d_info">작성자: {{ set.user }} 작성일 : {{ set.create_date|date:"Y년 m월 d일 h:i" }} </p>
             <ul class="d_text">
                 <span>CPU</span>
-                <li onmouseover="addText('CPU')">{% if set.cpu.hard_thumbnail %}<img src="{{ set.cpu.hard_thumbnail.url }}" alt="{{ set.cpu }}">{% endif %} {% if set.cpu == None %}미선택{% else %}{{ set.cpu }}{% endif %}</li>
+                <li onmouseout="addText('CPU')">{% if set.cpu.hard_thumbnail %}<img src="{{ set.cpu.hard_thumbnail.url }}" alt="{{ set.cpu }}">{% endif %} {% if set.cpu == None %}미선택{% else %}{{ set.cpu }}{% endif %}</li>
                 <span>Board</span>
                 <li onmouseover="addText('Board')">{% if set.board.hard_thumbnail %}<img src="{{ set.board.hard_thumbnail.url }}" alt="{{ set.board }}">{% endif %} {% if set.board == None %}미선택{% else %}{{ set.board }}{% endif %}</li>
                 <span>RAM</span>
@@ -57,7 +57,7 @@
                 <div class="fb-share-button" data-href="http://logia7.pythonanywhere.com/custom/{{ object.id }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flogia7.pythonanywhere.com%2Fcustom%2F{{object.id}}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">공유하기</a></div>
             </div>
             <div class="detail_nav">
-            <a href="{% url 'board:board_set_list' %}" class="button_st">목록보기</a>{% if user == set.user %}<a href="{% url 'custom:custom_edit' pk=set.pk %}" class="button_st">수정</a><a href="{% url 'custom:custom_delete' pk=set.pk %}" class="button_st">삭제</a>
+            <a href="{% url 'board:board_set_list' %}" class="button_st">목록보기</a> {% if user == set.user %}<a href="{% url 'custom:custom_edit' pk=set.pk %}" class="button_st">수정</a> <a href="{% url 'custom:custom_delete' pk=set.pk %}" class="button_st">삭제</a>
             {% endif %}
             </div>
         </div>
