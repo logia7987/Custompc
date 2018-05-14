@@ -379,6 +379,9 @@ div.done_div {
 div.done_div h1 {
   font-weight: 400;
 }
+.short_1 h2 {
+  text-align: left;
+}
 @media all and (min-width: 768px) {
   form.register {
     width: 50%;
@@ -425,6 +428,14 @@ div.done_div h1 {
     float: right;
     width: 49%;
     height: 25em;
+  }
+  div.short_1 {
+    float: left;
+    width: 48%;
+  }
+  div.short_2 {
+    float: right;
+    width: 48%;
   }
 }
 @media all and (min-width: 1030px) {

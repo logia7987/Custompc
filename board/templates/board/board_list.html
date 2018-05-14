@@ -11,7 +11,7 @@
             <th>글쓴이</th>
             <th>등록일</th>
         </tr>
-        <tr ng-repeat="board in boards|startFrom:currentPage*pageSize|limitTo:pageSize|orderBy:myOrderBy">
+        <tr ng-repeat="board in boards|startFrom:currentPage*pageSize|limitTo:pageSize|orderBy:'-fields.created_date'">
             <td>{{ board.pk }}</td>
             <td><a href="{{ board.pk }}/detail">{{ board.fields.title }}</a></td>
             <td>{{ board.fields.author }}</td>
@@ -34,9 +34,6 @@
         $scope.boards = []
         $scope.numberOfPage = function() {
             return Math.ceil($scope.boards.length/$scope.pageSize);
-        };
-        $scope.orderByMe = function(x) {
-            $scope.myOrderBy = x;
         };
         $http.get('{% url "board:board_list_data" %}').then(function (response){
             data = JSON.parse(response.data.boards);

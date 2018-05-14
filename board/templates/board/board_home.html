@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
+<div>
+  <p>
+    *각 게시판마다 AngularJS 비동기 통신을 이용하였습니다.<br>
+    언어: Java Script 라이브러리: AngularJS
+  </p>
+</div>
 <div class="board_list_nav clearfix">
     <h1><a href="{% url 'board:board_home' %}">게시판</a></h1>
+    {% if user.is_authenticated %}
     <a href="{% url 'board:board_new' %}" class="board_new">새글쓰기</a>
+    {% endif %}
 </div>
     {% block board %}
     <div class="board_list clearfix">

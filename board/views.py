@@ -6,6 +6,7 @@ from .models import Board,Category
 from .forms import BoardForm
 from custom.forms import CommentForm
 from custom.models import Custom, User
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 class BoardHome(TemplateView):
     template_name = 'board/board_home.html'
@@ -48,6 +49,7 @@ def board_detail(request, pk):
 
     return render(request, 'board/board_detail.html',{'board':board,'cate':cate,'form':form})
 
+@login_required
 def board_new(request):
     cate = Category.objects.all()
     if request.method == 'POST':

@@ -32,6 +32,9 @@ urlpatterns = [
     url(r'^member/', MemberHome.as_view(), name='member_home'),
     url(r'^admin/', admin.site.urls),
     url(r'^no_authority', no_authority, name='no_authority'),
+    # short
+    url(r'^short/', portfolio_short, name='portfolio_short'),
+    # AJAX
     url(r'^getcompa', get_compa, name='get_compa'),
     url(r'^getdata', get_data, name='get_data'),
     url(r'^gettext',get_text, name='get_text'),

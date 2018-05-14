@@ -49,7 +49,7 @@
                 if (data[i]['fields']['is_superuser'] === true && data[i]['fields']['is_manager'] === false && data[i]['fields']['is_member'] === false) {
                     $scope.users[i]['atrt'] = '슈퍼유저';
                 } else if (data[i]['fields']['is_superuser'] === false && data[i]['fields']['is_manager'] === true && data[i]['fields']['is_member'] === false) {
-                    $scope.users[i]['atrt'] = '매니저';
+                    $scope.users[i]['atrt'] = '메니저';
                 } else if (data[i]['fields']['is_superuser'] === false && data[i]['fields']['is_manager'] === false && data[i]['fields']['is_member'] === true) {
                     $scope.users[i]['atrt'] = '유저';
                 }

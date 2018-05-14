@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <!--jQuery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset='euc-kr'></script>
+    <!--AngularJS-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     {% block bootstrap %}{% endblock %}
 </head>
@@ -18,12 +19,13 @@
                 <ul>
                     <li><a href="/">메인화면</a></li>
                     <li><a href="{% url 'board:board_home' %}">게시판</a></li>
+                    <li><a href="{% url 'portfolio_short' %}">개발설명</a></li>
                 </ul>
             </div>
             <div class="headnav_right">
                 <ul>
-                    {% if request.user.is_superuser or is_manager %}
-                    <li><a href="{% url 'manager_page' %}">매니저페이지</a></li>
+                    {% if request.user.is_superuser or request.user.is_manager %}
+                    <li><a href="{% url 'manager_page' %}">메니저페이지</a></li>
                     {% endif %}
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'member_home' %}">마이페이지</a></li>
@@ -44,7 +46,7 @@
         {% endblock %}
     </div>
     <footer>
-        <p>Copyright Powerd By. c22moon</p>
+        <p>Copyright Powerd By c22moon</p>
     </footer>
 </body>
 </html>

@@ -171,6 +171,9 @@ class MemberHome(LoginRequiredMixin, TemplateView):
 def no_authority(request):
     return render(request, 'no_authority.html',{})
 
+def portfolio_short(request):
+    return render(request, 'portfolio_short.html', {})
+
 @login_required
 def leave(request):
     user = request.user
@@ -231,7 +234,7 @@ def get_compa(request):
         'compa':compa
     }
     return JsonResponse(data)
-#매니저 페이지를 위한 정보 수집
+#메니저 페이지를 위한 정보 수집
 def get_data(request):
     hardware = serializers.serialize('json', Hardware.objects.all())
     comp = serializers.serialize('json',Compa.objects.all())
