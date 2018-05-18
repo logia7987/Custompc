@@ -11,10 +11,10 @@
             <th>글쓴이</th>
             <th>등록일</th>
         </tr>
-        <tr ng-repeat="set in sets|startFrom:currentPage*pageSize|limitTo:pageSize|orderBy:myOrderBy">
+        <tr ng-repeat="set in sets|startFrom:currentPage*pageSize|limitTo:pageSize">
             <td>{{ set.pk }}</td>
             <td><a href="/custom/{{ set.pk }}/detail">{{ set.title }}</a></td>
-            <td>{{ set.fields.user }}</td>
+            <td>{{ set.username }}</td>
             <td>{{ set.fields.create_date|date:'y.M.d h:m' }}</td>
         </tr>
     </table>
@@ -37,9 +37,6 @@
         $scope.numberOfPage = function() {
             return Math.ceil($scope.sets.length/$scope.pageSize);
         };
-        $scope.orderByMe = function(x) {
-            $scope.myOrderBy = x;
-        };
         $http.get('{% url "board:board_list_data" %}').then(function (response){
             $scope.data = JSON.parse(response.data.sets);
             $scope.id = JSON.parse(response.data.id);
@@ -49,10 +46,15 @@
                     $scope.sets[i]['title'] = $scope.data[i]['fields']['text'].slice(0,10)
                 } else if ($scope.data[i]['fields']['text'] === '') {
                     $scope.sets.push($scope.data[i])
-                    for (var k=0;k<=$scope.id.length;k++) {
+                    for (var k=0;k<$scope.id.length;k++) {
                         if ($scope.data[i]['fields']['user'] === $scope.id[k]['pk']) {
-                            return $scope.sets[i]['title'] = $scope.id[k]['fields']['username']
+                            $scope.sets[i]['title'] = $scope.id[k]['fields']['username']
                         }
+                    }
+                }
+                for (var k=0;k<$scope.id.length;k++) {
+                    if ( $scope.sets[i]['fields']['user'] === $scope.id[k]['pk']) {
+                        $scope.sets[i]['username'] = $scope.id[k]['fields']['username']
                     }
                 }
             }

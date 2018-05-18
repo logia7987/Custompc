@@ -366,7 +366,9 @@
         var text = prompt('설명을 입력해주세요.');
         $('textarea#id_text').val(text);
         $('button#save_set').trigger("click");
-      }
+        } else {
+          $('button#save_set').trigger("click");
+        }
     } else {
       alert('취소되었습니다.')
     }

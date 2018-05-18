@@ -7,81 +7,75 @@
   </p>
 </div>
 <div class="board_list_nav clearfix">
-    <h1><a href="{% url 'board:board_home' %}">게시판</a></h1>
-    {% if user.is_authenticated %}
-    <a href="{% url 'board:board_new' %}" class="board_new">새글쓰기</a>
-    {% endif %}
+    <h3><a href="{% url 'board:board_home' %}">전체보기</a> | <a href="{% url 'board:board_set_list' %}">견적게시판</a> |{% for ctgr in ctgrs %} <a href="{% url 'board:board_list' %}?category={{ ctgr.id }}">{{ ctgr.name }} </a> |{% endfor %}</h3>
 </div>
     {% block board %}
     <div class="board_list clearfix">
-        <div class="board_list_ctgr d_style">
-            <h1><a href="{% url 'board:board_set_list' %}">견적게시판</a></h1>
+        {% verbatim %}
+        <div class="board_list_ctgr d_style" ng-app="homeApp" ng-controller="homeCtrl">
+            <h1>게시판</h1>
             <table>
                 <tr>
                     <th>번호</th>
                     <th>견적</th>
+                    <th>글쓴이</th>
+                    <th>카테고리</th>
                     <th>작성일</th>
                 </tr>
-                {% for set in custom %}
-                <tr>
-                    <td>{{ set.id }}</td>
-                    <td><a href="{% url 'custom:custom_detail' pk=set.pk %}">{{ set }}</a></td>
-                    <td>{{ set.create_date|date:'Y.m.d h:i' }}</td>
+                <tr ng-repeat="board in boards|startFrom:currentPage*pageSize|limitTo:pageSize|orderBy:'-fields.created_date'">
+                    <td>{{ board.pk }}</td>
+                    <td><a href="{{ board.pk }}/detail">{{ board.fields.title }}</a></td>
+                    <td>{{ board.username }}</td>
+                    <td>{{ board.ctgr }}</td>
+                    <td>{{ board.fields.created_date|date:'y.M.d h:m' }}</td>
                 </tr>
-                {% endfor %}
             </table>
+            <div class="button_area">
+                <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="button_st">이전</button>
+                {{currentPage+1}}/{{numberOfPage()}}
+                <button ng-disabled="currentPage >= boards.length/pageSize - 1" ng-click="currentPage=currentPage+1" class="button_st">다음</button>
+            </div>
         </div>
-        <div class="board_list_ctgr d_style">
-            <h1><a href="{% url 'board:board_list' %}?category=2">후기게시판</a></h1>
-            <table>
-                <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>작성일</th>
-                </tr>
-                {% for board in reviews %}
-                    <tr>
-                        <td>{{ board.id }}</td>
-                        <td><a href="{% url 'board:board_detail' pk=board.pk %}">{{ board }}</a></td>
-                        <td>{{ board.created_date|date:'Y.m.d h:i' }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+        {% endverbatim %}
+        {% if user.is_authenticated %}
+        <div class="board_home_new">
+            <a href="{% url 'board:board_new' %}" class="board_new button_st">새글쓰기</a>
         </div>
-        <div class="board_list_ctgr d_style">
-            <h1><a href="{% url 'board:board_list' %}?category=3">H/W 정보게시판</a></h1>
-            <table>
-                <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>작성일</th>
-                </tr>
-                {% for board in info %}
-                    <tr>
-                        <td>{{ board.id }}</td>
-                        <td><a href="{% url 'board:board_detail' pk=board.pk %}">{{ board }}</a></td>
-                        <td>{{ board.created_date|date:'Y.m.d h:i' }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
-        <div class="board_list_ctgr d_style">
-            <h1><a href="{% url 'board:board_list' %}?category=4">자유게시판</a></h1>
-            <table>
-                <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>작성일</th>
-                </tr>
-                {% for board in free %}
-                    <tr>
-                        <td>{{ board.id }}</td>
-                        <td><a href="{% url 'board:board_detail' pk=board.pk %}">{{ board }}</a></td>
-                        <td>{{ board.created_date|date:'Y.m.d h:i' }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
+        {% endif %}
     </div>
     {% endblock %}
+<script>
+    var app = angular.module('homeApp', []);
+
+    app.controller('homeCtrl', function($scope, $http) {
+        $scope.currentPage = 0;
+        $scope.pageSize = 10;
+        $scope.boards = []
+        $scope.numberOfPage = function() {
+            return Math.ceil($scope.boards.length/$scope.pageSize);
+        };
+        $http.get('{% url "board:board_list_data" %}').then(function (response){
+            $scope.data = JSON.parse(response.data.boards);
+            $scope.id = JSON.parse(response.data.id);
+            $scope.ctgr = JSON.parse(response.data.ctgrname);
+            $scope.boards = $scope.data
+            for (var i=0;i<$scope.boards.length;i++) {
+                for (var k=0;k<$scope.id.length;k++) {
+                    if ( $scope.boards[i]['fields']['author'] === $scope.id[k]['pk']) {
+                        $scope.boards[i]['username'] = $scope.id[k]['fields']['username']
+                    }
+                    if ( $scope.boards[i]['fields']['category'] === $scope.ctgr[k]['pk'] ){
+                        $scope.boards[i]['ctgr'] = $scope.ctgr[k]['fields']['name']
+                    }
+                }
+            } 
+        });
+    });
+    app.filter('startFrom', function() {
+        return function(input, start) {
+            start = +start;
+            return input.slice(start);
+        };
+    });
+</script>
 {% endblock %}

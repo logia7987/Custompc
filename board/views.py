@@ -14,15 +14,14 @@ class BoardHome(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BoardHome, self).get_context_data(**kwargs)
         context['custom'] = Custom.objects.all().order_by('-create_date')[:10]
-        context['reviews'] = Board.objects.filter(category=2).order_by('-created_date')[:10]
-        context['info'] = Board.objects.filter(category=3).order_by('-created_date')[:10]
-        context['free'] = Board.objects.filter(category=4).order_by('-created_date')[:10]
+        context['ctgrs'] = Category.objects.all()
+        context['boards'] = Board.objects.all().order_by('-created_date')
         return context
 
 def board_set_list(request):
     sets = Custom.objects.all()
-    cate = Category.objects.all()
-    return render(request, 'board/board_set_list.html',{'sets':sets,'cate':cate})
+    ctgrs = Category.objects.all()
+    return render(request, 'board/board_set_list.html',{'sets':sets,'ctgrs':ctgrs})
 
 def board_list(request):
     ctgr = request.GET.get('category')
@@ -30,8 +29,8 @@ def board_list(request):
         boards = Board.objects.filter(category__name = ctgr)
     else:
         boards = Board.objects.all()
-    cate = Category.objects.all()
-    return render(request,'board/board_list.html',{'boards':boards,'cate':cate,'ctgr':ctgr})
+    ctgrs = Category.objects.all()
+    return render(request,'board/board_list.html',{'boards':boards,'ctgrs':ctgrs,'ctgr':ctgr})
 
 def board_detail(request, pk):
     board = get_object_or_404(Board, pk=pk)
@@ -85,10 +84,12 @@ def board_remove(request, pk):
 def board_list_data(request):
     sets = serializers.serialize('json', Custom.objects.all())
     boards = serializers.serialize('json', Board.objects.all())
+    ctgrname = serializers.serialize('json', Category.objects.all())
     id = serializers.serialize('json', User.objects.all())
     data = {
         'sets':sets,
         'boards':boards,
-        'id':id
+        'id':id,
+        'ctgrname':ctgrname
     }
     return JsonResponse(data)
