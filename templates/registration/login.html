@@ -9,6 +9,9 @@
     <span>아이디</span><input type="text" name="username" autofocus maxlength="254" required id="id_username" />
     <label for="id_password">Password:</label>
     <span>비밀번호</span><input type="password" name="password" required id="id_password" />
+    {% if form.errors %}
+        <p class="error_ms">아이디와 비밀번호가 일치하지 않습니다.</p>
+    {% endif %}
     <button type="submit" class="button_st form_button">로그인</button>
     <input type="hidden"name="next"value="{{next}}">
     <div>

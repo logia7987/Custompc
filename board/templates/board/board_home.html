@@ -2,8 +2,9 @@
 {% block content %}
 <div>
   <p>
-    *각 게시판마다 AngularJS 비동기 통신을 이용하였습니다.<br>
-    언어: Java Script 라이브러리: AngularJS
+    <h3>저장한 견적과 유저들이 작성한 글을 열람할 수 있는데 게시판입니다.</h3>
+    *각 게시판마다 AngularJS 를 이용하였습니다.<br>
+    <b>언어: Java Script 라이브러리: AngularJS</b>
   </p>
 </div>
 <div class="board_list_nav clearfix">
@@ -35,13 +36,13 @@
                 {{currentPage+1}}/{{numberOfPage()}}
                 <button ng-disabled="currentPage >= boards.length/pageSize - 1" ng-click="currentPage=currentPage+1" class="button_st">다음</button>
             </div>
-        </div>
         {% endverbatim %}
-        {% if user.is_authenticated %}
-        <div class="board_home_new">
-            <a href="{% url 'board:board_new' %}" class="board_new button_st">새글쓰기</a>
+            {% if user.is_authenticated %}
+            <div class="board_home_new">
+                <a href="/board/new/" class="board_new button_st">새글쓰기</a>
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
     </div>
     {% endblock %}
 <script>

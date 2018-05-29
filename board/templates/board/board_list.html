@@ -25,6 +25,11 @@
     </div>
 </div>
 {% endverbatim %}
+{% if user.is_authenticated %}
+<div class="board_home_new">
+    <a href="{% url 'board:board_new' %}" class="board_new button_st">새글쓰기</a>
+</div>
+{% endif %}
 <script>
     var app = angular.module('boardApp', []);
 

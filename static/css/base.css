@@ -223,9 +223,6 @@ div.board_list_nav a.board_new:hover {
   background: #99ccff;
   color: #fff;
 }
-div.board_home_new {
-  text-align: right;
-}
 h1.board_title {
   margin-top: 1em;
 }

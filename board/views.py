@@ -46,7 +46,7 @@ def board_detail(request, pk):
     else:
         form = CommentForm()
 
-    return render(request, 'board/board_detail.html',{'board':board,'cate':cate,'form':form})
+    return render(request, 'board/board_detail.html',{'board':board,'ctgrs':cate,'form':form})
 
 @login_required
 def board_new(request):
@@ -60,7 +60,7 @@ def board_new(request):
             return redirect('board:board_detail', pk=board.pk)
     else:
         form = BoardForm()
-    return render(request, 'board/board_edit.html',{'form':form,'cate':cate})
+    return render(request, 'board/board_edit.html',{'form':form,'ctgrs':cate})
 
 def board_edit(request, pk):
     board = get_object_or_404(Board, pk=pk)
@@ -74,7 +74,7 @@ def board_edit(request, pk):
             return redirect('board:board_detail', pk=board.pk)
     else:
         form = BoardForm(instance=board)
-    return render(request, 'board/board_edit.html',{'form':form,'cate':cate})
+    return render(request, 'board/board_edit.html',{'form':form,'ctgrs':cate})
 
 def board_remove(request, pk):
     board = get_object_or_404(Board, pk=pk)
